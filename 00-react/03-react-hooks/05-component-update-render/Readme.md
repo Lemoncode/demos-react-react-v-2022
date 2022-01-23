@@ -75,8 +75,6 @@ const MyChildComponent = () => {
 
 + React.useEffect(() => {
 +    console.log("A. Called when the component is mounted and after every render");
-+
-+      );
 +  });
 
   return (
@@ -94,7 +92,7 @@ React.useEffect(() => {
 +      console.log(
 +        "B. Cleanup function called after every render"
 +      );
-+  });
+  });
 ```
 
 - If we start the project and open the browser console we can check the
