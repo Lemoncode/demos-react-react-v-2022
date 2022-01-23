@@ -8,9 +8,9 @@ export const MyComponent = () => {
 
   // Load full list when the component gets mounted and filter gets updated
   React.useEffect(() => {
-    fetch(`https://swapi.dev/api/people?search=${filter}`)
+    fetch(`https://jsonplaceholder.typicode.com/users?name_like=${filter}`)
       .then((response) => response.json())
-      .then((json) => setUserCollection(json.results));
+      .then((json) => setUserCollection(json));
   }, [debouncedFilter]);
 
   return (
