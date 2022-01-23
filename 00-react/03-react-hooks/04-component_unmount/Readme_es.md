@@ -49,6 +49,8 @@ _./src/demo.tsx_
 
 - Y si en vez de un \_h4\_\_, instanciamos un componente:
 
+_./src/demo.tsx_
+
 ```diff
 + export const MyChildComponent = () => {
 +   return <h4>Hello form child component</h4>
