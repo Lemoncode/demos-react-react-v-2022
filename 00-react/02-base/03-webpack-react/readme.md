@@ -21,7 +21,7 @@ npm install
 npm install react react-dom --save
 ```
 
-- Let's install _react_ and _react-dom_ typing
+- Let's install _react_ and _react-dom_ typings
 
 ```bash
 npm install @types/react @types/react-dom --save-dev
@@ -88,6 +88,20 @@ _.babelrc_
   ]
 }
 ```
+
+> By the way the _rc_ suffix is pretty usual in linux it's stands for "runcom"
+> (CTSS system 1962-63) Script file containing startup instructions for an application program.
+> In other words, "rc" is just something that stuck from back in the sixties, and has been used quite often for configuration files in different sorts of programs since, including Node, Babel and many, many others.
+> More info [on stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs)
+
+> Another curiosity... what is a _preset_ ... let's start with what is a babel plugin: babel transformations are
+> enabled by applying plugins, there are plenty of plugins and if you have to go adding one by one it can become a nightmare,
+> in order to make this easier, babel has grouped common sets of plugins in _presets_, for instance @babel-preset-react
+> includes the following plugins:
+
+- @babel/plugin-syntax-jsx
+- @babel/plugin-transform-react-jsx
+- @babel/plugin-transform-react-display-name
 
 - Is time to double check the _webpack.config.js_
 

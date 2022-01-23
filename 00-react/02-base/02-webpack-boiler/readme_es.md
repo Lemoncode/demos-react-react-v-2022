@@ -1,20 +1,20 @@
-## 02 Web Boiler plate
+# 02 Web Boiler plate
 
-## Summary
+## Resumen
 
-In this example there is a webpack boiler plate set up with Typescript support, just in the step before
-to adding React support.
+En este ejempo hay montado un boiler plate en webpack con soporte a Typescript, justo en el paso previo
+a añadirle soporte a React.
 
-It is based on the Webpack examples.
+Está basado en los ejemplos de Webpack.
 
-This example is the only one that doesn't have a step-by-step (if you need guidance, you can go to the
-webpack examples you'll find in this repository).
+Este ejemplo es el único que no tiene un paso a paso (si necesitas guía puedes ir a los ejemplos
+de webpack que econtrarás en este repositorio).
 
-Highlights:
+A destacar:
 
-- The webpackconfig has the src folder configured, and the loaders to handle typescript.
-- We have babel and typescript configuration files.
-- We do the transpilation using babel.
+- El webpackconfig tiene configurada la carpeta src, y los loaders para manejar typescript.
+- Tenemos ficheros de configuracion de babel y typescript.
+- Hacemos la transpilación utlizando babel.
 
-In the following example we will take this as a starting point and we will go step by step adding
-support for React.
+En el siguiente ejemplo tomaremos este como punto de partida y si iremos paso a paso añadiendo
+soporte a React.
