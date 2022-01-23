@@ -4,7 +4,7 @@ interface Props {
   name: string;
 }
 
-export const DisplayUsername = React.memo((props: Props) => {
+export const DisplayUsername = React.memo((props : Props) => {
   console.log(
     "Hey I'm only rerendered when name gets updated, check React.memo"
   );
