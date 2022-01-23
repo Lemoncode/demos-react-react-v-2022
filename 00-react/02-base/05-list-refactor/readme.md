@@ -90,7 +90,7 @@ export const MemberTableRow: React.FC<Props> = (props) => {
 
 - See how interesting it is how a component remains a black box that exposes its interaction with the outside via properties.
 
-- Ahora podemos sustituirlo en App:
+- Now we can replace it in App:
 
 ```diff
 import React from "react";
@@ -118,7 +118,8 @@ import { MemberEntity } from './model';
   );
 ```
 
-> We could even create a subcomponent for the table headers if we wanted to.
+> We could even create a subcomponent for the table headers if we wanted to,
+> this will be an excercise to do in a next example.
 
 - One last step, the _App_ component still has too much code, it should just instantiate the main component and that's it.
   the main component and that's it, let's simplify this.
