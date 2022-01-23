@@ -56,7 +56,7 @@ export const MyComponent: React.FC = () => {
     <>
 -      <h4>{myName}</h4>
 +      <h4>{userInfo.name} {userInfo.lastname}</h4>
--      <input value={myName} onChange={(e) => setMyName(e.target.value)} />
+       <input value={myName} onChange={(e) => setMyName(e.target.value)} />
     </>
   );
 ```
@@ -72,6 +72,7 @@ If we start the application we can see how the name and lastname are displayed.
       <h4>
         {userInfo.name} {userInfo.lastname}
       </h4>
+-     <input value={myName} onChange={(e) => setMyName(e.target.value)} />      
 +     <input
 +       value={userInfo.name}
 +       onChange={e => userInfo.name = e.target.value}

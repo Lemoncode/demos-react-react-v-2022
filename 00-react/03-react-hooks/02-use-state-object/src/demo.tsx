@@ -10,6 +10,7 @@ export const MyComponent: React.FC = () => {
     name: "John",
     lastname: "Doe",
   });
+
   return (
     <>
       <h4>
