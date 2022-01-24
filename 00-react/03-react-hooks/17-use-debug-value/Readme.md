@@ -1,4 +1,4 @@
-# 16 Use Debug Value
+# 17 Use Debug Value
 
 The internal hook _useDebugValue_ is useful for debugging custom hooks using the React DevTools. This hook allows you to display a label for a custom hook.
 
@@ -36,7 +36,9 @@ export const App = () => {
 }
 ```
 
-- Let's open the file _demo.tsx_. Let's add the content that appears just below (a custom hook that saves a user and stores their TO-DO's).
+- Let's open the file _demo.tsx_. Let's add the content that appears just below (a custom hook that saves a user and stores their TO-DO's), you can test this by entering in the
+  text box a number like 1, 2, 3 (user Ids) then the list of todo's for that given user
+  will appear.
 
 _./src/demo.tsx_
 
@@ -83,8 +85,7 @@ export const MyComponent = () => {
 };
 ```
 
-
-- Now we have to add the _useDebugValue_ hook. In this case we will show a label indicating the content of _user_.
+- Now let's check what _useDebugValue_ can do for us. In this case we will show a label indicating the content of _user_.
 
 _./src/demo.tsx_
 
