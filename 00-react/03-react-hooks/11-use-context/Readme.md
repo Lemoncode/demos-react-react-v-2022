@@ -112,7 +112,7 @@ Check out what we have here:
 - We feed the context with that data.
 - We put the children property to paint what was underneath that component (that is, as in the Alien movie, nobody is counted that the human has "a little bug" inside).
 
-- Let's go to create a component (we add this to the end of the _demo.tsx_ file)
+- Let's create another component (we add this to the end of the _demo.tsx_ file)
 
 _./src/demo.tsx_
 
@@ -126,7 +126,7 @@ export const MyComponent = () => {
 };
 ```
 
-Let's go to place the provider at the global level of the application.
+Let's place the provider at the global level of the application.
 
 _./src/app.tsx_
 
@@ -153,6 +153,8 @@ If you notice, here applies what we discussed about the property _children_ all 
 There is below the contextprovider that paints it as is that component.
 
 - And now we are going to access the context data without having to go through the props:
+
+_./src/demo.tsx_
 
 ```diff
 export const MyComponent = () => {
