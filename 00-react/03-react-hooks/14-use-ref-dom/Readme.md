@@ -67,7 +67,6 @@ export const MyComponent = () => {
     </div>
   );
 };
-
 ```
 
 - If we execute, we can see how it now gives us the current result when we press
