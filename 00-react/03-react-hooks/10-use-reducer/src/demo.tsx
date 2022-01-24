@@ -63,7 +63,10 @@ export const MyComponent = () => {
       <h3>
         {userInfo.name} {userInfo.lastname}
       </h3>
-      <EditUsername name={userInfo.name} dispatch={dispatch} />
+      <EditUsername
+        name={userInfo.name}
+        dispatch={dispatch}
+      />
       <input
         value={userInfo.lastname}
         onChange={(e) =>
