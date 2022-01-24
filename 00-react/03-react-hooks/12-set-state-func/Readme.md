@@ -80,8 +80,8 @@ a function:
 ```diff
   React.useEffect(() => {
     setTimeout(() => {
--      setNumero(numero + 1);
-+      setNumero((numero) => numero + 1);
+-      setNumber(number + 1);
++      setNumber((number) => number + 1);
 
     }, 1500);
     setNumero(1);
