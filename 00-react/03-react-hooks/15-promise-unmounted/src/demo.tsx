@@ -35,19 +35,22 @@ const useSafeState = function <T>(
     return isMounted() ? setState(data) : null;
   };
 
-  return [state, setSafeState]
+  return [state, setSafeState];
 };
 
 export const MyChildComponent = () => {
   const [filter, setFilter] = React.useState("");
   const [userCollection, setUserCollection] = useSafeState([]);
 
+  const setSafeUserCollection = (userCollection) =>
+    setUserCollection(userCollection);
+
   // Load full list when the component gets mounted and filter gets updated
   React.useEffect(() => {
     setTimeout(() => {
       fetch(`https://jsonplaceholder.typicode.com/users?name_like=${filter}`)
         .then((response) => response.json())
-        .then((json) => setUserCollection(json));
+        .then((json) => setSafeUserCollection(json));
     }, 2500);
   }, [filter]);
 
