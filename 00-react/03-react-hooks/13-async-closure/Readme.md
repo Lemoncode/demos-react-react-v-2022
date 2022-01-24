@@ -1,6 +1,5 @@
-# 13 Promise Unmounted
-
-## Resume
+# 13 Async closure
+## Summary
 
 This example takes the _12-set-state-func_ example as starting point.
 
@@ -149,7 +148,7 @@ export const MyComponent = () => {
 -      setSeconds(1);
 -      secondsRef.current = 1;
 +      console.log(info.seconds);
-+      setInfo(info => {...info, seconds: 1})
++      setInfo(info => ({...info, seconds: 1}))
     }, 1000);
 
     setTimeout(() => {
