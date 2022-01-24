@@ -11,6 +11,7 @@ We are going to implement a customer satisfaction widget, based on smily faces, 
 ```bash
 npm install
 ```
+
 - We have to make a slight change in this example in our _webpack.config.js_
 
 ```diff
@@ -24,9 +25,9 @@ npm install
 ...
 ```
 
-- Let's copy the five smiley faces (you can copy them from the sample implementation in github)  into the route _src/assets_.
+- Let's copy the five smiley faces (you can copy them from the sample implementation in github) into the route _src/assets_.
 
-- Let's add the following content into the _src/styles.css_  css file to add the smileys styles:
+- Let's add the following content into the _src/styles.css_ css file to add the smileys styles:
 
 ```css
 .App {
@@ -66,7 +67,7 @@ npm install
 }
 ```
 
-- Let's change the component _src/demo.tsx_,  we will start by just adding something hardcoded in the component:
+- Let's change the component _src/demo.tsx_, we will start by just adding something hardcoded in the component:
 
 ```tsx
 import * as React from "react";
@@ -74,9 +75,7 @@ import * as React from "react";
 export const MyComponent = (props) => {
   const { level } = props;
 
-  return (
-    <div className="somewhat-satisfied" />
-  )
+  return <div className="somewhat-satisfied" />;
 };
 ```
 
@@ -130,8 +129,12 @@ import * as React from 'react';
 +   if (level < 400) {
 +     return "somewhat-satisfied"
 +   }
-+ 
++
 +   return "very-satisfied"
++ }
+
++ interface Props {
++   level:number;
 + }
 
 - export const MyComponent = props => {
@@ -146,7 +149,7 @@ import * as React from 'react';
 }
 ```
 
-- In app.tsx_ let's add a state variable to hold the current satisfaction level plus an slider to let the user update it.
+- In app.tsx\_ let's add a state variable to hold the current satisfaction level plus an slider to let the user update it.
 
 _./src/app.tsx_
 
@@ -160,16 +163,15 @@ export const App = () => {
 +   const [satisfactionLevel, setSatisfactionLevel] = React.useState(300);
 +
   return (
-    <div className="App">
+-    <div className="App">
++    <div className="App" style={{ display: "flex", flexDirection: "column" }}>
 +       <input type="range"
 +         min="0"
 +         max="500"
 +         value={satisfactionLevel}
 +         onChange={(event) => setSatisfactionLevel(+event.target.value)}
 +       />
-+       <br />
 +       <span>{satisfactionLevel}</span>
-+       <br />
 -       <MyComponent level={100}/>
 +       <MyComponent level={satisfactionLevel} />
     </div>
@@ -186,7 +188,6 @@ npm start
 - Let's add a rendering optimization, we should only trigger the render whenever the level just changes the satisfaction range:
 
 _./src/demo.tsx_
-
 
 ```diff
 import * as React from 'react';
@@ -213,10 +214,10 @@ const setSatisfactionClass = level => {
 }
 
 + const isSameRange = (prevValue, nextValue) => {
-+ 
++
 +   const prevValueClass = setSatisfactionClass(prevValue.level);
 +   const nextValueClass = setSatisfactionClass(nextValue.level);
-+ 
++
 +   return prevValueClass === nextValueClass;
 + }
 
@@ -230,7 +231,6 @@ const setSatisfactionClass = level => {
   );
 - }
 + }, isSameRange);
-```isSameRange);
 ```
 
 - Now if we place a breakpoint in the FaceComponent render method we can see that render is only triggered when you change from a satisfaction range (e.g. 99 to 100).

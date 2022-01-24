@@ -1,11 +1,11 @@
 import React from "react";
 import { MyComponent } from "./demo";
-import "./styles.css";
 
 export const App = () => {
   const [satisfactionLevel, setSatisfactionLevel] = React.useState(300);
+
   return (
-    <div className="App">
+    <div className="App" style={{ display: "flex", flexDirection: "column" }}>
       <input
         type="range"
         min="0"
@@ -13,9 +13,7 @@ export const App = () => {
         value={satisfactionLevel}
         onChange={(event) => setSatisfactionLevel(+event.target.value)}
       />
-      <br />
       <span>{satisfactionLevel}</span>
-      <br />
       <MyComponent level={satisfactionLevel} />
     </div>
   );
