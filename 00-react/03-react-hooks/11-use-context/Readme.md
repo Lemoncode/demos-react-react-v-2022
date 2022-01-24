@@ -164,7 +164,6 @@ export const MyComponent = () => {
     <>
 -      <h3>Hello</h3>
 +     <h3>{myContext.username}</h3>
-
     </>
   )
 }
