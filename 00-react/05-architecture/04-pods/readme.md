@@ -77,7 +77,7 @@ export const LoginContainer: React.FC = () => {
     }
   };
 
-  return <LoginComponent OnLogin={handleLogin} />;
+  return <LoginComponent onLogin={handleLogin} />;
 };
 ```
 
@@ -86,13 +86,13 @@ export const LoginContainer: React.FC = () => {
 _./pods/login/login.component.tsx_
 
 ```tsx
-import React, { VoidFunctionComponent } from "react";
+import React from "react";
 
 interface Props {
   onLogin: (username: string, password: string) => void;
 }
 
-export const LoginComponent: React.FC = () => {
+export const LoginComponent: React.FC<props> = (Props) => {
   return <></>;
 };
 ```
@@ -112,15 +112,101 @@ import { ProfileContext } from "@/core/profile";
 - Time to dig into Login Component
 
 ```diff
-import React, { VoidFunctionComponent } from "react";
+import React from "react";
 
 interface Props {
   onLogin : (username: string, password: string) => void;
 }
 
 export const LoginComponent: React.FC = () => {
-  return <></>
++  const { onLogin } = props;
++  const [username, setUsername] = React.useState("");
++  const [password, setPassword] = React.useState("");
+
++ const handleNavigation = (e: React.FormEvent<HTMLFormElement>) => {
++    e.preventDefault();
++    onLogin(username, password);
++ }
+
+-  return <></>
++  return (
++      <form onSubmit={handleNavigation}>
++        <div className="login-container">
++          <input
++            placeholder="Username"
++            value={username}
++            onChange={(e) => setUsername(e.target.value)}
++          />
++          <input
++            placeholder="Password"
++            type="password"
++            value={password}
++            onChange={(e) => setPassword(e.target.value)}
++          />
++          <button type="submit">login</button>
++        </div>
++      </form>
++  );
 }
 ```
 
+- Let's expose the container in a barrel
+
 _./pods/login/index.ts_
+
+```ts
+export * from "./login.container";
+```
+
+- And it's time to use it in our scene:
+
+_./src/scenes/login.tsx_
+
+```diff
+import React from "react";
++ import { LoginContainer } from '@/pods/login';
+- import { Link, useNavigate } from "react-router-dom";
+- import { routes } from "core";
+import { CenterLayout } from "@/layouts";
+- import { ProfileContext } from "@/core/profile";
+
+export const LoginPage: React.FC = () => {
+-  const navigate = useNavigate();
+-  const [username, setUsername] = React.useState("");
+-  const [password, setPassword] = React.useState("");
+-  const { setUserProfile } = React.useContext(ProfileContext);
+-
+-  const handleNavigation = (e: React.FormEvent<HTMLFormElement>) => {
+-    e.preventDefault();
+-
+-    if (username === "admin" && password === "test") {
+-      setUserProfile({ userName: username });
+-      navigate(routes.list);
+-    } else {
+-      alert("User / password not valid, psst... admin / test");
+-    }
+-  };
+-
+  return (
+    <CenterLayout>
++      <LoginContainer/>
+-      <form onSubmit={handleNavigation}>
+-        <div className="login-container">
+-          <input
+-            placeholder="Username"
+-            value={username}
+-            onChange={(e) => setUsername(e.target.value)}
+-          />
+-          <input
+-            placeholder="Password"
+-            type="password"
+-            value={password}
+-            onChange={(e) => setPassword(e.target.value)}
+-          />
+-          <button type="submit">login</button>
+-        </div>
+-      </form>
+    </CenterLayout>
+  );
+};
+```
