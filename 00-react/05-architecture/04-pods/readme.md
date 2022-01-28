@@ -210,3 +210,146 @@ export const LoginPage: React.FC = () => {
   );
 };
 ```
+
+- That was fine, let's apply what we have learned, ... stop and try to port to pods the
+  list page.
+
+** Excercise wait some minutes **
+
+- First let's create the list pod
+
+```bash
+cd src
+```
+
+```bash
+mkdir list
+```
+
+And create the List container and component, this time the container will hold the logic to
+load the list of users and the component will hold the display, here we could discuss as
+well where to place the navigation logic, we could bubble up to the container or just
+place it in the innner component.
+
+- Now we need a model file to store the entity:
+
+_./pods/list/list.vm.ts_
+
+```ts
+export interface MemberEntity {
+  id: string;
+  login: string;
+  avatar_url: string;
+}
+```
+
+_./pods/list/list.container.tsx_
+
+```tsx
+import React from "react";
+import { ListComponent } from "./list.component";
+import { MemberEntity } from "./list.vm";
+
+export const ListContainer: React.FC = () => {
+  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+
+  React.useEffect(() => {
+    fetch(`https://api.github.com/orgs/lemoncode/members`)
+      .then((response) => response.json())
+      .then((json) => setMembers(json));
+  }, []);
+
+  return <ListComponent members={members} />;
+};
+```
+
+_./pods/list/list.component.tsx_
+
+```tsx
+import { routes } from "@/core";
+import React from "react";
+import { Link } from "react-router-dom";
+import { MemberEntity } from "./list.vm";
+
+interface Props {
+  members: MemberEntity[];
+}
+
+export const ListComponent: React.FC<Props> = (props) => {
+  const { members } = props;
+  return (
+    <>
+      <h2>Hello from List page</h2>
+      <div className="list-user-list-container">
+        <span className="list-header">Avatar</span>
+        <span className="list-header">Id</span>
+        <span className="list-header">Name</span>
+        {members.map((member) => (
+          <>
+            <img src={member.avatar_url} />
+            <span>{member.id}</span>
+            <Link to={routes.details(member.login)}>{member.login}</Link>
+          </>
+        ))}
+      </div>
+    </>
+  );
+};
+```
+
+Let's create a barrel:
+
+_./src/pods/list/index.ts_
+
+```ts
+export * from "./list.container";
+```
+
+And let's consume it in the scene:
+
+_./src/scenes/list.tsx_
+
+```diff
+import React from "react";
+- import { Link } from "react-router-dom";
+- import { routes } from "core";
+import { AppLayout } from "@/layouts";
++ import { ListContainer } from '@/pods/list';
+
+- interface MemberEntity {
+-  id: string;
+-  login: string;
+-  avatar_url: string;
+- }
+-
+- export const ListPage: React.FC = () => {
+-  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+-
+-  React.useEffect(() => {
+-    fetch(`https://api.github.com/orgs/lemoncode/members`)
+-      .then((response) => response.json())
+-      .then((json) => setMembers(json));
+-  }, []);
+-
+  return (
+    <AppLayout>
++      <ListContainer/>
+-      <h2>Hello from List page</h2>
+-      <div className="list-user-list-container">
+-        <span className="list-header">Avatar</span>
+-        <span className="list-header">Id</span>
+-        <span className="list-header">Name</span>
+-        {members.map((member) => (
+-          <>
+-            <img src={member.avatar_url} />
+-            <span>{member.id}</span>
+-            <Link to={routes.details(member.login)}>{member.login}</Link>
+-          </>
+-        ))}
+-      </div>
+-      <Link to="/detail">Navigate to detail page</Link>
+    </AppLayout>
+  );
+};
+
+```
