@@ -351,5 +351,182 @@ import { AppLayout } from "@/layouts";
     </AppLayout>
   );
 };
+```
 
+- Let's refactor the detail component, we could think this is just a boring taks, BUUUUUT.... there's a good new item
+  for dicussion: we are reading parameters from the query string, who should take responsability on reading this value,
+  we have two options:
+  - Let the scene handle this and pass it as a prop to the pod.
+  - Let the pod handle this and use the react router hook useParams to directly get the data.
+
+There's no silver bullet, so... ** Discussion... what do you think would be the best approach? **
+(...)
+
+We have chosen the scene to handle the url parameter parsing and pass it as a prop to the pod, Why?
+
+- It is information related to the page (scene).
+- The detail pod could be easier reused in other pages, you are not tied up to certain url param.
+- The detail pod is simpler and has well identified contract (props).
+
+Let's go for it :)
+
+- Let's create the detail pod:
+
+```bash
+cd src
+```
+
+```bash
+mkdir detail
+```
+
+- We have to define a viewmodel file that will contain the _MemberDetailEntity_
+
+_./src/pods/detail/detail.vm.ts_
+
+```ts
+export interface MemberDetailEntity {
+  id: string;
+  login: string;
+  name: string;
+  company: string;
+  bio: string;
+}
+
+export const createDefaultMemberDetail = () => ({
+  id: "",
+  login: "",
+  name: "",
+  company: "",
+  bio: "",
+});
+```
+
+- Let's create the detail container:
+
+_./src/pods/details/detail.container.ts_
+
+```tsx
+import React from "react";
+import { MemberDetailEntity, createDefaultMemberDetail } from "./detail.vm";
+import { DetailComponent } from "./detail.component";
+
+interface Props {
+  id: string;
+}
+
+export const DetailContainer: React.FC<Props> = (props) => {
+  const { id } = props;
+  const [member, setMember] = React.useState<MemberDetailEntity>(
+    createDefaultMemberDetail()
+  );
+
+  React.useEffect(() => {
+    fetch(`https://api.github.com/users/${id}`)
+      .then((response) => response.json())
+      .then((json) => setMember(json));
+  }, []);
+
+  return <DetailComponent member={member} />;
+};
+```
+
+- And the detail component:
+
+_./src/pods/details/detail.component.ts_
+
+```tsx
+import React from "react";
+import { Link } from "react-router-dom";
+import { routes } from "core";
+import { MemberDetailEntity } from "./detail.vm";
+
+interface Props {
+  member: MemberDetailEntity;
+}
+
+export const DetailComponent: React.FC<Props> = (props) => {
+  const { member } = props;
+
+  return (
+    <>
+      <h2>Hello from Detail page</h2>
+      <p> id: {member.id}</p>
+      <p> login: {member.login}</p>
+      <p> name: {member.name}</p>
+      <p> company: {member.company}</p>
+      <p> bio: {member.bio}</p>
+      <Link to={routes.list}>Back to list page</Link>
+    </>
+  );
+};
+```
+
+- And let's expose it via barrel:
+
+_./src/pods/details/index.ts_
+
+```ts
+export * from "./detail.container";
+```
+
+- And let's replace it in the scene.
+
+_./src/scenes/details.tsx_
+
+```diff
+import React from "react";
+- import { Link, useParams } from "react-router-dom";
++ import { useParams } from "react-router-dom";
+- import { routes } from "core";
+import { AppLayout } from "@/layouts";
++ import { DetailContainer } from '@/pods/detail';
+
+- interface MemberDetailEntity {
+-  id: string;
+-  login: string;
+-  name: string;
+-  company: string;
+-  bio: string;
+- }
+-
+-const createDefaultMemberDetail = () => ({
+-  id: "",
+-  login: "",
+-  name: "",
+-  company: "",
+-  bio: "",
+- });
+
+export const DetailPage: React.FC = () => {
+-  const [member, setMember] = React.useState<MemberDetailEntity>(
+-    createDefaultMemberDetail()
+-  );
+  const { id } = useParams();
+
+-  React.useEffect(() => {
+-    fetch(`https://api.github.com/users/${id}`)
+-      .then((response) => response.json())
+-      .then((json) => setMember(json));
+-  }, []);
+
+  return (
+    <AppLayout>
++      <DetailContainer id={ id }/>
+-      <h2>Hello from Detail page</h2>
+-      <p> id: {member.id}</p>
+-      <p> login: {member.login}</p>
+-      <p> name: {member.name}</p>
+-      <p> company: {member.company}</p>
+-      <p> bio: {member.bio}</p>
+-      <Link to={routes.list}>Back to list page</Link>
+    </AppLayout>
+  );
+};
+```
+
+Let's give a try:
+
+```bash
+npm start
 ```
