@@ -17,21 +17,23 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleNavigation}>
-      <div className="login-container">
-        <input
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">login</button>
-      </div>
-    </form>
+    <div className="layout-center">
+      <form onSubmit={handleNavigation}>
+        <div className="login-container">
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">login</button>
+        </div>
+      </form>
+    </div>
   );
 };

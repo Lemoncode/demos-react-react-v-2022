@@ -26,6 +26,14 @@ body {
   font-family: Sans-Serif;
 }
 
++.layout-center {
++  display: grid;
++  grid-template-columns: 1fr;
++  align-items: center;
++  justify-items: center;
++  margin-top: 2rem;
++ }
+
 + .login-root {
 +  margin: 90px;
 + }

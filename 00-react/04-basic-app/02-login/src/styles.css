@@ -2,12 +2,18 @@ body {
   font-family: Sans-Serif;
 }
 
+.layout-center {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
 .login-container {
-  margin: 90px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-  align-items: center;
 }
 
 .login-container > input {
@@ -16,4 +22,5 @@ body {
 
 .login-container > button {
   width: 180px;
+  align-self: center;
 }
