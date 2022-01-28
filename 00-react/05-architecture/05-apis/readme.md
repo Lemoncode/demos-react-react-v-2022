@@ -130,4 +130,68 @@ export const LoginContainer: React.FC = () => {
 };
 ```
 
-We could even go on step forward and encapsulate handleLogin in the hook.
+We could even go on step forward and encapsulate handleLogin in the hook, do you want to give a try?
+Is it a good idea?
+
+- Now it's time to apply this refactor to the list pod, BUUUUUUT we have a more complex scenario:
+
+  - In this case our API is returning a list of entities (is not a simple type).
+  - This server entities may differ from the entities that we are using in our pod, for instance:
+    - Is a third party api and returns a complex structure, and we only need some fields (for instance
+      open hotel apis).
+    - Is a third party api and the way of naming some fields is not the same as the dictionary we are
+      using in our domain.
+    - The same view is hitting several API providers (e.g. you want to show hotels availability from
+      different beds providers, each of them have their own contracts).
+    - The third party api returns some fields, but we need to apply some transformations:
+      - Date formatting.
+      - Doing some calculations (for instance an API returns us a list of trainings and we just want to show
+        a pill with the total number).
+
+- In order to control this we introduce new pieces:
+  - The ViewModel are the entities related to the pod UI.
+  - The ApiModel are the entities that the server API (Rest API) exposes.
+  - A Mapper is the bridge between the ViewModel and API and viceversa: this are just functions that map the
+    data in both ways applying the needed transformations.
+
+Our main goal is to preprocess the data so the View (UI) has to focus on displaying the information, rhater
+that adapt it from the server to the client.
+
+- Let's get started, first we will create the list api:
+
+_./src/pods/list/list.api.ts_
+
+```tsx
+import { MemberEntity } from "./list.vm";
+
+export const GetMemberCollection = (): Promise<MemberEntity[]> =>
+  fetch(`https://api.github.com/orgs/lemoncode/members`).then((response) =>
+    response.json()
+  );
+```
+
+- And let's consume it in the container:
+
+_./src/pods/list/list.container.ts_
+
+```diff
+import React from "react";
+import { ListComponent } from "./list.component";
+import { MemberEntity } from "./list.vm";
++ import { GetMemberCollection } from './list.api';
+
+export const ListContainer: React.FC = () => {
+  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+
+  React.useEffect(() => {
++    GetMemberCollection().then(
++     (memberCollection : MemberEntity[]) => setMembers(memberCollection)
++ );
+-    fetch(`https://api.github.com/orgs/lemoncode/members`)
+-      .then((response) => response.json())
+-      .then((json) => setMembers(json));
+  }, []);
+
+  return <ListComponent members={members} />;
+};
+```
