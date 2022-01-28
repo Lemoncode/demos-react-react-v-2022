@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {routes} from 'core';
 
 interface MemberEntity {
   id: string;
@@ -27,7 +28,7 @@ export const ListPage: React.FC = () => {
           <>
             <img src={member.avatar_url} />
             <span>{member.id}</span>
-            <Link to={`/detail/${member.login}`}>{member.login}</Link>
+            <Link to={routes.details(member.login)}>{member.login}</Link>
           </>
         ))}
       </div>

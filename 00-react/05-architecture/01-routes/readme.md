@@ -158,4 +158,191 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export const App = () => {
 ```
 
+To define the routes we are going to set up something that allows us to forget about hardcoded strings, besides this we have an additional challenge:
 
+- On the one hand there are the routes that we define in the react router switch:
+
+  - If they have no parameters they go as they are.
+  - If they have parameters we have to define: editEmployee: '/employees/:id'.
+
+- On the other hand, how we consume the routes:
+  - If they have no parameters they go as is.
+  - If they have parameters we call them with their /employees/2345 parameter.
+
+We could consider making two lists with the constants of each route, but we would be encoding the strings twice and it would be easy to make mistakes when adding new members or modifying.
+
+Since we have Typescript at hand, we can consider:
+
+- Have an interface in which we enumerate which routes we are going to have available.
+
+- Have an object that defines the routing for the SwitchRouter, which inherits from the routing interface.
+
+- We define an interface that inherits from the base routes that we defined before, but we overwrite those that are of type parameter (they become of type function).
+
+- We have an object for the navigation routes.
+  Implementing it will help us understand it better:
+
+First we define the routes for the switch and the object that defines them.
+
+Since this is a crosscutting asset we will place it under the _./src/core_ path.
+
+_./src/core/router/routes.ts_
+
+```tsx
+import { generatePath } from "react-router-dom";
+
+interface SwitchRoutes {
+  root: string;
+  list: string;
+  details: string;
+}
+
+export const switchRoutes: SwitchRoutes = {
+  root: "/",
+  list: "/list",
+  details: "/detail/:id",
+};
+```
+
+Let's definde the navigation routes: all the routes are the same but the _details_ route
+(param definition vs real parameter when navigating):
+
+Let's append the following content
+
+_./src/core/routers/routes.tsx_
+
+```tsx
+interface Routes extends Omit<SwitchRoutes, "details"> {
+  details: (id: string) => string;
+}
+```
+
+What are we doing here? Inheriting from the Switch interface and removing
+the entries that are not the same in order to rewrite them.
+
+Let's implement now the routes object (append content):
+
+_./src/core/routers/routes.tsx_
+
+```tsx
+export const routes: Routes = {
+  ...switchRoutes,
+  details: (id) => generatePath(switchRoutes.details, { id }),
+};
+```
+
+- Here there is something sounds strange, and that is that we are exporting "SwitchRoutes" and "Routes", shouldn't you call it "NavigationRoutes"? The thing is that we are going to encapsulate the router of our application inside this same folder and we are only going to expose out the navigation routes, we start by defining the router, we are going to bring some imports:
+
+./src/core/router/router.component.tsx
+
+```tsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { switchRoutes } from "./routes";
+import { LoginPage, ListPage, DetailPage } from "@/scenes";
+
+export const RouterComponent: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path={switchRoutes.root} element={<LoginPage />} />
+        <Route path={switchRoutes.list} element={<ListPage />} />
+        <Route path={switchRoutes.details} element={<DetailPage />} />
+      </Routes>
+    </Router>
+  );
+};
+```
+
+- Let's create a barrel under our core barrel, this case we just remove from the export
+  the _switchRoutes_ since it's will be only used internally on the _routes.ts_ file.
+
+_./src/core/index.ts_
+
+```ts
+export * from "./router/router.component";
+export { routes } from "./router/routes";
+```
+
+Time to jump into _app.tsx_ and replace the router:
+
+_./src/app.tsx_
+
+```diff
+import React from "react";
+- import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+- import { LoginPage, ListPage, DetailPage } from "@/scenes";
++ import { RouterComponent } from 'core';
+
+export const App = () => {
++    return <RouterComponent />;
+-  return (
+-    <Router>
+-      <Routes>
+-        <Route path="/" element={<LoginPage />} />
+-        <Route path="/list" element={<ListPage />} />
+-        <Route path="/detail/:id" element={<DetailPage />} />
+-      </Routes>
+-    </Router>
+-  );
+};
+```
+
+- Now is time to get rid of all the harcoded links that are around the app:
+
+_./src/scenes/login.tsx_
+
+```diff
++ import {routes} from 'core';
+// (...)
+
+  const handleNavigation = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (username === "admin" && password === "test") {
+-      navigate("/list");
++      navigate(routes.list);
+    } else {
+      alert("User / password not valid, psst... admin / test");
+    }
+  };
+```
+
+_./src/scenes/list.tsx_
+
+```diff
++ import {routes} from 'core';
+// (...)
+
+        {members.map((member) => (
+          <>
+            <img src={member.avatar_url} />
+            <span>{member.id}</span>
+-            <Link to={`/detail/${member.login}`}>{member.login}</Link>
++            <Link to={routes.details(member.login)}>{member.login}</Link>
+          </>
+        ))}
+      </div>
+-      <Link to="/detail">Navigate to detail page</Link>
+    </>
+```
+
+_./src/scenes/detail.tsx_
+
+```diff
++ import {routes} from 'core';
+// (...)
+
+      <p> bio: {member.bio}</p>
+-      <Link to="/list">Back to list page</Link>
++      <Link to={routes.list}>Back to list page</Link>
+    </>
+```
+
+Cool so in the first attempt we just code the app in minutes, now it has taken more time, what
+are the benefits of this:
+
+- [Aliases] We don't have "../../../../" hell.
+- All routes are identified in one place.
+- The constants are grouped in one place.
+- The developer who consumes these routes only has to worry about using Routes, and as it is typed when it is a function type it will pop up indicating even the type of parameter that must be introduced.
