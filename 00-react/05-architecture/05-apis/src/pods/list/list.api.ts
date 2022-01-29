@@ -1,5 +1,6 @@
-import {MemberEntity} from './list.vm'
+import { MemberEntityApi } from "./list.api-model";
 
-export const GetMemberCollection = () : Promise<MemberEntity[]> => 
-  fetch(`https://api.github.com/orgs/lemoncode/members`)
-  .then((response) => response.json())
+export const getMemberCollection = (): Promise<MemberEntityApi[]> =>
+  fetch(`https://api.github.com/orgs/lemoncode/members`).then((response) =>
+    response.json()
+  );

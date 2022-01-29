@@ -1,13 +1,14 @@
 import React from "react";
 import { ListComponent } from "./list.component";
 import { MemberEntity } from "./list.vm";
-import { GetMemberCollection } from "./list.api";
+import { getMemberCollection } from "./list.repository";
+import { mapMemberCollectionFromApiToVm } from "./list.mapper";
 
 export const ListContainer: React.FC = () => {
   const [members, setMembers] = React.useState<MemberEntity[]>([]);
 
   React.useEffect(() => {
-    GetMemberCollection().then((memberCollection: MemberEntity[]) =>
+    getMemberCollection().then((memberCollection) =>
       setMembers(memberCollection)
     );
   }, []);
