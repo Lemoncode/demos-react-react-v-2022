@@ -25,8 +25,9 @@ export const InputFormik: React.FC<
     <div style={{ display: "flex" }}>
       <input
         {...props}
+        name={inputFieldProps.name}
         onChange={inputFieldProps.onChange}
-        onBlur={inputFieldProps.onChange}
+        onBlur={inputFieldProps.onBlur}
         value={inputFieldProps.value}
         style={{ width: "100%" }}
       />

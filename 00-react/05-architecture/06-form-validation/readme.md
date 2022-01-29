@@ -255,8 +255,9 @@ export const InputFormik: React.FC<
     <div style={{ display: "flex" }}>
       <input
         {...props}
+        name={inputFieldProps.name}
         onChange={inputFieldProps.onChange}
-        onBlur={inputFieldProps.onChange}
+        onBlur={inputFieldProps.onBlur}
         value={inputFieldProps.value}
       />
       <span>{hasError ? meta.error : ""}</span>
@@ -308,3 +309,52 @@ _./src/pods/login/login.component.tsx_
 ```bash
 npm start
 ```
+
+- Well now have gotten a pro form state management and
+  plenty of metadata... time to add some validation to
+  the form, in this case we want both fields to be required,
+  let's add a validation library:
+
+```bash
+npm install @lemoncode/fonk @lemoncode/fonk-formik --save
+```
+
+- One powerful feature of _Fonk_ is that we define the
+  validations outside of the form component and markup,
+  by doing this, is quite easy to check which validations
+  are being applied to the form and unit test them without
+  the need of mounting the component, for this form it
+  would be something like:
+
+_./src/pods/login/login.validation.ts_
+
+```ts
+import { ValidationSchema, Validators } from "@lemoncode/fonk";
+import { createFormikValidation } from "@lemoncode/fonk-formik";
+
+const validationSchema: ValidationSchema = {
+  field: {
+    username: [Validators.required],
+    password: [Validators.required],
+  },
+};
+
+export const formValidation = createFormikValidation(validationSchema);
+```
+
+- And let's apply it to our login form:
+
+_./src/pods/login/login.component.tsx_
+
+```diff
++ import { formValidation } from './login.validation';
+
+<Formik
+  onSubmit={onLogin}
+  initialValues={createEmptyLogin()}
++ validate={formValidation.validateForm}
+  >
+```
+
+- How poweful is this form validation library?
+  We can explore this post: https://www.basefactor.com/formik-form-validation-fonk
