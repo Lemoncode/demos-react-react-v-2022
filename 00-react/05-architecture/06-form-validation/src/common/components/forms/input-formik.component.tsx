@@ -22,7 +22,13 @@ export const InputFormik: React.FC<
   // Harcoded styles here... pending to add
   // CSS modules (next example) or CSS in JS solution :)
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+      }}
+    >
       <input
         {...props}
         name={inputFieldProps.name}
@@ -31,7 +37,9 @@ export const InputFormik: React.FC<
         value={inputFieldProps.value}
         style={{ width: "100%" }}
       />
-      <span>{hasError ? meta.error : ""}</span>
+      <span style={{ fontSize: "60%", color: "red" }}>
+        {hasError ? meta.error : ""}
+      </span>
     </div>
   );
 };
