@@ -1,0 +1,201 @@
+# Form Validation
+
+We have seen that React offers us some basic plumbing to work with forms, but there is not an ellaborated built in solution
+for this, in this tutorial we will check a solutions for:
+
+- Manage form state managament.
+- Industrialize form state managament.
+
+We will make use of:
+
+- Formik.
+- Fonk.
+
+# Step by Step Guide
+
+- Managing a form can become a pain in the neck:
+
+  - You need to collected data.
+  - You need to add some special behavior based on the form state (for instance display error message on a field
+    only if the field has been touched or save button has been pressed).
+
+- There are several libraries that provide a solution for this: React Final Form, Formik, React Hook Form, we will
+  make use of Formik in this example.
+
+- Prior to get started we are going to add an small refactor, instead of using two separate fields to manage the form
+  let's create an viewmodel for this.
+
+_./src/pods/login/login.vm.ts_
+
+```ts
+export interface Login {
+  username: string;
+  password: string;
+}
+
+export const createEmptyLogin = (): Login => ({
+  username: "",
+  password: "",
+});
+```
+
+And adapt the code in the login container:
+
+_./src/pods/login/login.container.ts_
+
+```diff
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { routes } from "core";
+import { ProfileContext } from "@/core/profile";
+import { LoginComponent } from "./login.component";
+import { doLogin } from "./login.api";
++ import { Login } from './login.vm';
+
+const useLoginHook = () => {
+  const navigate = useNavigate();
+  const { setUserProfile } = React.useContext(ProfileContext);
+
+  const loginSucceededAction = (userName) => {
+    setUserProfile({ userName });
+    navigate(routes.list);
+  };
+
+  const loginFailedAction = () => {
+    alert("User / password not valid, psst... admin / test");
+  };
+  return { loginSucceededAction, loginFailedAction };
+};
+
+export const LoginContainer: React.FC = () => {
+  const { loginSucceededAction, loginFailedAction } = useLoginHook();
+
+-  const handleLogin = (username: string, password: string) => {
++  const handleLogin = (login : Login) => {
++   const {username, password} = login;
+    doLogin(username, password).then((result) => {
+      if (result) {
+         loginSucceededAction(username);
+      } else {
+        loginFailedAction();
+      }
+    });
+  };
+
+  return <LoginComponent onLogin={handleLogin} />;
+};
+```
+
+And let's refactor the component:
+
+_./src/pods/login.component.tsx_
+
+```diff
+import React from "react";
++ import { Login, createEmptyLogin } from './login.vm';
+
+interface Props {
+-  onLogin: (username: string, password: string) => void;
++  onLogin: (login: Login) => void;
+
+}
+
+export const LoginComponent: React.FC<Props> = (props) => {
+  const { onLogin } = props;
+-  const [username, setUsername] = React.useState("");
+-  const [password, setPassword] = React.useState("");
++  const [login, setLogin] = React.useState<Login>(createEmptyLogin())
+
+  const handleNavigation = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+-    onLogin(username, password);
++    onLogin(login);
+  };
+
++  const updateFieldValue = (name: keyof Login) => e => {
++    setLogin({
++      ...login,
++      [name]: e.target.value,
++    })
++  }
+
+  return (
+    <form onSubmit={handleNavigation}>
+      <div className="login-container">
+        <input
+          placeholder="Username"
+-          value={username}
+-          onChange={(e) => setUsername(e.target.value)}
++          value={login.username}
++          onChange={updateFieldValue('username')}
+        />
+        <input
+          placeholder="Password"
+          type="password"
+-          value={password}
+-          onChange={(e) => setPassword(e.target.value)}
++          value={login.password}
++          onChange={updateFieldValue('password')}
+        />
+        <button type="submit">login</button>
+      </div>
+    </form>
+  );
+};
+```
+
+- Let's thest the refactored code
+
+```bash
+npm start
+```
+
+Let's start by install formik:
+
+```bash
+npm install formik --save
+```
+
+We are going to add form management to the login form (this case can be handled without the use of this library,
+but is just a simple sample to show how this work).
+
+Let's define all the form managament in the _login.component_
+
+_./src/pods/login.component.tsx_
+
+```diff
+import React from "react";
++ import { Formik, Form } from 'formik';
+```
+
+- We will wrap the form with the _Formik_ component (this component takes care of setting up the initial values,
+  and controls the submit button), this component provides a render prop where we define the form and the fields.
+  We will replace the standard _form_ element with Formik's Form element, this component automatically hooks in
+  Formik's _handleSubmit_ and _handleReset_.
+
+_./src/pods/login.component.tsx_
+
+```diff
+  return (
++        <Formik
++          onSubmit={handleNavigation}
++          initialValues={createEmptyLogin()}
++        >
+    <form onSubmit={handleNavigation}>
+      <div className="login-container">
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">login</button>
+      </div>
+    </form>
+  );
+```
