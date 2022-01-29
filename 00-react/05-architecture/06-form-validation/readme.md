@@ -176,12 +176,29 @@ import React from "react";
 _./src/pods/login.component.tsx_
 
 ```diff
+   const { onLogin } = props;
+-  const [login, setLogin] = React.useState<Login>(createEmptyLogin());
+
+-  const handleNavigation = (e: React.FormEvent<HTMLFormElement>) => {
+-    e.preventDefault();
+-    onLogin(login);
+-  };
+-
+-  const updateFieldValue = (name: keyof Login) => (e) => {
+-    setLogin({
+-      ...login,
+-      [name]: e.target.value,
+-    });
+-  };
+
   return (
 +        <Formik
-+          onSubmit={handleNavigation}
++          onSubmit={onLogin}
 +          initialValues={createEmptyLogin()}
 +        >
-    <form onSubmit={handleNavigation}>
++          {() => (
+-    <form onSubmit={handleNavigation}>
++    <Form>
       <div className="login-container">
         <input
           placeholder="Username"
@@ -196,6 +213,98 @@ _./src/pods/login.component.tsx_
         />
         <button type="submit">login</button>
       </div>
-    </form>
+-    </form>
++    </Form>
++    )}
++   </Formik>
   );
+```
+
+Now we can update the inputs entries in order to support
+Formik, since later on we will get benefit of some formik
+state management metadata information we will build a
+wrapper around the input field, since this wrapper could
+be reused in other projects we will add it to the root
+folder _./src/common_
+
+_./src/common/components/forms/input-formik.tsx_
+
+```tsx
+import React from "react";
+import { useField } from "formik";
+
+// Input props, we got this value by double clicking on a input element
+// and going to definition (d.ts)
+export const InputFormik: React.FC<
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >
+> = (props) => {
+  // useField allows us to extract all formik metadata about that field
+  const [field, meta] = useField(props.name);
+  // If the field doesn't exist then treat this as a normal input
+  const inputFieldProps = Boolean(field) ? field : props;
+  // We only want to display the field validation error messsage
+  // if formik is enabled, and is the field has been touched
+  // not a very good UX experience to show a blank form full
+  // of error a the initial state
+  const hasError = Boolean(meta && meta.touched && meta.error);
+
+  return (
+    <div style={{ display: "flex" }}>
+      <input
+        {...props}
+        onChange={inputFieldProps.onChange}
+        onBlur={inputFieldProps.onChange}
+        value={inputFieldProps.value}
+      />
+      <span>{hasError ? meta.error : ""}</span>
+    </div>
+  );
+};
+```
+
+And let's expose it in a couple of barrels:
+
+_./src/common/components/forms/index.ts_
+
+```ts
+export * from "./input-formik.component";
+```
+
+_./src/common/components/index.ts_
+
+```ts
+export * from "./forms";
+```
+
+Let's replace the form input (and simplify them):
+
+_./src/pods/login/login.component.tsx_
+
+```diff
++ import { InputFormik } from '@/common/components';
+
+-  <input
++  <InputFormik
++   name="username"
+    placeholder="Username"
+-    value={username}
+-    onChange={(e) => setUsername(e.target.value)}
+  />
+-  <input
++  <InputFormik
++   name="password"
+    placeholder="Password"
+    type="password"
+-    value={password}
+-    onChange={(e) => setPassword(e.target.value)}
+  />
+```
+
+- Let's check that things are still working :)
+
+```bash
+npm start
 ```
