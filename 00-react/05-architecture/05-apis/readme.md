@@ -374,3 +374,126 @@ What benefits are we getting from following this approach (in a real scenario):
   are you need to touch (plus some common goodies).
 - We get less conflicts when a team is working in parallel (each member can work on a separate
   pod).
+- We can industrialize processes (less magic, more deterministic steps)
+
+** Excercise: Let's do the same with the detail pod **
+
+Steps:
+
+- Create an API model.
+- Extract the API.
+- Create a mapper API > Vm
+- Use it on the container.
+
+- We can get the API model from
+
+https://api.github.com/users/brauliodiez
+
+- Let's build it:
+
+_./src/detail/detail.api-model.ts_
+
+```ts
+export interface MemberDetailEntityApi {
+  login: string;
+  id: number;
+  node_id: string;
+  avatar_url: string;
+  gravatar_id: string;
+  url: string;
+  html_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  starred_url: string;
+  subscriptions_url: string;
+  organizations_url: string;
+  repos_url: string;
+  events_url: string;
+  received_events_url: string;
+  type: string;
+  site_admin: string;
+  name: string;
+  company: string;
+  blog: string;
+  location: string;
+  hireable: string;
+  bio: string;
+  twitter_username: string;
+  public_repos: number;
+  public_gits: number;
+  followers: number;
+  following: number;
+  created_at: string;
+  updated_at: string;
+}
+```
+
+Let's create extract the API:
+
+_./src/pods/detail.api.ts_
+
+```ts
+import { MemberDetailEntityApi } from "./detail.api-model";
+
+export const getMemberDetail = (id: string): Promise<MemberDetailEntityApi> =>
+  fetch(`https://api.github.com/users/${id}`).then((response) =>
+    response.json()
+  );
+```
+
+Let's create the mapper:
+
+_./src/pods/detail.mapper.ts_
+
+```ts
+import * as vm from "./detail.vm";
+import * as api from "./detail.api-model";
+
+export const mapMemberFromApiToVm = (
+  member: api.MemberDetailEntityApi
+): vm.MemberDetailEntity => ({
+  id: member.id.toString(),
+  login: member.login,
+  name: member.name,
+  company: member.company,
+  bio: member.bio,
+});
+```
+
+Let's create the repository:
+
+_./src/pods/detail.repository.ts_
+
+```ts
+import { MemberDetailEntity } from "./detail.vm";
+import { getMemberDetail as getMemberDetailApi } from "./detail.api";
+import { mapMemberFromApiToVm } from "./detail.mapper";
+
+export const getMemberCollection = (
+  id: string
+): Promise<MemberDetailEntity> => {
+  return new Promise<MemberDetailEntity>((resolve) => {
+    getMemberDetailApi(id).then((result) => {
+      resolve(mapMemberFromApiToVm(result));
+    });
+  });
+};
+```
+
+And finally let's consume it in the container:
+
+_./src/detail.container.tsx_
+
+```diff
++ import { getMemberCollection } from './detail.repository';
+//(...)
+
+  React.useEffect(() => {
+-    fetch(`https://api.github.com/users/${id}`)
+-      .then((response) => response.json())
+-      .then((json) => setMember(json));
++    getMemberCollection(id)
++      .then(memberDetail => setMember(memberDetail));
+  }, []);
+```
