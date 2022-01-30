@@ -414,11 +414,22 @@ _class name composer_, _cnc_...
 - Instead of reinventing the wheel we can give a try to one of the built in helpers:
 
 ```bash
-npm install classnames
+npm install classnames --save
 ```
 
+- And let's make use of it
 
+_./src/list.components.tsx_
 
+```diff
++ import classNames from 'classnames';
+
+  return (
+    <>
+      <h2>Hello from List page</h2>
+-      <div className={`${css.container} ${css.someAdditionalClass}`}>
++      <div className={`classNames(css.container, css.someAdditionalClass)`}>
+```
 
 Excercise: time for you to give a try to the power of css modules, can you migrate the
-heading styles to a css modules approach?
+heading styles to a css modules approach? this is located under _./src/layout/app.layout_ path.
