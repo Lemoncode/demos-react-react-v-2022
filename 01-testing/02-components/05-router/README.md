@@ -125,18 +125,15 @@ import * as api from './name-api';
 + import { UserEdit } from './user-edit';
 import { NameCollection } from './name-collection';
 
-+ const renderWithRouter = (component) => {
-+   return {
-+     ...render(
++ const renderWithRouter = (component) =>
++     render(
 +       <HashRouter>
 +         <Routes>
 +           <Route path="/" element={component} />
 +           <Route path="users/:name" element={<UserEdit />} />
 +         </Routes>
 +       </HashRouter>
-+     ),
-+   };
-+ };
++     );
 
 ...
     // Act
