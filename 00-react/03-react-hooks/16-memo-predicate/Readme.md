@@ -1,4 +1,4 @@
-# 15 Memo predicate
+# 16 Memo predicate
 
 In this example we will enhance rendering performance hooking to 'shouldComponentUpdate'.
 
@@ -92,8 +92,8 @@ export const App = () => {
 
   return (
 +    <div className="App">
--      <MyComponent />;
-+      <MyComponent level={100} />;
+-      <MyComponent />
++      <MyComponent level={100} />
 +    </div>
   );
 };
