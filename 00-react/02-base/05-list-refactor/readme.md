@@ -18,6 +18,8 @@ npm install
   previous example, we forgot to put the key in the map where we dynamically generated the files with the
   the files with the members that belong to an organisation.
 
+_./src/app.tsx_
+
 ```diff
 {members.map((member) => (
 -  <>
@@ -26,7 +28,7 @@ npm install
     <span>{member.id}</span>
     <span>{member.login}</span>
 +  </React.Fragment>
-+ </>
+- </>
 ```
 
 - Secondly, right now we are not typing the list of members we receive from github.
@@ -65,7 +67,7 @@ export const App = () => {
   in the table to a component, we can leave it in the same file or extract it to a separate file.
   to a separate file, let's do it:
 
-_./src/member-table-row.tsx_
+_./src/member-grid-row.tsx_
 
 ```tsx
 import React from "react";
@@ -79,11 +81,11 @@ export const MemberTableRow: React.FC<Props> = (props) => {
   const { member } = props;
 
   return (
-    <>
+    <React.Fragment key={member.id}>
       <img src={member.avatar_url} />
       <span>{member.id}</span>
       <span>{member.login}</span>
-    </>
+    </React.Fragment>
   );
 };
 ```
@@ -100,21 +102,19 @@ import { MemberEntity } from './model';
 
 ```diff
   return (
-    <>
-      <div className="user-list-container">
-        <span className="header">Avatar</span>
-        <span className="header">Id</span>
-        <span className="header">Name</span>
-        {members.map((member) => (
+    <div className="user-list-container">
+      <span className="header">Avatar</span>
+      <span className="header">Id</span>
+      <span className="header">Name</span>
+      {members.map((member) => (
 +          <MemberTableRow key={member.id} member={member}>
 -          <React.Fragment key={member.id}>
 -            <img src={member.avatar_url} />
 -            <span>{member.id}</span>
 -            <span>{member.login}</span>
 -          </React.Fragment>
-        ))}
-      </div>
-    </>
+      ))}
+    </div>
   );
 ```
 
@@ -161,17 +161,17 @@ _./src/app.tsx_
 
 ```diff
 import React from "react";
-import { MemberEntity } from './model';
+- import { MemberEntity } from './model';
 + import {MemberTable} from './member-table';
 
 export const App = () => {
   const [members, setMembers] = React.useState<MemberEntity[]>([]);
 
-  React.useEffect(() => {
-    fetch(`https://api.github.com/orgs/lemoncode/members`)
-      .then((response) => response.json())
-      .then((json) => setMembers(json));
-  }, []);
+-  React.useEffect(() => {
+-    fetch(`https://api.github.com/orgs/lemoncode/members`)
+-      .then((response) => response.json())
+-      .then((json) => setMembers(json));
+-  }, []);
 
   return (
 +    <MemberTable/>
