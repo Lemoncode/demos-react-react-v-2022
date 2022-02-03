@@ -123,7 +123,7 @@ to take into account:
 - Now that we see that it works we are going to fit this in a grid, let's define some gobal styles
   (check [CSS modules example](https://github.com/Lemoncode/master-frontend-lemoncode/tree/master/03-bundling/01-webpack/12-css-modules), to learn how to configure component isolated CSS)
 
-./src/styles.css
+_./src/styles.css_
 
 ```css
 body {
@@ -207,6 +207,9 @@ export const App = () => {
 
   return (
 ```
+
+Here we execute a code just when the component mounts the DOM, the square brackets that we find at the end of useEffect
+are the ones that indicate that it is only executed once when the component is mounted, we will learn how this works in detail later.
 
 - Now we have to make the AJAX call inside that _useEffect_.
 

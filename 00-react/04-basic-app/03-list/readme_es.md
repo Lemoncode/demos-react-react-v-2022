@@ -88,47 +88,53 @@ _./src/list.tsx_
   );
 ```
 
-- Y ahora vamos a añadir una tabla:
+
+
+- Y ahora vamos a añadir una tabla con grid que muestre los datos:
+
+_./src/styles.css_
+
+```diff
++ .list-user-list-container {
++  display: grid;
++  grid-template-columns: 80px 1fr 3fr;
++  grid-template-rows: 20px;
++  grid-auto-rows: 80px;
++  grid-gap: 10px 5px;
++}
++
++.list-header {
++  background-color: #2f4858;
++  color: white;
++  font-weight: bold;
++}
++
++.list-user-list-container > img {
++  width: 80px;
++}
+```
 
 _./src/list.tsx_
 
 ```diff
   return (
     <>
-      <h2>Hello from List page</h2>
+-      <h2>Hello from List page</h2>
 -      {members.map((member) => (
 -        <span key={member.id}>{member.login}</span>
 -      ))}
-+          <table className="table">
-+            <thead>
-+                <tr>
-+                    <th>
-+                        Avatar
-+                    </th>
-+                    <th>
-+                        Id
-+                    </th>
-+                    <th>
-+                        Name
-+                    </th>
-+                </tr>
-+            </thead>
-+            <tbody>
-+           {members.map((member) => (
-+              <tr>
-+                <td>
-+                  <img src={member.avatar_url} style ={{width: '5rem'}}/>
-+                </td>
-+                <td>
-+                  <span>{member.id}</span>
-+                </td>
-+                <td>
-+                  <span>{member.login}</span>
-+                </td>
-+              </tr>
-+          ))}
-+        </tbody>
-+      </table>
++      <div className="list-user-list-container">
++        <span className="list-header">Avatar</span>
++        <span className="list-header">Id</span>
++        <span className="list-header">Name</span>
++        {members.map((member) => (
++          <>
++            <img src={member.avatar_url} />
++            <span>{member.id}</span>
++            <span>{member.login}</span>
++          </>
++        ))}
++      </div>
     </>
   );
 ```

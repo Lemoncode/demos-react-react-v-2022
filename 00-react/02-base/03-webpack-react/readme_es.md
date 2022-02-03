@@ -96,6 +96,20 @@ _.babelrc_
 }
 ```
 
+> Por cierto, el sufijo _rc_ es bastante habitual en linux, significa "runcom".
+> (Sistema CTSS 1962-63) Archivo de script que contiene instrucciones de inicio para un programa de aplicación.
+> En otras palabras, "rc" es algo que se quedó atrás en los años sesenta, y se ha utilizado con bastante frecuencia para los archivos de configuración en diferentes tipos de programas desde entonces, incluyendo Node, Babel y muchos, muchos otros.
+> Más información [en stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs).
+
+> Otra curiosidad... qué es un _preset_ ... empecemos por lo que es un plugin de babel: las transformaciones de babel 
+> se habilitan aplicando plugins, hay un montón de plugins y si tienes que ir añadiendo uno a uno se puede convertir en una pesadilla,
+> para hacer esto más fácil, babel ha agrupado conjuntos comunes de plugins en _presets_, por ejemplo @babel-preset-react
+> incluye los siguientes plugins:
+
+- @babel/plugin-syntax-jsx
+- @babel/plugin-transform-react-jsx
+- @babel/plugin-transform-react-display-name
+
 - Es hora de saltar al _webpack.config.js_
 
 - Nos podemos asegurar de que tenemos como extension valida _ts_ y _tsx_

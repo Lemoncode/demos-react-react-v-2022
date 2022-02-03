@@ -125,50 +125,57 @@ a tener en cuenta:
 
 - Ahora que vemos que funciona vamos a encajar esto en un tabla:
 
-_./src/app.js_
+- Ahora que vemos que funciona vamos a encajar esto en un _grid_, vamos a definir algunos estilos gobales
+  (revisa [Ejemplo de módulos CSS](https://github.com/Lemoncode/master-frontend-lemoncode/tree/master/03-bundling/01-webpack/12-css-modules), para aprender a configurar el CSS aislado de los componentes).
+
+_./src/styles.css_
+
+```css
+body {
+  font-family: Sans-Serif;
+}
+
+.user-list-container {
+  display: grid;
+  grid-template-columns: 80px 1fr 3fr;
+  grid-template-rows: 20px;
+  grid-auto-rows: 80px;
+  grid-gap: 10px 5px;
+}
+
+.header {
+  background-color: #2f4858;
+  color: white;
+  font-weight: bold;
+}
+
+.user-list-container > img {
+  width: 80px;
+}
+```
+
+- Y vamos a integrarlo en nuestro componente de la aplicación:
 
 ```diff
 export const App = () => {
   const [members, setMembers] = React.useState(membersMock);
 
 -  return members.map((member) => <span key={member.id}>{member.login}</span>);
-+  return (
-+          <table className="table">
-+            <thead>
-+                <tr>
-+                    <th>
-+                        Avatar
-+                    </th>
-+                    <th>
-+                        Id
-+                    </th>
-+                    <th>
-+                        Name
-+                    </th>
-+                </tr>
-+            </thead>
-+            <tbody>
-+           {members.map((member) => (
-+              <tr>
-+                <td>
-+                  <img src={member.avatar_url} style ={{width: '5rem'}}/>
-+                </td>
-+                <td>
-+                  <span>{member.id}</span>
-+                </td>
-+                <td>
-+                  <span>{member.login}</span>
-+                </td>
-+              </tr>
-+          ))}
-+        </tbody>
-+      </table>
++  return members.map(
++    <div className="user-list-container">
++        <span className="header">Avatar</span>
++        <span className="header">Id</span>
++        <span>Name</span>
++        {members.map((member) => (
++            <img src={member.avatar_url}/>
++            <span>{member.id}</span>
++            <span>{member.login}</span>
++        )}
++    </div>
 +  )
-};
 ```
 
-Fijaros aquí hemos creado una tabla, con su cabecera y iterado por todo los elementos de la colección
-creando una fila en la tabla por cada elemento de la fila.
+Así que hemos creado aquí un contenedor CSS Grid añadimos la cabecera y un bucle de todos los elementos de la lista de usuarios.
 
 - Hasta aquí muy bien pero... yo quiero tirar de la API de Github no de datos mockeados, vamos a empezar
   por eliminar los datos mock e inicializar el estado de nuestro componente a un array vacio:

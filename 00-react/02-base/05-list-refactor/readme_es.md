@@ -17,10 +17,14 @@ npm install
   la files con los miembros que pertenecen a una organizacion.
 
 ```diff
-<tbody>
-  {members.map((member) => (
--    <tr>
-+    <tr key={member.id}>
+{members.map((member) => (
+-  <>
++  <React.Fragment key={member.id}>
+    <img src={member.avatar_url} />
+    <span>{member.id}</span>
+    <span>{member.login}</span>
++  </React.Fragment>
++ </>
 ```
 
 - Lo segundo, ahora mismo no estamos tipando la lista de miembros que recibimos de
@@ -73,17 +77,11 @@ export const MemberTableRow: React.FC<Props> = (props) => {
   const { member } = props;
 
   return (
-    <tr>
-      <td>
-        <img src={member.avatar_url} style={{ width: "5rem" }} />
-      </td>
-      <td>
-        <span>{member.id}</span>
-      </td>
-      <td>
-        <span>{member.login}</span>
-      </td>
-    </tr>
+    <>
+      <img src={member.avatar_url} />
+      <span>{member.id}</span>
+      <span>{member.login}</span>
+    </>
   );
 };
 ```
@@ -102,25 +100,26 @@ import { MemberEntity } from './model';
 ```
 
 ```diff
-      <tbody>
+  return (
+    <>
+      <div className="user-list-container">
+        <span className="header">Avatar</span>
+        <span className="header">Id</span>
+        <span className="header">Name</span>
         {members.map((member) => (
-+          <MemberTableRow key={member.id} member={member}/>
--          <tr>
--            <td>
--              <img src={member.avatar_url} style={{ width: "5rem" }} />
--            </td>
--            <td>
--              <span>{member.id}</span>
--            </td>
--            <td>
--              <span>{member.login}</span>
--            </td>
--          </tr>
++          <MemberTableRow key={member.id} member={member}>
+-          <React.Fragment key={member.id}>
+-            <img src={member.avatar_url} />
+-            <span>{member.id}</span>
+-            <span>{member.login}</span>
+-          </React.Fragment>
         ))}
-      </tbody>
+      </div>
+    </>
+  );
 ```
 
-> Incluso si quisieramos podríamos crear un subcomponente para las cabecera de la tabla.
+> Incluso si quisiéramos podríamos crear un subcomponente para las cabecera de la tabla.
 
 - Un último paso, el componente _App_ sigue teniendo demasiado código, debería sólo de instanciar
   el componente principal y punto, vamos a simplificar esto.
@@ -144,20 +143,14 @@ export const MemberTable = () => {
   }, []);
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Avatar</th>
-          <th>Id</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {members.map((member) => (
-          <MemberTableRow member={member} />
-        ))}
-      </tbody>
-    </table>
+    <div className="user-list-container">
+      <span className="header">Avatar</span>
+      <span className="header">Id</span>
+      <span className="header">Name</span>
+      {members.map((member) => (
+        <MemberTableRow key={member.id} member={member} />
+      ))}
+    </div>
   );
 };
 ```
@@ -168,38 +161,35 @@ _./src/app.tsx_
 
 ```diff
 import React from "react";
-- import { MemberEntity } from "./model";
-- import { MemberTableRow } from "./member-table-row";
+import { MemberEntity } from './model';
 + import {MemberTable} from './member-table';
-```
 
-```diff
 export const App = () => {
-+   return <MemberTable />;
--  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+  const [members, setMembers] = React.useState<MemberEntity[]>([]);
 
--  React.useEffect(() => {
--    fetch(`https://api.github.com/orgs/lemoncode/members`)
--      .then((response) => response.json())
--      .then((json) => setMembers(json));
--  }, []);
--
--  return (
--    <table className="table">
--      <thead>
--        <tr>
--          <th>Avatar</th>
--          <th>Id</th>
--          <th>Name</th>
--        </tr>
--      </thead>
--      <tbody>
+  React.useEffect(() => {
+    fetch(`https://api.github.com/orgs/lemoncode/members`)
+      .then((response) => response.json())
+      .then((json) => setMembers(json));
+  }, []);
+
+  return (
++    <MemberTable/>
+-    <>
+-      <div className="user-list-container">
+-        <span className="header">Avatar</span>
+-        <span className="header">Id</span>
+-        <span className="header">Name</span>
 -        {members.map((member) => (
--          <MemberTableRow member={member} />
+-          <React.Fragment key={member.id}>
+-            <img src={member.avatar_url} />
+-            <span>{member.id}</span>
+-            <span>{member.login}</span>
+-          </React.Fragment>
 -        ))}
--      </tbody>
--    </table>
--  );
+-      </div>
+-    </>
+  );
 };
 ```
 
