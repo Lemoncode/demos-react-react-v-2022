@@ -153,7 +153,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 - import { LoginPage } from "@/scenes/login";
 - import { ListPage } from "@/scenes/list";
 - import { DetailPage } from "@/scenes/detail";
-+ import {LoginPage, ListPage, DetailPage} from from "@/scenes";
++ import {LoginPage, ListPage, DetailPage} from "@/scenes";
 
 export const App = () => {
 ```
