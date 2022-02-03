@@ -41,8 +41,8 @@ npm start
 ```
 
 If we take a look to _app.tsx_ VS Code has already updated the paths to that
-files, not bad :), but if we take a look we are using relatives path to
-reference that files, in this case is something that doesn't hurt quite a lot:
+file, not bad :), but if we take a look we are using relatives path to
+reference that file, in this case is something that doesn't hurt quite a lot:
 
 ```tsx
 import { LoginPage } from "./scenes/login";
@@ -85,7 +85,7 @@ But since we don't want to repeat code, let's see if somebody has
 implemented some magic to allow webpack read this configuration from
 the _tsconfig_
 
-We have two approaches
+We have two approaches:
 
 - Gist source code: https://gist.github.com/nerdyman/2f97b24ab826623bff9202750013f99e
 
@@ -207,7 +207,7 @@ export const switchRoutes: SwitchRoutes = {
 Let's definde the navigation routes: all the routes are the same but the _details_ route
 (param definition vs real parameter when navigating):
 
-Let's append the following content
+Let's append the following content:
 
 _./src/core/routers/routes.tsx_
 
@@ -233,7 +233,7 @@ export const routes: Routes = {
 
 - Here there is something sounds strange, and that is that we are exporting "SwitchRoutes" and "Routes", shouldn't you call it "NavigationRoutes"? The thing is that we are going to encapsulate the router of our application inside this same folder and we are only going to expose out the navigation routes, we start by defining the router, we are going to bring some imports:
 
-./src/core/router/router.component.tsx
+_./src/core/router/router.component.tsx_
 
 ```tsx
 import React from "react";
