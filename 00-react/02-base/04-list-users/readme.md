@@ -36,7 +36,7 @@ https://api.github.com/orgs/lemoncode/members
 
 - Let's create a similar dataset that shows two members of an organisation.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 import React from "react";
@@ -62,7 +62,7 @@ export const App = () => {
 - Now that we have the data, let's add state to our component and load this default data.
   and load this default data into it.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const const App = () => {
@@ -75,7 +75,7 @@ export const const App = () => {
 - Now we have the data in our state, let's display the first element
   and see if the display name is _antonio06_:
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
@@ -95,7 +95,7 @@ npm start
 
 - This isn't bad, but maybe the list doesn't have any elements, but it can still have 5, how do we iterate through the elements in the list? Using ES6's _map_.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
@@ -136,6 +136,7 @@ body {
   grid-template-rows: 20px;
   grid-auto-rows: 80px;
   grid-gap: 10px 5px;
+  max-width: 40vw;
 }
 
 .header {
@@ -151,21 +152,25 @@ body {
 
 - And let's integrate it in our app component:
 
+_./src/app.tsx_
+
 ```diff
 export const App = () => {
   const [members, setMembers] = React.useState(membersMock);
 
 -  return members.map((member) => <span key={member.id}>{member.login}</span>);
-+  return members.map(
++  return (
 +    <div className="user-list-container">
-+        <span className="header">Avatar</span>
-+        <span className="header">Id</span>
-+        <span>Name</span>
-+        {members.map((member) => (
-+            <img src={member.avatar_url}/>
-+            <span>{member.id}</span>
-+            <span>{member.login}</span>
-+        )}
++      <span className="header">Avatar</span>
++      <span className="header">Id</span>
++      <span className="header">Name</span>
++      {members.map((member) => (
++        <>
++          <img src={member.avatar_url} />
++          <span>{member.id}</span>
++          <span>{member.login}</span>
++        </>
++      ))}
 +    </div>
 +  )
 ```

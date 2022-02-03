@@ -36,7 +36,7 @@ _./src/index.html_
 
 ```diff
   <body>
--    Hello World !
+-    <h1 class="my-text">Hello World !</h1>
 +    <div id="root"></div>
   </body>
 ```
@@ -74,7 +74,7 @@ ReactDOM.render(
 ```
 
 - Vamos por buen camino, pero si intentamos ejecutar esto no va fallar, ya que _babel_ no sabe
-  como transformar el _jsx_ (recordemos que esto era un azucar, que en realidad era un XML) a
+  como transformar el _jsx_ (recordemos que esto era un azúcar, que en realidad era un XML) a
   javaScript, para que babel sea capaz de entender esto tenemos que instalar el _preset_
   _@babel/preset-react_
 

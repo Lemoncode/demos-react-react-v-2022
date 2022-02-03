@@ -35,7 +35,7 @@ _./src/index.html_
 
 ```diff
   <body>
--    Hello World !
+-    <h1 class="my-text">Hello World !</h1>
 +    <div id="root"></div>
   </body>
 ```

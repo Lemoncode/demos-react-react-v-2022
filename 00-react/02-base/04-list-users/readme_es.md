@@ -38,7 +38,7 @@ https://api.github.com/orgs/lemoncode/members
 
 - Vamos a crear un set de datos parecido que mueste dos miembros de una organización.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 import React from "react";
@@ -64,7 +64,7 @@ export const App = () => {
 - Ahora que tenemos los datos, vamos a añadirle estado a nuestro componente
   y cargarle estos datos por defecto.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
@@ -74,10 +74,10 @@ export const App = () => {
 };
 ```
 
-- Ya tenemos los datos en nuestro estado, vamos a mostrar el primero elemento
-  y vemos si el nombre que aparee por pantalla es _antonio06_:
+- Ya tenemos los datos en nuestro estado, vamos a mostrar el primer elemento
+  y vemos si el nombre que aparece por pantalla es _antonio06_:
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
@@ -98,7 +98,7 @@ npm start
 - Esto no esta mal, pero igual la lista no trae elementos, que igual puede traer 5, ¿Cómo iterar por los
   elementos de la lista? Usando _map_ de ES6.
 
-_./src/app.js_
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
@@ -141,6 +141,7 @@ body {
   grid-template-rows: 20px;
   grid-auto-rows: 80px;
   grid-gap: 10px 5px;
+  max-width: 40vw;
 }
 
 .header {
@@ -154,23 +155,27 @@ body {
 }
 ```
 
-- Y vamos a integrarlo en nuestro componente de la aplicación:
+- Y vamos a integrarlo en el componente de nuestra aplicación:
+
+_./src/app.tsx_
 
 ```diff
 export const App = () => {
   const [members, setMembers] = React.useState(membersMock);
 
 -  return members.map((member) => <span key={member.id}>{member.login}</span>);
-+  return members.map(
++  return (
 +    <div className="user-list-container">
-+        <span className="header">Avatar</span>
-+        <span className="header">Id</span>
-+        <span>Name</span>
-+        {members.map((member) => (
-+            <img src={member.avatar_url}/>
-+            <span>{member.id}</span>
-+            <span>{member.login}</span>
-+        )}
++      <span className="header">Avatar</span>
++      <span className="header">Id</span>
++      <span className="header">Name</span>
++      {members.map((member) => (
++        <>
++          <img src={member.avatar_url} />
++          <span>{member.id}</span>
++          <span>{member.login}</span>
++        </>
++      ))}
 +    </div>
 +  )
 ```

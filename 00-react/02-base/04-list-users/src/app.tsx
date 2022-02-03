@@ -10,19 +10,17 @@ export const App = () => {
   }, []);
 
   return (
-    <>
-      <div className="user-list-container">
-        <span className="header">Avatar</span>
-        <span className="header">Id</span>
-        <span className="header">Name</span>
-        {members.map((member) => (
-          <>
-            <img src={member.avatar_url} />
-            <span>{member.id}</span>
-            <span>{member.login}</span>
-          </>
-        ))}
-      </div>
-    </>
+    <div className="user-list-container">
+      <span className="header">Avatar</span>
+      <span className="header">Id</span>
+      <span className="header">Name</span>
+      {members.map((member) => (
+        <>
+          <img src={member.avatar_url} />
+          <span>{member.id}</span>
+          <span>{member.login}</span>
+        </>
+      ))}
+    </div>
   );
 };
