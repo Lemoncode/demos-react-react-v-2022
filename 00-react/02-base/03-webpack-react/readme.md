@@ -111,7 +111,7 @@ _.babelrc_
 
 * Let's check that things are working as expected:
 
-````bash
+```bash
 npm start
 ```
 
@@ -122,4 +122,4 @@ npm start
 
 
 
-````
+
