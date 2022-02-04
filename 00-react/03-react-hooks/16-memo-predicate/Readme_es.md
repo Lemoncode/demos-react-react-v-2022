@@ -1,4 +1,4 @@
-# 15 Memo predicate
+# 16 Memo predicate
 
 En este ejemplo mejoraremos el rendimiento del renderizado hookeando 'shouldComponentUpdate'.
 
@@ -93,8 +93,8 @@ export const App = () => {
 
   return (
 +    <div className="App">
--      <MyComponent />;
-+      <MyComponent level={100} />;
+-      <MyComponent />
++      <MyComponent level={100} />
 +    </div>
   );
 };
@@ -164,16 +164,15 @@ export const App = () => {
 +   const [satisfactionLevel, setSatisfactionLevel] = React.useState(300);
 +
   return (
-    <div className="App">
+-    <div className="App">
++    <div className="App" style={{ display: "flex", flexDirection: "column" }}>
 +       <input type="range"
 +         min="0"
 +         max="500"
 +         value={satisfactionLevel}
 +         onChange={(event) => setSatisfactionLevel(+event.target.value)}
 +       />
-+       <br />
 +       <span>{satisfactionLevel}</span>
-+       <br />
 -       <MyComponent level={100}/>
 +       <MyComponent level={satisfactionLevel} />
     </div>

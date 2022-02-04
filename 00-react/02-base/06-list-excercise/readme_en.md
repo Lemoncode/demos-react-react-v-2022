@@ -12,7 +12,7 @@ Now is your turn to get your hands wet coding some use stories :)
 - We want in the CSS grid a link to the Github Profile of each
   member:
 
-  - you can extract the info from: https://api.github.com/orgs/lemoncode/members
+  - You can extract the info from: https://api.github.com/orgs/lemoncode/members
 
   - Remember to create an _anchor_ HTML element.
 

@@ -35,7 +35,7 @@ _./src/index.html_
 
 ```diff
   <body>
--    Hello World !
+-    <h1 class="my-text">Hello World !</h1>
 +    <div id="root"></div>
   </body>
 ```
@@ -92,7 +92,7 @@ _.babelrc_
 > By the way the _rc_ suffix is pretty usual in linux it's stands for "runcom"
 > (CTSS system 1962-63) Script file containing startup instructions for an application program.
 > In other words, "rc" is just something that stuck from back in the sixties, and has been used quite often for configuration files in different sorts of programs since, including Node, Babel and many, many others.
-> More info [on stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs)
+> More info [on stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs).
 
 > Another curiosity... what is a _preset_ ... let's start with what is a babel plugin: babel transformations are
 > enabled by applying plugins, there are plenty of plugins and if you have to go adding one by one it can become a nightmare,
@@ -111,7 +111,7 @@ _.babelrc_
 
 * Let's check that things are working as expected:
 
-````bash
+```bash
 npm start
 ```
 
@@ -122,4 +122,4 @@ npm start
 
 
 
-````
+
