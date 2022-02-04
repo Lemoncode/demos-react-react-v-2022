@@ -1,23 +1,23 @@
 # Pods
 
-So far breaking into pages seems to be a fair solutions since our app is very simple, but imagine a real scenario:
+Hasta ahora dividir en páginas parece ser una solución justa ya que nuestra aplicación es muy simple, pero imagina un escenario real:
 
-- If our page logic grows then we have to split it into different files, we would have to create a folder per page.
-- A given folder can have rich functionallity that could be reused in other pages, or a given page could
-  use several rich pieces.
-- In some SSR frameworks, the page is on a public folder and we don't want to mess it up with other files (e.g.
-  business logic, mappers...)
-- Is not a bad idea to separate concerns and ensure that the page only handle page related stuff, choose layout,
-  handle navigation params...
+- Si la lógica de nuestra página crece y tenemos que dividirla en diferentes archivos, tendríamos que crear una carpeta por página.
+- Una carpeta dada puede tener una funcionalidad rica que podría ser reutilizada en otras páginas, o una página dada podría
+  utilizar varias piezas ricas.
+- En algunos frameworks de SSR, la página está en una carpeta pública y no queremos ensuciarla con otros archivos (por ejemplo
+  lógica de negocio, mapeadores...)
+- No es una mala idea separar y asegurarse de que la página sólo maneja cosas relacionadas con la página, elegir el diseño,
+  manejar los parámetros de navegación...
 
-Following ember approach we are going to encapsulate rich functionallity in pods, this pods will be rich isolated
-functionallity islands, based on our experiencie the pod / page mapping use to be one to one, but there are
-cases where a given page can consume more than one pod (e.g. dashboard), or the other way around (e.g. a login
-pod that is used in several places in the app login page, menu login layer, etc...)
+Siguiendo el enfoque vamos a encapsular la funcionalidad rica en pods, estos pods serán islas de funcionalidad aisladas,
+basándonos en nuestra experiencia, el mapeo pod/página suele ser uno a uno, pero hay
+casos en los que una página determinada puede consumir más de un pod (por ejemplo, el panel de control), o al revés (por ejemplo, un pod de acceso
+que se utiliza en varios lugares en la página de inicio de sesión de la aplicación, en la capa de inicio de sesión del menú, etc...).
 
-# Step by step guide
+# Pasos
 
-- Let's start refactoring this, we will start by creating a pods folder:
+- Empecemos a refactorizar esto, empezaremos por crear una carpeta de pods:
 
 ```bash
 cd src
@@ -27,7 +27,7 @@ cd src
 mkdir pods
 ```
 
-- In this case we will define the following pods:
+- En este caso definiremos los siguientes pods:
   - login
   - list
   - detail
@@ -48,13 +48,13 @@ mkdir list
 mkdir detail
 ```
 
-Let's start migrating the login page content, usually we will create a first level container component
-that will hold the state and a dumb component that will contain the layout (in this case we could discuss
-whether this is not neccessary and in other we will need a more elaborated solutions for instance create
-components folder to breakdown the dumb components into more levels, or...):
+Empecemos a migrar el contenido de la página de _login_, normalmente crearemos un componente contenedor de primer nivel
+que contendrá el estado y un componente _dumb_ que contendrá el _layout_ (en este caso podríamos discutir
+si esto no es necesario y en otros necesitaremos una solución más elaborada por ejemplo crear
+Componentes para desglosar los componentes _dumb_ en más niveles, o...):
 
-We will refactor the login code in order to isolate what is container aim and component stuff (low level
-submit args etc...)
+Vamos a refactorizar el _login_ para aislar lo que es el objetivo del contenedor y las cosas del componente (_low level_
+_submit args etc..._)
 
 _./pods/login/login.container.tsx_
 
@@ -81,7 +81,7 @@ export const LoginContainer: React.FC = () => {
 };
 ```
 
-- Is time to define the contract for the props:
+- Es el momento de definir el contrato para las _props_:
 
 _./pods/login/login.component.tsx_
 
@@ -97,7 +97,7 @@ export const LoginComponent: React.FC<Props> = (props) => {
 };
 ```
 
-Let's import the component in the container
+Vamos a importar el componente en el contenedor
 
 _./src/login.container.tsx_
 
@@ -109,7 +109,7 @@ import { ProfileContext } from "@/core/profile";
 + import {LoginComponent} from './login.component';
 ```
 
-- Time to dig into Login Component
+- Es hora de profundizar en el componente de _login_
 
 _./pods/login/login.component.tsx_
 
@@ -152,7 +152,7 @@ export const LoginComponent: React.FC<Props> = (props) => {
 }
 ```
 
-- Let's expose the container in a barrel
+- Expongamos el contenedor en un _barrel_
 
 _./pods/login/index.ts_
 
@@ -160,7 +160,7 @@ _./pods/login/index.ts_
 export * from "./login.container";
 ```
 
-- And it's time to use it in our scene:
+- Y es el momento de usarlo en nuestra escena:
 
 _./src/scenes/login.tsx_
 
@@ -213,12 +213,12 @@ export const LoginPage: React.FC = () => {
 };
 ```
 
-- That was fine, let's apply what we have learned, ... stop and try to port to pods the
-  list page.
+- Eso estuvo bien, apliquemos lo que hemos aprendido, ... paremos e intentemos importar a pods la
+  página de la lista.
 
-** Excercise wait some minutes **
+** Ejercicio espera algunos minutos **
 
-- First let's create the list pod
+- Primero vamos a crear el pod de la lista
 
 ```bash
 cd src
@@ -228,12 +228,12 @@ cd src
 mkdir list
 ```
 
-And create the List container and component, this time the container will hold the logic to
-load the list of users and the component will hold the display, here we could discuss as
-well where to place the navigation logic, we could bubble up to the container or just
-place it in the innner component.
+Crea el contenedor de la lista y el componente, esta vez el contenedor contendrá la lógica para
+cargar la lista de usuarios y el componente contendrá la visualización, aquí podríamos discutir también
+donde colocar la lógica de navegación, podríamos burbujear al contenedor o simplemente
+colocarla en el componente interno.
 
-- Now we need a model file to store the entity:
+- Ahora necesitamos un archivo modelo para almacenar la entidad:
 
 _./pods/list/list.vm.ts_
 
@@ -299,7 +299,7 @@ export const ListComponent: React.FC<Props> = (props) => {
 };
 ```
 
-Let's create a barrel:
+Creemos el _barrel_
 
 _./src/pods/list/index.ts_
 
@@ -307,7 +307,7 @@ _./src/pods/list/index.ts_
 export * from "./list.container";
 ```
 
-And let's consume it in the scene:
+Y vamos a consumirlo en la escena:
 
 _./src/scenes/list.tsx_
 
@@ -355,24 +355,24 @@ import { AppLayout } from "@/layouts";
 };
 ```
 
-- Let's refactor the detail component, we could think this is just a boring taks, BUUUUUT.... there's a good new item
-  for dicussion: we are reading parameters from the query string, who should take responsability on reading this value,
-  we have two options:
-  - Let the scene handle this and pass it as a prop to the pod.
-  - Let the pod handle this and use the react router hook useParams to directly get the data.
+- Vamos a refactorizar el componente de detalle, podríamos pensar que esto es sólo un _tak_ aburrido, PEROOOO.... hay un buen elemento nuevo
+  para dicutir: estamos leyendo parámetros de la cadena de consulta, quien debe tomar la responsabilidad en la lectura de este valor,
+  tenemos dos opciones:
+  - Dejar que la escena se encargue de esto y pasarlo como un prop al pod.
+  - Dejar que el pod se encargue de esto y usar el hook useParams de react router para obtener directamente los datos.
 
-There's no silver bullet, so... ** Discussion... what do you think would be the best approach? **
+No hay una bala de plata, así que... ** Discusión... ¿cuál crees que sería el mejor enfoque? **
 (...)
 
-We have chosen the scene to handle the url parameter parsing and pass it as a prop to the pod, Why?
+Hemos elegido la escena para manejar el parámetro _url parsing_ y pasarlo como un prop al _pod_, ¿Por qué?
 
-- It is information related to the page (scene).
-- The detail pod could be easier reused in other pages, you are not tied up to certain url param.
-- The detail pod is simpler and has well identified contract (props).
+- Es información relacionada con la página (escena).
+- El _pod_ de detalle podría ser más fácil de reutilizar en otras páginas, no está atado a ciertos parámetros de la url.
+- El _pod_ de detalle es más simple y tiene un contrato bien identificado (props).
 
-Let's go for it :)
+Vamos a por ello :)
 
-- Let's create the detail pod:
+- Vamos a crear el _pod_ de detalle:
 
 ```bash
 cd src
@@ -382,7 +382,7 @@ cd src
 mkdir detail
 ```
 
-- We have to define a viewmodel file that will contain the _MemberDetailEntity_
+- Tenemos que definir un archivo _viewmodel_ que contendrá _MemberDetailEntity_
 
 _./src/pods/detail/detail.vm.ts_
 
@@ -404,7 +404,7 @@ export const createDefaultMemberDetail = () => ({
 });
 ```
 
-- Let's create the detail container:
+- Vamos a crear el contenedor de detalles:
 
 _./src/pods/details/detail.container.tsx_
 
@@ -433,7 +433,7 @@ export const DetailContainer: React.FC<Props> = (props) => {
 };
 ```
 
-- And the detail component:
+- Y el componente del detalle:
 
 _./src/pods/details/detail.component.tsx_
 
@@ -464,7 +464,7 @@ export const DetailComponent: React.FC<Props> = (props) => {
 };
 ```
 
-- And let's expose it via barrel:
+- Vamos a exponerlo via _barrel_:
 
 _./src/pods/details/index.ts_
 
@@ -472,7 +472,7 @@ _./src/pods/details/index.ts_
 export * from "./detail.container";
 ```
 
-- And let's replace it in the scene.
+- Y vamos a reemplazarlo en la escena.
 
 _./src/scenes/details.tsx_
 
@@ -527,7 +527,7 @@ export const DetailPage: React.FC = () => {
 };
 ```
 
-Let's give a try:
+Vamos a intentarlo:
 
 ```bash
 npm start
