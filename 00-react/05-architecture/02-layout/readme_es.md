@@ -1,17 +1,17 @@
 # Layout
 
-Fine... now we pages and routes under control, but... usually some pages
-same some structure in common, e.g. a header, footer, and some others not
-(e.g. login Screen).
+Bien... ahora tenemos las páginas y las rutas bajo control, pero... normalmente algunas páginas
+tienen la misma estructura en común, por ejemplo una cabecera, un pie de página, y otras no
+(por ejemplo, la pantalla de inicio de sesión).
 
-If you jump back to the ASP .net days there was a concept call _master pages_
-where you defined a layout, and a place holder to show the pages content, we
-will implement something quite similar.
+Si te remontas a los días de _ASP .net_ había un concepto llamado _páginas maestras_
+donde se definía un diseño, y un marcador de posición para mostrar el contenido de las páginas, nosotros
+implementaremos algo muy similar.
 
-# Step by Step Guide
+# Pasos
 
-Ok, first of all, where should we display this _master pages_ / _layouts_
-definitions? Let's create a folder _layouts_ under our _src_ folder.
+Bien, primero de todo, ¿dónde debemos mostar estos _layouts_?
+Vamos a crear una carpeta _layouts_ bajo nuestra carpeta _src_.
 
 ```bash
 cd src
@@ -21,8 +21,8 @@ cd src
 mkdir layouts
 ```
 
-- First of all we will create a layout that will center the content, this layout will let us
-  simplifiy our Login Page:
+- En primer lugar vamos a crear un diseño que centrará el contenido, este diseño nos permitirá
+  simplificar nuestra página de inicio de sesión:
 
 _./src/layouts/center.layout.tsx_
 
@@ -34,7 +34,7 @@ export const CenterLayout: React.FC = ({ children }) => (
 );
 ```
 
-- Let's create the barrel for the layout subfolder:
+- Vamos a crear el _barrel_ para la subcarpeta de _layouts_:
 
 _./src/layouts/index.ts_
 
@@ -42,7 +42,7 @@ _./src/layouts/index.ts_
 export * from "./center.layout";
 ```
 
-- Let's apply this layout to the login page:
+- Apliquemos este _layout_ a la página de _login_:
 
 _./src/scenes/login.tsx_
 
@@ -92,16 +92,16 @@ export const LoginPage: React.FC = () => {
 };
 ```
 
-In this case it maybe a lite change but, take this into consideration:
+En este caso puede ser un cambio ligero pero, ten en cuenta:
 
-- Separation of concerns, layout is defined in a separated place.
-- We could reused for other pages.
-- In the future we could use this login widget in other places (spoiler alert, pods).
+- Separación de preocupaciones, el diseño se define en un lugar separado.
+- Podríamos reutilizarlo para otras páginas.
+- En el futuro podríamos usar este _widget_ de _login_ en otros lugares (_spoiler alert_, _pods_).
 
-> Using React Router you can as well integrate layouts.
+> Usando React Router también puedes integrar layouts.
 
-- Let's keep on playing with layouts, now we are going to define an app layout that
-  will contain a header.
+- Sigamos jugando con los _layouts_, ahora vamos a definir un _layout_ para la app que
+  contendrá una cabecera.
 
 _./src/styles.css_
 
@@ -147,7 +147,7 @@ export const AppLayout: React.FC = ({ children }) => (
 );
 ```
 
-- Let's add the layout to the layout barrel
+- Vamos a añadir el _barrel_ a _layout_.
 
 _./src/layouts/index.ts_
 
@@ -156,7 +156,7 @@ export * from "./center.layout";
 + export * from './app.layout';
 ```
 
-- Let's update the list page:
+- Actualicemos la _list page_:
 
 _./src/scenes/list.tsx_
 
@@ -186,8 +186,8 @@ _./src/scenes/list.tsx_
   );
 ```
 
-Now let's jump into details, stop for a second and try to add
-the layout in that pages by yourself.
+Ahora entremos en detalles, detente un segundo e intenta añadir
+el diseño en esas páginas por ti mismo.
 
 _./src/scenes/detail.tsx_
 

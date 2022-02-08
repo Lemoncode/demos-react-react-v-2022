@@ -1,29 +1,29 @@
-# Form Validation
+# Validación de formularios
 
-We have seen that React offers us some basic plumbing to work with forms, but there is not an ellaborated built in solution
-for this, in this tutorial we will check a solutions for:
+Hemos visto que React nos ofrece una serie de herramientas básicas para trabajar con formularios, pero hay una solución elaborada
+para esto, en este tutorial veremos una solución para:
 
-- Manage form state managament.
-- Industrialize form state managament.
+- Gestionar el estado de los formularios.
+- Industrializar la gestión del estado de los formularios.
 
-We will make use of:
+Haremos uso de:
 
 - Formik.
 - Fonk.
 
-# Step by Step Guide
+# Pasos
 
-- Managing a form can become a pain in the neck:
+- La gestión de un formulario puede convertirse en un dolor de cabeza:
 
-  - You need to collected data.
-  - You need to add some special behavior based on the form state (for instance display error message on a field
-    only if the field has been touched or save button has been pressed).
+  - Necesitas recoger datos.
+  - Necesita añadir algún comportamiento especial basado en el estado del formulario (por ejemplo, mostrar un mensaje de error en un campo
+    sólo si se ha tocado el campo o se ha pulsado el botón de guardar).
 
-- There are several libraries that provide a solution for this: React Final Form, Formik, React Hook Form, we will
-  make use of Formik in this example.
+- Hay varias bibliotecas que proporcionan una solución para esto: _React Final Form_, _Formik_, _React Hook Form_, nosotros
+  utilizaremos _Formik_ en este ejemplo.
 
-- Prior to get started we are going to add an small refactor, instead of using two separate fields to manage the form
-  let's create an viewmodel for this.
+- Antes de empezar vamos a añadir una pequeña refactorización, en lugar de utilizar dos campos separados para gestionar el formulario
+  vamos a crear un _viewmodel_ para ello.
 
 _./src/pods/login/login.vm.ts_
 
@@ -39,7 +39,7 @@ export const createEmptyLogin = (): Login => ({
 });
 ```
 
-And adapt the code in the login container:
+Y adaptar el código en el contenedor del _login_:
 
 _./src/pods/login/login.container.ts_
 
@@ -86,7 +86,7 @@ export const LoginContainer: React.FC = () => {
 };
 ```
 
-And let's refactor the component:
+Y vamos a refactorizar el componente:
 
 _./src/pods/login.component.tsx_
 
@@ -144,22 +144,22 @@ export const LoginComponent: React.FC<Props> = (props) => {
 };
 ```
 
-- Let's thest the refactored code
+- Veamos el código refactorizado
 
 ```bash
 npm start
 ```
 
-Let's start by install formik:
+Empecemos por instalar _formik_:
 
 ```bash
 npm install formik --save
 ```
 
-We are going to add form management to the login form (this case can be handled without the use of this library,
-but is just a simple sample to show how this work).
+Vamos a añadir la gestión de formularios al formulario del _login_ (este caso puede ser manejado sin el uso de esta biblioteca,
+pero es un simple ejemplo para mostrar cómo funciona).
 
-Let's define all the form managament in the _login.component_
+Vamos a definir toda la gestión del formulario en el _login.component_
 
 _./src/pods/login.component.tsx_
 
@@ -168,10 +168,10 @@ import React from "react";
 + import { Formik, Form } from 'formik';
 ```
 
-- We will wrap the form with the _Formik_ component (this component takes care of setting up the initial values,
-  and controls the submit button), this component provides a render prop where we define the form and the fields.
-  We will replace the standard _form_ element with Formik's Form element, this component automatically hooks in
-  Formik's _handleSubmit_ and _handleReset_.
+- Envolveremos el formulario con el componente _Formik_ (este componente se encarga de configurar los valores iniciales
+  y controla el botón de envío), este componente proporciona un render prop donde definimos el formulario y los campos.
+  Reemplazaremos el elemento _form_ estándar por el elemento _Form_ de _Formik_, este componente engancha automáticamente
+  Formik's _handleSubmit_ y _handleReset_.
 
 _./src/pods/login.component.tsx_
 
@@ -220,12 +220,12 @@ _./src/pods/login.component.tsx_
   );
 ```
 
-Now we can update the inputs entries in order to support
-Formik, since later on we will get benefit of some formik
-state management metadata information we will build a
-wrapper around the input field, since this wrapper could
-be reused in other projects we will add it to the root
-folder _./src/common_
+Ahora podemos actualizar las entradas para soportar
+_Formik_, ya que más adelante nos beneficiaremos de algunos _formik_
+construiremos una envoltura alrededor del campo de entrada,
+ya que esta envoltura podría
+ser reutilizado en otros proyectos lo añadiremos a la carpeta _root_
+_./src/common_
 
 _./src/common/components/forms/input-formik.component.tsx_
 
@@ -277,7 +277,7 @@ export const InputFormik: React.FC<
 };
 ```
 
-And let's expose it in a couple of barrels:
+Y vamos a exponerlo en un par de _barrels_:
 
 _./src/common/components/forms/index.ts_
 
@@ -291,7 +291,7 @@ _./src/common/components/index.ts_
 export * from "./forms";
 ```
 
-Let's replace the form input (and simplify them):
+Reemplacemos las entradas del formulario (y simplifiquémoslas):
 
 _./src/pods/login/login.component.tsx_
 
@@ -315,27 +315,27 @@ _./src/pods/login/login.component.tsx_
   />
 ```
 
-- Let's check that things are still working :)
+- Vamos a comprobar que las cosas siguen funcionando :)
 
 ```bash
 npm start
 ```
 
-- Well now have gotten a pro form state management and
-  plenty of metadata... time to add some validation to
-  the form, in this case we want both fields to be required,
-  let's add a validation library:
+- Bueno, ahora han conseguido una gestión del estado del formulario y
+  un montón de metadatos... es hora de añadir algo de validación al
+  el formulario, en este caso queremos que ambos campos sean obligatorios,
+  vamos a añadir una librería de validación:
 
 ```bash
 npm install @lemoncode/fonk @lemoncode/fonk-formik --save
 ```
 
-- One powerful feature of _Fonk_ is that we define the
-  validations outside of the form component and markup,
-  by doing this, is quite easy to check which validations
-  are being applied to the form and unit test them without
-  the need of mounting the component, for this form it
-  would be something like:
+- Una potente característica de _Fonk_ es que definimos las
+  validaciones fuera del componente del formulario y del marcado,
+  al hacer esto, es bastante fácil comprobar qué validaciones
+  se están aplicando al formulario y probarlas unitariamente sin
+  la necesidad de montar el componente, para este formulario sería
+  sería algo así como:
 
 _./src/pods/login/login.validation.ts_
 
@@ -353,7 +353,7 @@ const validationSchema: ValidationSchema = {
 export const formValidation = createFormikValidation(validationSchema);
 ```
 
-- And let's apply it to our login form:
+- Y vamos a aplicarlo a nuestro formulario de _login_:
 
 _./src/pods/login/login.component.tsx_
 
@@ -367,5 +367,5 @@ _./src/pods/login/login.component.tsx_
   >
 ```
 
-- How poweful is this form validation library?
-  We can explore this post: https://www.basefactor.com/formik-form-validation-fonk
+- ¿Cómo de potente es esta librería de validación de formularios?
+  Podemos explorar este post: https://www.basefactor.com/formik-form-validation-fonk

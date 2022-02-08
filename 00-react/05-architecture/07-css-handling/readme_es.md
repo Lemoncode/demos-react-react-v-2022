@@ -1,29 +1,29 @@
-# CSS handling
+# Manejo de CSS
 
-Even in a small project like that we are starting to have issues on the CSS side:
+Incluso en un proyecto pequeño como este estamos empezando a tener problemas en el lado del _CSS_:
 
-- We are now grouping all the styling in a global css and starts to become difficult to work with that.
-- We have decided to use some manual prefixes, we now that this will become a problem if the project grows, generating
-  bugs hard to pinpoint.
-- We have started to repeat some values or adding some CSS that could be written in a more maintanble way using a SASS
-  approach like.
+- Estamos agrupando todos los estilos en un css global y empieza a ser difícil trabajar con eso.
+- Hemos decidido utilizar algunos prefijos manuales, pero
+  esto se convertirá en un problema si el proyecto crece, generando
+  bugs difíciles de localizar.
+- Hemos empezado a repetir algunos valores o a añadir algo de _CSS_ que podría ser escrito de una manera más mantenible usando _SASS_.
 
-There are several solutions to this:
+Hay varias soluciones para esto:
 
-- We could use CSS modules in order to get a CSS per component.
-- We could use SASS to better organize our project.
-- We could make use of HTML variables.
-- We could use a CSS in JS approach and get some extra goodies (avoid having to deal with specifity, easy live theming, js power applied to CSS... ).
+- Podríamos utilizar _CSS modules_ para obtener un _CSS_ por componente.
+- Podríamos utilizar _SASS_ para organizar mejor nuestro proyecto.
+- Podríamos hacer uso de variables _HTML_.
+- Podríamos utilizar un enfoque de _CSS_ en _JS_ y obtener algunas ventajas extra (evitar tener que lidiar con la especificidad, fácil tematización en vivo, potencia de js aplicada a _CSS_... ).
 
-In this case we will see how introducing a simple change (first applying CSS modules, then SASS), we can obtain a huge improvement in our base code.
+En este caso veremos cómo introduciendo un simple cambio (aplicando primero _CSS Modules_, y luego _SASS_), podemos obtener una enorme mejora en nuestro código base.
 
-# Step by Step guide
+# Pasos
 
-- With CSS modules, each CSS file selectors get prefixed and suffixed, with the _path_ and _name_ of the file and a hash number, or just with
-  a random id (not recommended for local development), but you may want to do a gradual migration, or maybe you just want to have some global
-  CSS available, we will learn how to do this in this example.
+- Con los _CSS modules_, cada uno de los selectores de archivos CSS tiene un prefijo y un sufijo, con la _ruta_ y el _nombre_ del archivo y un número hash, o simplemente con
+  un identificador aleatorio (no se recomienda para el desarrollo local), pero es posible que desee hacer una migración gradual, o tal vez tú sólo quieras tener algunos _CSS_ globales
+  disponibles, vamos a aprender cómo hacerlo en este ejemplo.
 
-- First of all let's move our global _styles.css_ to a subfolder called _src/global-css_:
+- En primer lugar vamos a mover nuestro global _styles.css_ a una subcarpeta llamada _src/global-css_:
 
 ```bash
 cd src
@@ -37,8 +37,8 @@ mkdir global-css
 mv styles.css ./global-css
 ```
 
-Now we will update our webpack configuration: we will update our CSS rule to target only the
-_global_ folder:
+Ahora actualizaremos nuestra configuración de _webpack_: actualizaremos nuestra regla _CSS_ para que se dirija únicamente a la carpeta
+_global_:
 
 _./webpack.config.js_
 
@@ -49,7 +49,7 @@ _./webpack.config.js_
   },
 ```
 
-- Let's constraint this rule only for the _global-css_ folder.
+- Vamos a restringir esta regla sólo para la carpeta _global-css_.
 
 ```diff
       {
@@ -68,14 +68,14 @@ _./webpack.config.js_
     ],
 ```
 
-- Let's check that we ain't broke anything :) (remember to stop and restart when you update the webpack config).
+- Vamos a comprobar que no hemos roto nada :) (recuerda parar y reiniciar cuando actualices la configuración de _webpack_).
 
 ```bash
 npm start
 ```
 
-Now is time to configure css modules for the rest of css files let's start with the minimum ,creating an extra
-rule, excluding _global-css_ path for that rule, adding css modules support and camel case sintax when consuming selector from js files.
+Ahora es el momento de configurar los _css modules_ para el resto de los archivos css. Vamos a empezar con el mínimo, creando una regla extra,
+excluyendo la ruta _global-css_ para esa regla, añadiendo el soporte de _css modules_ y la sintaxis _camel case_ al consumir el selector de los archivos _js_.
 
 ```diff
       {
@@ -110,8 +110,8 @@ rule, excluding _global-css_ path for that rule, adding css modules support and 
     ],
 ```
 
-- Since we are going to import the local CSS files directly into our TypeScript files, we have to tell TypeScript that
-  CSS is a valid module :), let's ask him to allow _css_ and _scss_ extensions (we will declare them as valid modules):
+- Como vamos a importar los archivos _CSS_ locales directamente a nuestros archivos _TypeScript_, tenemos que decirle a _TypeScript_ que
+  _CSS_ es un módulo válido :), vamos a pedirle que permita las extensiones _css_ y _scss_ (las declararemos como módulos válidos):
 
 _./src/declaration.d.ts_
 
@@ -120,7 +120,7 @@ declare module "*.css";
 declare module "*.scss";
 ```
 
-- And let's refactor the login styles:
+- Y refactoricemos los estilos de _login_:
 
 _./src/pods/login/login.styles.css_
 
@@ -141,7 +141,7 @@ _./src/pods/login/login.styles.css_
 }
 ```
 
-- Let's remove them from the global css
+- Vamos a eliminarlas del _css_ global
 
 _./global-css/styles.css_
 
@@ -171,10 +171,10 @@ _./global-css/styles.css_
 -}
 ```
 
-- Now in order to use this CSS file, we will have to import it, and use _camelCase_ to
-  name the selectors (selectors with dash is a pain in the neck to use it we will have to
-  use brackets to access the properties, by default CSS modules will convert it to camel
-  case notation)
+- Ahora para usar este archivo CSS, tendremos que importarlo, y usar _camelCase_ para
+  los selectores (los selectores con guión son un dolor de cabeza para utilizarlo tendremos que
+  usar paréntesis para acceder a las propiedades, por defecto los _CSS modules_ lo convertirán a notación
+  _case_)
 
 _./src/pods/login/login.component.tsx_
 
@@ -194,15 +194,15 @@ _./src/pods/login/login.component.tsx_
         </Form>
 ```
 
-- Let's get the thing working:
+- Hagamos que la cosa funcione:
 
 ```bash
 npm start
 ```
 
-And let's check with devtools what going on... there's something ugly, algtough we can navigate to the prop, we are getting random css selector names, maybe this can be ok ir we are in production mode, but this can be a pain in the neck if you have inspect our CSS code :(
+Y vamos a comprobar con _devtools_ lo que está pasando... hay algo feo, aunque podemos navegar a la _prop_, estamos recibiendo nombres de selectores _css_ al azar, tal vez esto puede estar bien si estamos en modo de producción, pero esto puede ser un dolor de cabeza si estamos inspeccionando nuestro código CSS :(
 
-We are going to tell css loader that we are going to take control over how the selectors are named to avod collisions:
+Vamos a decirle al _css loader_ que vamos a tomar el control sobre cómo se nombran los selectores para evitar colisiones:
 
 _./webpack.config.js_
 
@@ -227,9 +227,9 @@ _./webpack.config.js_
         ],
 ```
 
-- Now if we inspect we can check that we are getting meaningfull names on the class names.
+- Ahora si inspeccionamos podemos comprobar que estamos obteniendo nombres significativos en los nombres de las clases.
 
-- Now that we are uinsg this prefixing, we can get rid of the manual prefixes that we added.
+- Ahora que estamos utilizando este prefijo, podemos deshacernos de los prefijos manuales que hemos añadido.
 
 _./src/pods/login/login.styles.css_
 
@@ -254,7 +254,7 @@ _./src/pods/login/login.styles.css_
 }
 ```
 
-and in the component:
+y en el componente:
 
 _./src/pods/login/login.component.tsx_
 
@@ -264,10 +264,10 @@ _./src/pods/login/login.component.tsx_
 +          <div className={css.container}>
 ```
 
-- Just to check that we won't have css name collisions, let's refactor the list
-  component + styling:
+- Sólo para comprobar que no tendremos colisiones de nombres css, vamos a refactorizar la lista
+  componente + estilos:
 
-- Let's create a local css that will be associated to the list component:
+- Vamos a crear un _css_ local que se asociará al componente de la lista:
 
 _./src/pods/components/list.styles.css_
 
@@ -291,7 +291,7 @@ _./src/pods/components/list.styles.css_
 }
 ```
 
-- Let's rename the list container to _container_, and remove all the manual prefixes
+- Cambiemos el nombre del contenedor de la lista a _container_, y eliminemos todos los prefijos manuales
 
 _./src/pods/components/list.styles.css_
 
@@ -319,7 +319,7 @@ _./src/pods/components/list.styles.css_
 
 ```
 
-- Let's update our component with the new simplified class names:
+- Actualicemos nuestro componente con los nuevos nombres de clase simplificados:
 
 _./src/pods/components/list.component.tsx_
 
@@ -338,7 +338,7 @@ _./src/pods/components/list.component.tsx_
 
 ```
 
-- Let's remove the global styles entries:
+- Vamos a eliminar las entradas de estilos globales:
 
 _./src/global-css/_
 
@@ -371,13 +371,13 @@ _./src/global-css/_
 - }
 ```
 
-- As we can see we can have two selectors using the same name and they won't collide, this
-  is quite useful when developing components, we can have a local mindset per component.
+- Como podemos ver podemos tener dos selectores con el mismo nombre y no colisionarán, esto
+  es bastante útil a la hora de desarrollar componentes, podemos tener un _mindset local_ por componente.
 
-- Just a last thing to take into account: this _css.whatever_ is just an string (we can
-  check this by debugging using the dev tools).
+- Sólo una última cosa a tener en cuenta: este _css.whatever_ es sólo una cadena de texto(podemos
+  comprobarlo depurando con las herramientas de desarrollo).
 
-How can I add more than one class to a given element? By using interpolation, a dummy example e.g.
+¿Cómo puedo añadir más de una clase a un elemento dado? Utilizando la interpolación, un ejemplo ficticio, por ejemplo
 
 _./src/list.styles.css_
 
@@ -408,17 +408,17 @@ export const ListComponent: React.FC<Props> = (props) => {
 +      <div className={`${css.container} ${css.someAdditionalClass}`}>
 ```
 
-One additionall enhancement that you could implement is a simple function that check if a given
-class exists or not (avoid undefined hell), you will find plenty of helpers like that named
-_class name composer_, _cnc_...
+Una mejora adicional que podría implementar es una simple función que compruebe si una clase dada
+existe o no (para evitar el infierno de lo indefinido), encontrarás muchos _helpers_ como ese llamado
+_nombre de la clase compositor_, _cnc_...
 
-- Instead of reinventing the wheel we can give a try to one of the built in helpers:
+- En lugar de reinventar la rueda podemos probar uno de los _helpers_ incorporados:
 
 ```bash
 npm install classnames --save
 ```
 
-- And let's make use of it
+- Y lo utilizamos
 
 _./src/list.components.tsx_
 
@@ -432,5 +432,5 @@ _./src/list.components.tsx_
 +      <div className={classNames(css.container, css.someAdditionalClass)}>
 ```
 
-Excercise: time for you to give a try to the power of css modules, can you migrate the
-heading styles to a css modules approach? this is located under _./src/layout/app.layout_ path.
+Ejercicio: es hora de que pruebes el poder de los _css modules_, ¿puedes migrar los
+estilos del encabezado a _css modules_? este se encuentra en la ruta _./src/layout/app.layout_.

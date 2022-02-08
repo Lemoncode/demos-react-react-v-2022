@@ -1,45 +1,45 @@
 # APIS
 
-Well the app is getting into shape :), now we are going to dig deeper into the pod concept, our goal is to have
-a rich pod, but separating concerns and having each file with a clear goal.
+Bueno la aplicación va tomando forma :), ahora vamos a profundizar en el concepto de _pod_, nuestro objetivo es tener
+un _pod_ rico, pero separando las procesos y teniendo cada archivo con un objetivo claro.
 
-In this example we will extract the rest api access from the container into a separate file, we will discuss
-where to place this funcionallity and how distinguish between server API model and pod View model, and how to
-perform conversions between entities.
+En este ejemplo vamos a extraer el acceso a la _rest API_ del contenedor en un archivo separado, vamos a discutir
+dónde colocar esta funcionalidad y cómo distinguir entre el modelo API del servidor y el modelo _View_ del _pod_, y cómo
+realizar conversiones entre entidades.
 
-# Step by Step Guide
+# Pasos
 
-- So now we want to extract the code that access to an API rest from the container, our firs instinct could be to create
-  a root _/api/_ folder, but what problems could we have by using this?
+- Así que ahora queremos extraer el código que accede a una _rest API_ del contenedor, nuestro primer instinto podría ser crear
+  una carpeta raíz _/api/_, pero ¿qué problemas podríamos tener al usar esto?
 
-- We are taking far away related assets, each time we want to touch the repo and we are on the container we have
-  to dig in to the folder api deep blue sea.
+- Estamos llevando lejos los _assets_ relacionados, cada vez que queremos tocar el repo y estamos en el contenedor tenemos
+  que escarbar en la carpeta _api deep blue sea_.
 
-- Is hard to know which api is being used where, maybe we can introduce some change by mistake in a given api
-  that could impact another pod.
+- Es difícil saber qué _api_ se está usando y dónde, quizás podamos introducir algún cambio por error en una _api_ determinada
+  que pueda afectar a otro _pod_.
 
-- It's easy to generate conflicts with other developers in the team since we are updating common stuff.
+- Es fácil generar conflictos con otros desarrolladores del equipo ya que estamos actualizando cosas comunes.
 
-- If we want to extract the pod functionality we have to grant some files from the pod, some other from the api folder,
-  is not straight forward.
+- Si queremos extraer la funcionalidad del _pod_ tenemos que conceder algunos archivos del pod, otros de la carpeta api,
+  no es sencillo.
 
-So let's try a radical change, let's store the api inside the pod... _WTF !!?!?!?! but then if you want to reuse it what happens_:
+Así que vamos a intentar un cambio radical, vamos a almacenar la _api_ dentro del _pod_... pero luego si quieres reutilizarla qué pasa:
 
-- Usually most of the calls you are going to make to a REST API will be just used by that give pod and no other pods.
-- If there is a call to a given REST API that will be heavily resued by other pods (for instance lookups etc...), then
-  we can promote that api to a _core/apis_ folder and use it every where.
+- Normalmente la mayoría de las llamadas que vas a hacer a una _api rest_ sólo serán utilizadas por ese pod dado y no por otros pods.
+- Si hay una llamada a una _api rest_ que es muy utilizada por otros pods (por ejemplo, búsquedas, etc.), entonces
+  podemos promocionar esa _api_ a una carpeta _core/apis_ y usarla en todos los sitios.
 
-- Let's start refactoring the login page, in this case we will go one step further:
+- Empecemos a refactorizar la página de login, en este caso iremos un paso más allá:
 
-  - We have to be prepared for the "real thing" integration, right now we are just check some dummy user/password in a
-    synchronous way.
-  - Why not creating a client API that will return a promise with the expected result, by following this approach:
-    - Once we get the real server API we only need to update the api file, the rest of assets / components won't
-      be affected.
-    - We can configure using an environment variable whether to use the real or the mock client api (this will let us
-      perform e2e testing, or if the server is down keep on progressing using the mock approach).
+  - Tenemos que estar preparados para la integración "real", ahora mismo sólo estamos comprobando algún usuario/contraseña ficticio de forma
+    manera sincrónica.
+  - Por qué no crear una _API_ de cliente que devuelva una promesa con el resultado esperado, siguiendo este enfoque:
+    - Una vez que obtenemos la API del servidor real sólo tenemos que actualizar el archivo _api_, el resto de los activos / componentes no
+      se verán afectados.
+    - Podemos configurar mediante una variable de entorno si queremos utilizar la api real o el cliente simulado (esto nos permitirá
+      (esto nos permitirá realizar pruebas _e2e_, o si el servidor está caído seguir avanzando con el _mock_).
 
-- First let's simulate a client API:
+- Primero vamos a simular una API de cliente:
 
 _./pods/login/login.api.ts_
 
@@ -58,10 +58,10 @@ export const doLogin = (
 };
 ```
 
-> For the sake of simplicity we are using the standar promise handling, we could use async await but it would
-> need some extra setup plumbing (regenerator runtime).
+> Para simplificar estamos usando el manejo de promesas estándar, podríamos usar async await pero necesitaría
+> alguna configuración extra (regenerator runtime).
 
-- And now let's consume it in the login container.
+- Y ahora vamos a consumirlo en el contenedor del _login_.
 
 _./src/pods/login/login.container.tsx_
 
@@ -88,9 +88,9 @@ _./src/pods/login/login.container.tsx_
   };
 ```
 
-- This is not api related, but is a good moment to check how easy is to create a custom component,
-  if we take a look to this container, it is starting to have some code that is not related with
-  rendering, we may think about encapsulating some funcionality in a custom hook, something like:
+- Esto no está relacionado con la api, pero es un buen momento para comprobar lo fácil que es crear un componente personalizado,
+  si echamos un vistazo a este contenedor, está empezando a tener algo de código que no está relacionado con lo
+  renderizado, podemos pensar en encapsular alguna funcionalidad en un hook personalizado, algo así:
 
 ```diff
 + const useLoginHook = () => {
@@ -130,34 +130,34 @@ export const LoginContainer: React.FC = () => {
 };
 ```
 
-We could even go on step forward and encapsulate handleLogin in the hook, do you want to give a try?
-Is it a good idea?
+Incluso podríamos ir un paso más allá y encapsular _handleLogin_ en el _hook_, ¿quieres probar?
+¿Es una buena idea?
 
-- Now it's time to apply this refactor to the list pod, BUUUUUUT we have a more complex scenario:
+- Ahora es el momento de aplicar este _refactor_ al _pod_ de la lista, pero tenemos un escenario más complejo:
 
-  - In this case our API is returning a list of entities (is not a simple type).
-  - This server entities may differ from the entities that we are using in our pod, for instance:
-    - Is a third party api and returns a complex structure, and we only need some fields (for instance
-      open hotel apis).
-    - Is a third party api and the way of naming some fields is not the same as the dictionary we are
-      using in our domain.
-    - The same view is hitting several API providers (e.g. you want to show hotels availability from
-      different beds providers, each of them have their own contracts).
-    - The third party api returns some fields, but we need to apply some transformations:
-      - Date formatting.
-      - Doing some calculations (for instance an API returns us a list of trainings and we just want to show
-        a pill with the total number).
+  - En este caso nuestra API está devolviendo una lista de entidades (no es un tipo simple).
+  - Estas entidades del servidor pueden diferir de las entidades que estamos utilizando en nuestro _pod_, por ejemplo:
+    - Es una _api_ de terceros y devuelve una estructura compleja, y nosotros sólo necesitamos algunos campos (por ejemplo
+      _open hotel apis_).
+    - Es una _api_ de terceros y la forma de nombrar algunos campos no es la misma como estamos
+      usando en nuestro dominio.
+    - La misma vista está golpeando a varios proveedores de _APIs_ (por ejemplo, se quiere mostrar la disponibilidad de hoteles de
+      diferentes proveedores de camas, cada uno de los cuales tiene sus propios contratos).
+    - La _api_ de terceros devuelve algunos campos, pero necesitamos aplicar algunas transformaciones:
+      - Formateo de fechas.
+      - Hacer algunos cálculos (por ejemplo una _API_ nos devuelve una lista de formaciones y sólo queremos mostrar
+        una píldora con el número total).
 
-- In order to control this we introduce new pieces:
-  - The ViewModel are the entities related to the pod UI.
-  - The ApiModel are the entities that the server API (Rest API) exposes.
-  - A Mapper is the bridge between the ViewModel and API and viceversa: this are just functions that map the
-    data in both ways applying the needed transformations.
+- Para controlar esto introducimos nuevas piezas:
+  - El _ViewModel_ son las entidades relacionadas con el _pod UI_.
+  - El _ApiModel_ son las entidades que expone la _API_ del servidor (_Rest API_).
+  - Un _Mapper_ es el puente entre el _ViewModel_ y la _API_ y viceversa: se trata de funciones que mapean los
+    datos en ambos sentidos aplicando las transformaciones necesarias.
 
-Our main goal is to preprocess the data so the View (UI) has to focus on displaying the information, rhater
-that adapt it from the server to the client.
+Nuestro objetivo principal es preprocesar los datos para que la Vista (_UI_) tenga que centrarse en mostrar la información, después
+que adaptarla desde el servidor al cliente.
 
-- Let's get started, first we will create the list api:
+- Empecemos, primero crearemos la api de la lista:
 
 _./src/pods/list/list.api.ts_
 
@@ -170,7 +170,7 @@ export const getMemberCollection = (): Promise<MemberEntity[]> =>
   );
 ```
 
-- And let's consume it in the container:
+- Y vamos a consumirlo en el contenedor:
 
 _./src/pods/list/list.container.ts_
 
@@ -196,11 +196,11 @@ export const ListContainer: React.FC = () => {
 };
 ```
 
-- That was fine, but are doing a dangerous assumption, in the api we are directly returning
-  a viewmodel entity, but the Github API returns lot more data, even the names could not be
-  the same as the ones we are using, we should establish an _api.model_:
+- Eso estaba bien, pero estamos haciendo una suposición peligrosa, en la _api_ estamos devolviendo directamente
+  una entidad _viewmodel_, pero la _API_ de _Github_ devuelve muchos más datos, incluso los nombres podrían no ser
+  los mismos que estamos utilizando, deberíamos establecer un _api.model_:
 
-We can take a look to the real api json result and create a more accurate entity:
+Podemos echar un vistazo al resultado real de la api y crear una entidad más precisa:
 
 https://api.github.com/orgs/lemoncode/members
 
@@ -229,7 +229,7 @@ export interface MemberEntityApi {
 }
 ```
 
-Let's update our list api just to consume the real server entity :)
+Actualicemos nuestra _api_ de la lista para consumir la entidad real del servidor :)
 
 _./src/pods/list.api.ts_
 
@@ -244,22 +244,22 @@ _./src/pods/list.api.ts_
   .then((response) => response.json())
 ```
 
-Now we get an error on the list container, can you tell me whats going on?
+Ahora nos da un error en el contenedor de la lista, ¿podéis decirme qué pasa?
 
-To solve this we are going to create a separate piece that will transform from
-_MemberEntityApi_ to _MemberEntity_ (viewModel), we will call this a _mapper_,
-things to take into considerations:
+Para solucionar esto vamos a crear una pieza separada que transformará de
+_MemberEntityApi_ a _MemberEntity_ (viewModel), a esto lo llamaremos un _mapper_,
+cosas a tener en cuenta:
 
-- In this case the solution is straight forward, usually we will have to handle
-  date conversions, field names that do not match, info that can be nested,
-  or even some extra calcs to be performed.
-- Mappers are an excellent candidate to be implemented using TDD, you should
-  be prepared to cover edge cases (null object, undefined, no results...).
-- In a read / write form, we will map in both ways api -> vm and vm -> api
-  (data retrieval, data write).
+- En este caso la solución es sencilla, normalmente tendremos que manejar
+  conversiones de fechas, nombres de campos que no coinciden, información que puede ser anidada,
+  o incluso algunos cálculos adicionales que hay que realizar.
+- Los mapeadores son un excelente candidato para ser implementados usando _TDD_, debes
+  estar preparado para cubrir casos de borde (objeto nulo, indefinido, sin resultados...).
+- En una forma de lectura/escritura, mapearemos en ambos sentidos api -> vm y vm -> api
+  (recuperación de datos, escritura de datos).
 
-We are going to create a simple mapper, we won't take the time to ensure is robust
-(we can do this in the testing module).
+Vamos a crear un mapeador simple, pero no vamos a ver si nuestro código es robusto o no
+(podemos hacerlo en el módulo de pruebas).
 
 _./src/pods/list.mapper.ts_
 
@@ -281,7 +281,7 @@ export const mapMemberCollectionFromApiToVm = (
   memberCollection.map((member) => mapMemberFromApiToVm(member));
 ```
 
-- Now we could try to perform the mapping directly on the container, it would work, buuuut...
+- Ahora podríamos intentar realizar el mapeo directamente en el contenedor, funcionaría, pero...
 
 _./src/pods/list/list.container.tsx_
 
@@ -307,18 +307,18 @@ export const ListContainer: React.FC = () => {
 };
 ```
 
-But there's something dirty here:
+Pero aquí hay algo que no está bien:
 
-- The view should not be aware of a model different
-  than the Viewmodel.
+- La vista no debe ser consciente de un modelo diferente
+  que el _Viewmodel_.
 
-- The view is taking care of the transformation process, this should
-  be transparent for the UI.
+- La vista se está encargando del proceso de transformación, esto debería
+  ser transparente para la _UI_.
 
-Let's add one more component, the repository:
+Vamos a añadir un componente más, el repositorio:
 
-- The goal of this piece is to provide an API that talks "Viewmodelish".
-- It will let us decouple the api model from the view.
+- El objetivo de esta pieza es proporcionar una _API_ que hable _"Viewmodelish"_.
+- Nos permitirá desacoplar el modelo _api_ de la vista.
 
 _./src/list/list.repository.ts_
 
@@ -336,7 +336,7 @@ export const getMemberCollection = (): Promise<MemberEntity[]> => {
 };
 ```
 
-And now let's simplify our list container:
+Y ahora vamos a simplificar nuestro contenedor de la lista:
 
 ```diff
 import React from "react";
@@ -361,35 +361,35 @@ export const ListContainer: React.FC = () => {
 };
 ```
 
-What benefits are we getting from following this approach (in a real scenario):
+Qué beneficios obtenemos al seguir este enfoque (en un escenario real):
 
-- Each part does it's own job.
-- In the future it could be quite easy to promote an api + model to common if needed, we
-  only need to create the repository entries to adapt them to the viewmodel in each pod where
-  is being used.
-- We get separate parts that do one thing and only one thing.
-- All the pods have an homogeneus structure.
-- We could even specialize resource if needed.
-- We have simple entry point for a developer, this is your task, open this pod, this 5 files
-  are you need to touch (plus some common goodies).
-- We get less conflicts when a team is working in parallel (each member can work on a separate
-  pod).
-- We can industrialize processes (less magic, more deterministic steps)
+- Cada parte hace su propio trabajo.
+- En el futuro podría ser bastante fácil promover una api + modelo a común si es necesario, nosotros
+  sólo necesitamos crear las entradas del repositorio para adaptarlas al _viewmodel_ en cada _pod_ donde
+  se está utilizando.
+- Obtenemos partes separadas que hacen una cosa y sólo una cosa.
+- Todos los _pods_ tienen una estructura homogénea.
+- Incluso podríamos especializar los recursos si fuera necesario.
+- Tenemos un punto de entrada simple para un desarrollador, esta es tu tarea, abre este pod, estos 5 archivos
+  son los que tienes que tocar (además de algunas cosas comunes).
+- Tenemos menos conflictos cuando un equipo trabaja en paralelo (cada miembro puede trabajar en un
+  _pod_).
+- Podemos industrializar los procesos (menos magia, más pasos deterministas)
 
-** Excercise: Let's do the same with the detail pod **
+** Ejercicio: Hagamos lo mismo con el _pod_ de detalles **
 
-Steps:
+Pasos:
 
-- Create an API model.
-- Extract the API.
-- Create a mapper API > Vm
-- Use it on the container.
+- Crear un modelo de _API_.
+- Extraer la _API_.
+- Crear un _API mapper_ > _Vm_
+- Utilizarlo en el contenedor.
 
-- We can get the API model from
+- Podemos obtener el modelo de la _API_ desde
 
 https://api.github.com/users/brauliodiez
 
-- Let's build it:
+- Vamos a construirlo:
 
 _./src/detail/detail.api-model.ts_
 
@@ -429,7 +429,7 @@ export interface MemberDetailEntityApi {
 }
 ```
 
-Let's create extract the API:
+Vamos a extraer la _API_
 
 _./src/pods/detail.api.ts_
 
@@ -442,7 +442,7 @@ export const getMemberDetail = (id: string): Promise<MemberDetailEntityApi> =>
   );
 ```
 
-Let's create the mapper:
+Vamos a crear el _mapper_:
 
 _./src/pods/detail.mapper.ts_
 
@@ -461,7 +461,7 @@ export const mapMemberFromApiToVm = (
 });
 ```
 
-Let's create the repository:
+Vamos a crear el repositorio:
 
 _./src/pods/detail.repository.ts_
 
@@ -481,7 +481,7 @@ export const getMemberCollection = (
 };
 ```
 
-And finally let's consume it in the container:
+Y por último vamos a consumirlo en el contenedor:
 
 _./src/detail.container.tsx_
 
@@ -497,3 +497,5 @@ _./src/detail.container.tsx_
 +      .then(memberDetail => setMember(memberDetail));
   }, []);
 ```
+
+
