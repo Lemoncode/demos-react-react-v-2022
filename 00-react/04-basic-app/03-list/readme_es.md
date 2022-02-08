@@ -22,7 +22,7 @@ en el que se muestra como crear una lista de usuarios paso a paso.
 npm install
 ```
 
-- Si queremos ver que tipo de datos vamos a manejar, podemos abrir el navegador web y ver que devuelve la API Rest de Github.
+- Si queremos ver qué tipo de datos vamos a manejar, podemos abrir el navegador web y ver que devuelve la API Rest de Github.
 
 ```bash
 https://api.github.com/orgs/lemoncode/members
@@ -55,7 +55,7 @@ export const ListPage: React.FC = () => {
 };
 ```
 
-- Vamos a ahor a hacer la carga de datos:
+- Vamos ahora a hacer la carga de datos:
 
 _./src/list.tsx_
 
@@ -72,7 +72,7 @@ export const ListPage: React.FC = () => {
   return (
 ```
 
-- Vamos a comprobar que efectivamente se estan cargando los datos:
+- Vamos a comprobar que efectivamente se están cargando los datos:
 
 _./src/list.tsx_
 
@@ -151,7 +151,7 @@ _./src/list.tsx_
 ```
 
 - Otra forma de crear la url es usando _generatePath_, pero ojo en la versión 5
-esto si hacía el encoding de los parametros, en la 6 no (https://github.com/remix-run/react-router/issues/7428)
+esto si hacía el encoding de los parámetros, en la 6 no (https://github.com/remix-run/react-router/issues/7428)
 
 _./src/list.tsx_
 
@@ -170,7 +170,7 @@ _./src/list.tsx_
   </td>
 ```
 
-¿En que impactar que no haga encoding? Si quieres hacer la prueba sustituye el código dentro del useEffect por este;
+¿En qué impactar que no haga encoding? Si quieres hacer la prueba sustituye el código dentro del useEffect por este;
 
 ```tsx
 setMembers([{ id: "2", login: "a/b", avatar_url: "" }]);
@@ -179,16 +179,16 @@ setMembers([{ id: "2", login: "a/b", avatar_url: "" }]);
 > En la parte de arquitectura aprenderemos a quitar "strings mágicos" de nuestra
 > aplicación, ir harcodeando urls por nuestras páginas no es buena idea.
 
-- Muy interesante, ¿ Pero como puedo leer el id del usuario que estoy
-  recibiendo por el parametro de la URL?
+- Muy interesante, ¿Pero cómo puedo leer el id del usuario que estoy
+  recibiendo por el parámetro de la URL?
 
-Primero vamos a definir el parametro en la url de nuestro router
+Primero vamos a definir el parámetro en la url de nuestro router
 
 _./src/app.tsx_
 
 ```diff
--  <Route path="/detail">
-+  <Route path="/detail/:id">
+-  <Route path="/detail" element={<DetailPage />} />
++  <Route path="/detail/:id" element={<DetailPage />} />
     <DetailPage />
   </Route>
 ```
@@ -225,4 +225,4 @@ con clases en vivo, como edición continua con mentorización, para
 que puedas ir a tu ritmo y aprender mucho.
 
 Y si tienes ganas de meterte una zambullida en el mundo _devops_
-apuntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)
+apúntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)

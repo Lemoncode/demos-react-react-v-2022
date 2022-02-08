@@ -183,7 +183,7 @@ First we are going to define the parameter in the url of our router.
 _./src/app.tsx_
 
 ```diff
--  <Route path="/detail">
+-  <Route path="/detail" element={<DetailPage />} />
 +  <Route path="/detail/:id" element={<DetailPage/>}/>
   </Route>
 ```

@@ -7,8 +7,8 @@ Este ejemplo toma como punto de partida el ejemplo _00-boiler_.
 Partimos de una base en la que tenemos configurado webpack e
 instalado React, mostramos un mensaje de "Hola Mundo".
 
-Hemos hablado acerca de aplicaciones SPA, vamos a ver como
-utilizar un router en React y crearemos 3 páginas logicas (todas en blanco,
+Hemos hablado acerca de aplicaciones SPA, vamos a ver cómo
+utilizar un router en React y crearemos 3 páginas lógicas (todas en blanco,
 sólo con un enlace para navegar entre ellas),
 navegando entre ellas:
 
@@ -105,7 +105,7 @@ export const App = () => {
 };
 ```
 
-- Vamos a ejecutar y ver que pasa (podemos ir navegando tecleando en le url del 
+- Vamos a ejecutar y ver qué pasa (podemos ir navegando tecleando en le url del 
 navegador):
 
 ```bash
@@ -172,7 +172,7 @@ export const DetailPage: React.FC = () => {
 Genial... pero y si ahora quiero navegar desde JavaScript (por ejemplo la pulsar en un botón),
 tengo que usar un hook que me ofrecer React Router DOM:
 
-Vamos a añadir un bottón para navega desde login a la página de lista:
+Vamos a añadir un botón para navega desde login a la página de lista:
 
 _./src/login.tsx_
 
@@ -241,7 +241,7 @@ _./src/app.tsx_
 ```diff
 import React from "react";
 - import { BrowserRouter, Switch, Route } from "react-router-dom";
-+ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
++ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./login";
 import { ListPage } from "./list";
 import { DetailPage } from "./detail";
@@ -262,8 +262,8 @@ export const App = () => {
 ```
 
 - Hay una pega con todo esto y es que si te vas por ejemplo a la página de listado y pulsas en refresh (F5)
-  te da un error, ¿ Qué es lo que pasa aquí? Que va a servidor a intentar cargar esa ruta, y en el servidor
-  no existe... tenemos que definir un redirect en el servidor web para que sirva la página raiz.
+  te da un error, ¿Qué es lo que pasa aquí? Que va a servidor a intentar cargar esa ruta, y en el servidor
+  no existe... tenemos que definir un redirect en el servidor web para que sirva la página raíz.
 
 Si lo quieres arreglar en _webpack.config_ para desarrollar en local:
 
@@ -291,4 +291,4 @@ con clases en vivo, como edición continua con mentorización, para
 que puedas ir a tu ritmo y aprender mucho.
 
 Y si tienes ganas de meterte una zambullida en el mundo _devops_
-apuntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)
+apúntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)
