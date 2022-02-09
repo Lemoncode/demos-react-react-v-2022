@@ -5,7 +5,7 @@
 Este ejemplo toma como punto de partida el ejemplo _03-list_.
 
 Vamos a mostrar el detalle de un usuario de Github: para ellos
-nos quedamos con el id del usuario que elejimos en la lista,
+nos quedamos con el id del usuario que elegimos en la lista,
 llamamos a la API de Github para obtener sus detalles, y los
 mostramos en un componente.
 
@@ -17,7 +17,7 @@ mostramos en un componente.
 npm install
 ```
 
-- Si queremos ver que tipo de datos vamos a manejar, podemos abrir el navegador web y ver que devuelve la API Rest de Github.
+- Si queremos ver qué tipo de datos vamos a manejar, podemos abrir el navegador web y ver que devuelve la API Rest de Github.
 
 ```bash
 https://api.github.com/users/brauliodiez
@@ -66,7 +66,7 @@ export const DetailPage: React.FC = () => {
 };
 ```
 
-- Vamos a ahor a hacer la carga de datos:
+- Vamos ahora a hacer la carga de datos:
 
 _./src/detail.tsx_
 
@@ -92,7 +92,7 @@ export const DetailPage: React.FC = () => {
 };
 ```
 
-- Vamos a mostraro los datos:
+- Vamos a mostrar los datos:
 
 _./src/detail.tsx_
 
@@ -125,4 +125,4 @@ con clases en vivo, como edición continua con mentorización, para
 que puedas ir a tu ritmo y aprender mucho.
 
 Y si tienes ganas de meterte una zambullida en el mundo _devops_
-apuntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)
+apúntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)

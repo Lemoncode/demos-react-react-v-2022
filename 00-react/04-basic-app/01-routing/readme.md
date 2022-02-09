@@ -237,7 +237,7 @@ _./src/app.tsx_
 ```diff
 import React from "react";
 - import { BrowserRouter, Switch, Route } from "react-router-dom";
-+ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
++ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./login";
 import { ListPage } from "./list";
 import { DetailPage } from "./detail";
