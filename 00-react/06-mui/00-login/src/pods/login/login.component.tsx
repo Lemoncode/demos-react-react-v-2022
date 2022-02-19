@@ -1,9 +1,13 @@
 import React from "react";
 import { Login, createEmptyLogin } from "./login.vm";
 import { Formik, Form } from "formik";
-import { InputFormik } from "@/common/components";
+import { TextFieldFormik } from "@/common/components";
 import { formValidation } from "./login.validation";
 import css from "./login.styles.css";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
 
 interface Props {
   onLogin: (login: Login) => void;
@@ -13,24 +17,31 @@ export const LoginComponent: React.FC<Props> = (props) => {
   const { onLogin } = props;
 
   return (
-    <Formik
-      onSubmit={onLogin}
-      initialValues={createEmptyLogin()}
-      validate={formValidation.validateForm}
-    >
-      {() => (
-        <Form>
-          <div className={css.container}>
-            <InputFormik name="username" placeholder="Username" />
-            <InputFormik
-              name="password"
-              placeholder="Password"
-              type="password"
-            />
-            <button type="submit">login</button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <Card sx={{ padding: "20px" }}>
+      <CardHeader title="Login" />
+      <CardContent>
+        <Formik
+          onSubmit={onLogin}
+          initialValues={createEmptyLogin()}
+          validate={formValidation.validateForm}
+        >
+          {() => (
+            <Form>
+              <div className={css.container}>
+                <TextFieldFormik name="username" placeholder="Username" />
+                <TextFieldFormik
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                />
+                <Button variant="contained" type="submit">
+                  login
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </CardContent>
+    </Card>
   );
 };
