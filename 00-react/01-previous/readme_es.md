@@ -4,7 +4,7 @@
 
 En este ejemplo vamos a usar _codesandbox_ para crear nuestro primer proyecto en React.
 
-Puedes encontrar el ejemplo ya implementado en esta URL: https://codesandbox.io/s/intelligent-vaughan-menyg
+Puedes encontrar el ejemplo ya implementado en esta URL: https://codesandbox.io/s/strange-tdd-evsp07
 
 ## Paso a paso
 
@@ -32,22 +32,34 @@ _./public/index.html_
   _react native_. Nos hace falta una librería intermedia que se encarga de conectar
   React con un navegador web, esta librería es react-dom.
 
-- Es hora de abrirl el fichero que está en _./src/index.js_ aquí vemos como referenciamos
-  al div root que hemos creado antes, e invocamos a ReactDom.Render, pasandole:
+- Es hora de abrir el fichero que está en _./src/index.js_ aquí vemos como referenciamos
+  al div root que hemos creado antes, creamos la raíz de la aplicación y la renderizamos, para ello:
 
-  - Cómo primer parametros el componente React Raíz que queremos instanciar.
-  - Cómo segundo parametro el _div_ donde se va a renderizar (el div id root que creamos anteriormente).
+  - Obtenemos el elemento del dom con el id "root" (el que estaba creado en el HTML principal).
+  - Creamos la app React en el elemento root.
+  - Empezamos a pintarla (fijate que le pasamos el componente raíz App)
+
+> Ojo esta forma de crear la aplicación React es nueva (desde la versión 18), en versiones anteriores
+se usaba _React.render()_
+
 
 _./public/index.js_
 
 ```jsx
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+import App from "./App";
+
 const rootElement = document.getElementById("root");
-ReactDOM.render(
-  <React.StrictMode>
+const root = createRoot(rootElement);
+
+root.render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
-  rootElement
+  </StrictMode>
 );
+
 ```
 
 > ¿ Qué es React.StrictMode? Es una ayuda para detectar problemas en tiempo de desarrollo,
