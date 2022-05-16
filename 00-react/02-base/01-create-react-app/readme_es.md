@@ -8,7 +8,13 @@ https://create-react-app.dev/
 npx create-react-app my-app
 ```
 
-Cómo hacer un upgrade
+Si te da algún problema de versión antigua, prueba a borrar la caché de _npx_
+
+```bash
+sudo npx clear-npx-cache
+```
+
+Si un día necesitas hacer un upgrade de un proyecto existente, lo puedes hacer ejecutando el siguiente comando::
 
 ```bash
 npm install react-scripts@latest
