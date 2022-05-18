@@ -49,10 +49,8 @@ _./src/app.tsx_
 import React from "react";
 
 export const App = () => {
-  return (
-    <h1>Hello React !!</h1>
-  )
-}
+  return <h1>Hello React !!</h1>;
+};
 ```
 
 - Es hora de instanciar ese compente principal, para poder integrarlo con el navegador
@@ -62,15 +60,13 @@ _./src/index.tsx_
 
 ```tsx
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { App } from "./app";
 
-ReactDOM.render(
-  <div>
-    <App />
-  </div>,
-  document.getElementById("root")
-);
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(<App />);
 ```
 
 - Vamos por buen camino, pero si intentamos ejecutar esto no va fallar, ya que _babel_ no sabe
@@ -101,7 +97,7 @@ _.babelrc_
 > En otras palabras, "rc" es algo que se quedó atrás en los años sesenta, y se ha utilizado con bastante frecuencia para los archivos de configuración en diferentes tipos de programas desde entonces, incluyendo Node, Babel y muchos, muchos otros.
 > Más información [en stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs).
 
-> Otra curiosidad... qué es un _preset_ ... empecemos por lo que es un plugin de babel: las transformaciones de babel 
+> Otra curiosidad... qué es un _preset_ ... empecemos por lo que es un plugin de babel: las transformaciones de babel
 > se habilitan aplicando plugins, hay un montón de plugins y si tienes que ir añadiendo uno a uno se puede convertir en una pesadilla,
 > para hacer esto más fácil, babel ha agrupado conjuntos comunes de plugins en _presets_, por ejemplo @babel-preset-react
 > incluye los siguientes plugins:
