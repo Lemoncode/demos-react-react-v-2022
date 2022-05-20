@@ -20,9 +20,7 @@ const MyChildComponent = () => {
   });
 
   React.useEffect(() => {
-    console.log(
-      "A. Called when the component is mounted and after every render"
-    );
+    console.log("A. Called right after every render");
 
     return () => console.log("B. Cleanup function called after every render");
   });
