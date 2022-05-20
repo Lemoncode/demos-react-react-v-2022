@@ -2,7 +2,7 @@ import React from "react";
 
 export const MyChildComponent = () => {
   React.useEffect(() => {
-    console.log("Component just mounted on the DOM");
+    console.log("El componente se acaba de montar en el DOM");
 
     return () => console.log("El componente se acaba de desmontar del DOM");
   }, []);
