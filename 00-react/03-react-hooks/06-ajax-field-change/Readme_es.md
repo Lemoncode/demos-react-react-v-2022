@@ -73,6 +73,8 @@ Vamos a probar con otras API.
 Ojo, que esto impactara en el codigo, tenemos que meter algún cambio y
 ver que devuelven estas api, esto lo haremos como ejercicio.
 
+**EJERCICIO RICK AND MORTY API**
+
 https://rickandmortyapi.com/
 
 https://swapi.dev/documentation#auth
@@ -92,6 +94,8 @@ npm start
 ```
 
 ## BONUS
+
+### A. useDebounce
 
 Esto está bien, pero no es optimo, normalmente queremos disparar la busqueda
 justo cuando el usuario ha dejado de teclear para evitar hacer llamadas
@@ -116,12 +120,55 @@ export const MyComponent = () => {
 
   // Load full list when the component gets mounted and filter gets updated
   React.useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users?name_like=${filter}`)
+-    fetch(`https://jsonplaceholder.typicode.com/users?name_like=${filter}`)
++    fetch(`https://jsonplaceholder.typicode.com/users?name_like=${debouncedFilter}`)
+
       .then((response) => response.json())
       .then((json) => setUserCollection(json));
 -  }, [filter]);
 +  }, [debouncedFilter]);
 ```
+
+### B. useDeferredValue
+
+En React 18 han metido un nuevo hook interesante y es poder
+jugar actualizando a dos tiempos:
+
+- En el debounce nosotros artificialmente esperamos a
+  que el usuario deje de teclear para actualizar.
+
+- En useDeffered lo que hacemos es actualizar un valor con
+  un retraso.
+
+Esto nos puede servir cuando tenemos operaciones que pueden
+tardar más (por ejemplo pedir listad de fotos a una api , versus
+rellenar el texto de busqueda que queremos).
+
+Vamos a cambiar el uso de useDebounce por useDeferredValue:
+
+```diff
+export const MyComponent = () => {
+  const [filter, setFilter] = React.useState("");
+  const [userCollection, setUserCollection] = React.useState([]);
+-  const [debouncedFilter] = useDebounce(filter, 500);
++  const deferredFilter = React.useDeferredValue(filter, {timeoutMs:500 });
+```
+
+```diff
+  React.useEffect(() => {
+    fetch(
+-      `https://jsonplaceholder.typicode.com/users?name_like=${debouncedFilter}`
++      `https://jsonplaceholder.typicode.com/users?name_like=${deferredFilter}`
+
+    )
+      .then((response) => response.json())
+      .then((json) => setUserCollection(json));
+-  }, [debouncedFilter]);
++  }, [deferredFilter]);
+
+```
+
+Aquí no vemos mucho efecto, esto es más para da prioridades de renderizado.
 
 # ¿Te apuntas a nuestro máster?
 
