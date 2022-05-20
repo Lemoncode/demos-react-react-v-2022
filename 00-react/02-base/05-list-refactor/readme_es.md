@@ -59,7 +59,7 @@ export const App = () => {
 - Ahora si cometemos una equivocación al escribir uno de los campos en nuestro
   componente fila, el IDE nos lo marcará en rojo.
 
-- La siguiente mejor que vamos a introducir tiene que ver con el JSX que genramos,
+- La siguiente mejora que vamos a introducir tiene que ver con el JSX que genramos,
   fijate que apenas hemos metido una tabla y ya nos cuesta seguirlo, ¿No podríamos
   simplificar esto? La respuesta si, podemos extraer la parte que pinta un miembro
   en la tabla a un componente, esto lo podemos dejar en el mismo fichero o sacarlo
@@ -98,7 +98,7 @@ _./src/app.tsx_
 ```diff
 import React from "react";
 import { MemberEntity } from './model';
-+ import { MemberTableRow} from './member-table-row';
++ import { MemberTableRow} from './member-grid-row';
 ```
 
 ```diff
@@ -108,7 +108,7 @@ import { MemberEntity } from './model';
       <span className="header">Id</span>
       <span className="header">Name</span>
       {members.map((member) => (
-+          <MemberTableRow key={member.id} member={member}>
++          <MemberTableRow key={member.id} member={member}/>
 -          <React.Fragment key={member.id}>
 -            <img src={member.avatar_url} />
 -            <span>{member.id}</span>
@@ -131,7 +131,7 @@ _./src/member-table.tsx_
 ```tsx
 import React from "react";
 import { MemberEntity } from "./model";
-import { MemberTableRow } from "./member-table-row";
+import { MemberTableRow } from "./member-grid-row";
 
 export const MemberTable = () => {
   const [members, setMembers] = React.useState<MemberEntity[]>([]);
