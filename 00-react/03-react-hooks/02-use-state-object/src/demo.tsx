@@ -25,15 +25,6 @@ export const MyComponent: React.FC = () => {
           })
         }
       />
-      <input
-        value={userInfo.lastname}
-        onChange={(e) =>
-          setUserInfo({
-            ...userInfo,
-            lastname: e.target.value,
-          })
-        }
-      />
     </>
   );
 };

@@ -118,6 +118,8 @@ el valor de la propiedad que ha cambiado.
 - Vamos a hacer lo mismo para lastname, si quieres dale a la pausa en este
   video e inténtalo tu por tu cuenta.
 
+**EJERCICIO**
+
 ```diff
   return (
     <>
