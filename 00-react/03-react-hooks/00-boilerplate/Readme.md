@@ -1,23 +1,125 @@
-# 00 boilerplate
+# 03 Webpack React
 
-## Resume
+## Summary
 
-Starting point for the rest of examples.
+This example takes the _02-webpack-boiler_ example as a starting point.
 
-Is just a blank project created using create-react-app.
+We will go step by step adding the necessary configuration so that we integrate
+**React** into our build process.
 
-Hop into 01-use-state Readme.md and start with the fun :).
+# Step by Step guide
 
-# About Basefactor + Lemoncode
+- First we copy the previous example, and do a _npm install_
 
-We are an innovating team of Javascript experts, passionate about turning your ideas into robust products.
+```bash
+npm install
+```
 
-[Basefactor, consultancy by Lemoncode](http://www.basefactor.com) provides consultancy and coaching services.
+- Let's install _react_ and _react-dom_
 
-[Lemoncode](http://lemoncode.net/services/en/#en-home) provides training services.
+```bash
+npm install react react-dom --save
+```
 
-For the LATAM/Spanish audience we are running an Online Front End Master degree, more info: http://lemoncode.net/master-frontend
+- Let's install _react_ and _react-dom_ typings
 
-If you like the world of _backend_ you can sign up to our [Bootcamp backend Online Lemoncode](https://lemoncode.net/bootcamp-backend#bootcamp-backend/inicio).
+```bash
+npm install @types/react @types/react-dom --save-dev
+```
 
-And if you want to dive into the world _devops_ sign up for our [Bootcamp devops Online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio).
+This way we have the React library and the bindings to integrate with a web browser.
+
+- In the index.html we are going to put the _div_ that will serve as entry point to instantiate our React application. our React application.
+
+_./src/index.html_
+
+```diff
+  <body>
+-    <h1 class="my-text">Hello World !</h1>
++    <div id="root"></div>
+  </body>
+```
+
+- Let's create our first React component.
+
+_./src/app.tsx_
+
+```tsx
+import React from "react";
+
+export const App = () => {
+  return <h1>Hello React !!</h1>;
+};
+```
+
+- It's time to instantiate that main component, to be able to integrate it with the browser we have to make use of _ReactDOM.render_.
+
+_./src/index.tsx_
+
+```tsx
+import React from "react";
+import ReactDOM from "react-dom";
+import { App } from "./app";
+
+ReactDOM.render(
+  <div>
+    <App />
+  </div>,
+  document.getElementById("root")
+);
+```
+
+- We are on the right track, but if we try to run this it will fail, since _babel_ does not know how to transform the _jsx_ (remember that this was a sugar, which was actually an XML) into javaScript, in order for babel to be able to understand this we have to install the _preset_ _@babel/preset-react_
+
+First we install it and the configure it.
+
+```bash
+npm install @babel/preset-react --save-dev
+```
+
+_.babelrc_
+
+```diff
+{
+  "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript",
++     "@babel/preset-react"
+  ]
+}
+```
+
+> By the way the _rc_ suffix is pretty usual in linux it's stands for "runcom"
+> (CTSS system 1962-63) Script file containing startup instructions for an application program.
+> In other words, "rc" is just something that stuck from back in the sixties, and has been used quite often for configuration files in different sorts of programs since, including Node, Babel and many, many others.
+> More info [on stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs).
+
+> Another curiosity... what is a _preset_ ... let's start with what is a babel plugin: babel transformations are
+> enabled by applying plugins, there are plenty of plugins and if you have to go adding one by one it can become a nightmare,
+> in order to make this easier, babel has grouped common sets of plugins in _presets_, for instance @babel-preset-react
+> includes the following plugins:
+
+- @babel/plugin-syntax-jsx
+- @babel/plugin-transform-react-jsx
+- @babel/plugin-transform-react-display-name
+
+- Is time to double check the _webpack.config.js_
+
+- We can make sure that we have _ts_ and _tsx_ as valid extensions.
+- Also that in the loader we accept both _ts_ and _tsx_.
+- And in the app we have as entry point _index.tsx_.
+
+* Let's check that things are working as expected:
+
+```bash
+npm start
+```
+
+
+
+
+
+
+
+
+
