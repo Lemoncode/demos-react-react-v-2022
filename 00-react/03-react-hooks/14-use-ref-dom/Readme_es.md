@@ -73,6 +73,8 @@ export const MyComponent = () => {
 - Si ejecutamos, podemos ver como ahora nos da el resultado actual cuando pulsamos
   en el botón.
 
+Más info interesante sobre useRef y ForwardRef
+
 # ¿Te apuntas a nuestro máster?
 
 Si te ha gustado este ejemplo y tienes ganas de aprender Front End
