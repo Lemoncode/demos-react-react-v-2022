@@ -153,7 +153,7 @@ export const MyComponent = () => {
 -      setSeconds(1);
 -      secondsRef.current = 1;
 +      console.log(info.seconds);
-+      setInfo(info => {...info, seconds: 1})
++      setInfo(info => ({...info, seconds: 1}))
     }, 1000);
 
     setTimeout(() => {
