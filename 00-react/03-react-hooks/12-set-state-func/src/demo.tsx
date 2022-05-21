@@ -1,18 +1,18 @@
 import React from "react";
 
 export const MyComponent: React.FC = () => {
-  const [number, setNumber] = React.useState(0);
+  const [numero, setNumero] = React.useState(0);
 
   React.useEffect(() => {
     setTimeout(() => {
-      setNumber((number) => number + 1);
+      setNumero((numero) => numero + 1);
     }, 1500);
-    setNumber(1);
+    setNumero(1);
   }, []);
 
   return (
     <>
-      <h4>Number: {number}</h4>
+      <h4>El numero: {numero}</h4>
     </>
   );
 };
