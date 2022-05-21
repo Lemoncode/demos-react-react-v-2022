@@ -16,7 +16,9 @@ export const MyComponent = () => {
   const [username, setUsername] = React.useState("John");
   const [lastname, setLastname] = React.useState("Doe");
 
-  const resetNameCallback = React.useCallback(() => setUsername(""), []);
+  const resetNameCallback = React.useCallback(() => {
+    setUsername("");
+  }, []);
 
   return (
     <>
@@ -25,7 +27,7 @@ export const MyComponent = () => {
       </h3>
       <input value={username} onChange={(e) => setUsername(e.target.value)} />
       <input value={lastname} onChange={(e) => setLastname(e.target.value)} />
-      <ResetValue onReset={resetNameCallback}>Reset name</ResetValue>
+      <ResetValue onReset={resetNameCallback} />
     </>
   );
 };

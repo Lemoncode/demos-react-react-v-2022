@@ -3,10 +3,10 @@
 In the previous sample we saw how to make a component pure using
 _React.memo_, that's great, but when there's an issue
 what happens if we pass a function created inside the functional component to the child component?
-That  function will be always different on every render thus
+That function will be always different on every render thus
 the _memo_ won't take effect.
 
-How can we solve this? We can make use of _useCallback_, this won't mutate the setter 
+How can we solve this? We can make use of _useCallback_, this won't mutate the setter
 function unless we indicate any dependency (same approach as with _React.useEffect_).
 
 # Steps
@@ -53,19 +53,18 @@ export const MyComponent = () => {
       </h3>
       <input value={username} onChange={(e) => setUsername(e.target.value)} />
       <input value={lastname} onChange={(e) => setLastname(e.target.value)} />
-      <ResetValue onReset={resetNameCallback}>Reset name</ResetValue>
+      <ResetValue onReset={resetNameCallback} />
     </>
   );
 };
 ```
 
 - If we run the sample we will check that the render is always triggered
-  (_resetNameCallback_  is always recreated, shallow compare will fail).
+  (_resetNameCallback_ is always recreated, shallow compare will fail).
 
 - The trick here is to use _React.useCallback_ and passing as a second
-argument an empty array (it will just hold the reference for the function
-forever).
-
+  argument an empty array (it will just hold the reference for the function
+  forever).
 
 ```diff
 import React from "react";
