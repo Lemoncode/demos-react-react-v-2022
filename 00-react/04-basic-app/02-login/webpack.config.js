@@ -28,8 +28,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        loader: "url-loader",
+        type: "asset/resource",
       },
       {
         test: /\.html$/,

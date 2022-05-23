@@ -101,7 +101,7 @@ export const LoginPage: React.FC = () => {
 +   if(username === 'admin' && password === 'test') {
       navigate("/list");
 +   } else {
-+     alert("User / password not valid, psst... admin / test")
++     alert("User / password not valid, psst... admin / test");
 +   }
   };
 ```
