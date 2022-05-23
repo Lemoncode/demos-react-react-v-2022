@@ -6,22 +6,10 @@ Vamos a implementar un widget de satisfacción de clientes, basado en caras con 
 
 # Pasos
 
-- Tomaremos como punto de partida el ejemplo _15-promise-unmounted_. Copia el contenido del proyecto a una carpeta nueva y ejecuta _npm install_.
+- Tomaremos como punto de partida el ejemplo _14-memo-predicate_. Copia el contenido del proyecto a una carpeta nueva y ejecuta _npm install_.
 
 ```bash
 npm install
-```
-
-- Tenemos que hacer un ligero cambio en este ejemplo en nuestro _webpack.config.js_
-```diff
-...
-    {
-        test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
--        loader: "url-loader",
-+        type: "asset/resource",
-      },
-...
 ```
 
 - Copiamos la carpeta assets (puedes copiarlas de la implementación del ejemplo en github) dentro de _src/assets_.
@@ -68,15 +56,19 @@ npm install
 
 - Cambiamos el contenido de que tenía en el ejemplo anterior _src/demo.tsx_. Empezaremos por añadir algo hardcodeado en el fichero:
 
+_demo.tsx_
+
 ```tsx
 import * as React from "react";
 
-export const MyComponent = (props) => {
+interface Props {
+  level: number;
+}
+
+export const MyComponent = (props: Props) => {
   const { level } = props;
 
-  return (
-    <div className="somewhat-satisfied" />
-  )
+  return <div className="somewhat-satisfied" />;
 };
 ```
 
@@ -87,7 +79,6 @@ _./src/app.tsx_
 ```diff
 import React from "react";
 import { MyComponent } from "./demo";
-+ import "./styles.css";
 
 export const App = () => {
 
@@ -130,16 +121,15 @@ import * as React from 'react';
 +   if (level < 400) {
 +     return "somewhat-satisfied"
 +   }
-+ 
++
 +   return "very-satisfied"
 + }
 
-+ interface Props {
-+  level: number;
-+ }
+ interface Props {
+  level: number;
+ }
 
-- export const MyComponent = props => {
-+ export const MyComponent: React.FC<Props> = (props) => {
+export const MyComponent: React.FC<Props> = (props) => {
 
   const { level } = props;
 
@@ -190,7 +180,6 @@ npm start
 
 _./src/demo.tsx_
 
-
 ```diff
 import * as React from 'react';
 
@@ -216,10 +205,10 @@ const setSatisfactionClass = level => {
 }
 
 + const isSameRange = (prevValue, nextValue) => {
-+ 
++
 +   const prevValueClass = setSatisfactionClass(prevValue.level);
 +   const nextValueClass = setSatisfactionClass(nextValue.level);
-+ 
++
 +   return prevValueClass === nextValueClass;
 + }
 
@@ -227,6 +216,8 @@ const setSatisfactionClass = level => {
 + export const MyComponent: React.FC<Props> = React.memo( props => {
 
   const { level } = props;
+
++ console.log("repintando la carita...");
 
   return (
     <div className={setSatisfactionClass(level)}/>

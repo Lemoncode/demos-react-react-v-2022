@@ -31,8 +31,10 @@ interface Props {
   level: number;
 }
 
-export const MyComponent: React.FC<Props> = React.memo( props => {
+export const MyComponent = React.memo((props: Props) => {
   const { level } = props;
+
+  console.log("repintando la carita...");
 
   return <div className={setSatisfactionClass(level)} />;
 }, isSameRange);

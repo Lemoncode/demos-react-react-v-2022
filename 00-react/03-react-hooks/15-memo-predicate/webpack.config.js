@@ -24,7 +24,6 @@ module.exports = {
       },
       {
         test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
         type: "asset/resource",
       },
       {
