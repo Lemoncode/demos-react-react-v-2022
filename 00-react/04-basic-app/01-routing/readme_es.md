@@ -105,8 +105,8 @@ export const App = () => {
 };
 ```
 
-- Vamos a ejecutar y ver qué pasa (podemos ir navegando tecleando en le url del 
-navegador):
+- Vamos a ejecutar y ver qué pasa (podemos ir navegando tecleando en le url del
+  navegador, por ejemplo http://localhost:8081/#/list):
 
 ```bash
 npm start
@@ -279,6 +279,9 @@ _./webpack.config.js_
 +    historyApiFallback: true,
 +  },
 ```
+
+> NO TE OLVIDES DE PARAR EL SERVIDOR DE DESARROLLO Y VOLVERLO A
+> ARRANCAR PARA QUE SE ACTUALICE EL CAMBIO.
 
 Y para arreglarlo en producción: https://tylermcginnis.com/react-router-cannot-get-url-refresh/
 

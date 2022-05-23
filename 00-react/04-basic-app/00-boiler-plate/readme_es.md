@@ -36,7 +36,7 @@ _./src/index.html_
 
 ```diff
   <body>
--    Hello World !
+-    <h1 class="my-text">Hello World !</h1>
 +    <div id="root"></div>
   </body>
 ```
@@ -49,10 +49,8 @@ _./src/app.tsx_
 import React from "react";
 
 export const App = () => {
-  return (
-    <h1>Hello React !!</h2>
-  )
-}
+  return <h1>Hello React !!</h1>;
+};
 ```
 
 - Es hora de instanciar ese compente principal, para poder integrarlo con el navegador
@@ -62,19 +60,17 @@ _./src/index.tsx_
 
 ```tsx
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { App } from "./app";
 
-ReactDOM.render(
-  <div>
-    <App />
-  </div>,
-  document.getElementById("root")
-);
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(<App />);
 ```
 
 - Vamos por buen camino, pero si intentamos ejecutar esto no va fallar, ya que _babel_ no sabe
-  como transformar el _jsx_ (recordemos que esto era un azucar, que en realidad era un XML) a
+  como transformar el _jsx_ (recordemos que esto era un azúcar, que en realidad era un XML) a
   javaScript, para que babel sea capaz de entender esto tenemos que instalar el _preset_
   _@babel/preset-react_
 
@@ -96,6 +92,20 @@ _.babelrc_
 }
 ```
 
+> Por cierto, el sufijo _rc_ es bastante habitual en linux, significa "runcom".
+> (Sistema CTSS 1962-63) Archivo de script que contiene instrucciones de inicio para un programa de aplicación.
+> En otras palabras, "rc" es algo que se quedó atrás en los años sesenta, y se ha utilizado con bastante frecuencia para los archivos de configuración en diferentes tipos de programas desde entonces, incluyendo Node, Babel y muchos, muchos otros.
+> Más información [en stackoverflow](https://stackoverflow.com/questions/36212256/what-are-rc-files-in-nodejs).
+
+> Otra curiosidad... qué es un _preset_ ... empecemos por lo que es un plugin de babel: las transformaciones de babel
+> se habilitan aplicando plugins, hay un montón de plugins y si tienes que ir añadiendo uno a uno se puede convertir en una pesadilla,
+> para hacer esto más fácil, babel ha agrupado conjuntos comunes de plugins en _presets_, por ejemplo @babel-preset-react
+> incluye los siguientes plugins:
+
+- @babel/plugin-syntax-jsx
+- @babel/plugin-transform-react-jsx
+- @babel/plugin-transform-react-display-name
+
 - Es hora de saltar al _webpack.config.js_
 
 - Nos podemos asegurar de que tenemos como extension valida _ts_ y _tsx_
@@ -107,15 +117,3 @@ _.babelrc_
 ```bash
 npm start
 ```
-
-# ¿Te apuntas a nuestro máster?
-
-Si te ha gustado este ejemplo y tienes ganas de aprender Front End
-guiado por un grupo de profesionales ¿Por qué no te apuntas a
-nuestro [Máster Front End Online Lemoncode](https://lemoncode.net/master-frontend#inicio-banner)? Tenemos tanto edición de convocatoria
-con clases en vivo, como edición continua con mentorización, para
-que puedas ir a tu ritmo y aprender mucho.
-
-Y si tienes ganas de meterte una zambullida en el mundo _devops_
-apuntate nuestro [Bootcamp devops online Lemoncode](https://lemoncode.net/bootcamp-devops#bootcamp-devops/inicio)
-
