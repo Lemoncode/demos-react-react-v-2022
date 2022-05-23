@@ -32,6 +32,7 @@ export const DetailPage: React.FC = () => {
   return (
     <>
       <h2>Hello from Detail page</h2>
+      <h3>User Id: {id}</h3>
       <p> id: {member.id}</p>
       <p> login: {member.login}</p>
       <p> name: {member.name}</p>

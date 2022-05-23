@@ -23,6 +23,7 @@ npm install
 https://api.github.com/users/brauliodiez
 ```
 
+**EJERCICIO**
 > Con lo que has hecho en ejemplos anteriores sería capaz de montar
 > esta página tu sólo, te aconsejo que les des a la pause en este
 > ejercicio y lo pruebes.
