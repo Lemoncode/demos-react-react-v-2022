@@ -1,10 +1,11 @@
 # 16 Use Debug Value
 
-El hook interno _useDebugValue_ es útil para depurar custom hooks usando las React DevTools. Este hook te permite mostrar una etiqueta para un custom hook.
+El hook interno _useDebugValue_ es útil para depurar custom hooks usando las React DevTools. Este hook te permite mostrar una etiqueta para un custom hook
+en las tools del navegador.
 
 # Pasos
 
-- Tomaremos como punto de partida el ejemplo _16-memo-predicate_. Copia el contenido del proyecto a una carpeta nueva y ejecuta _npm install_.
+- Tomaremos como punto de partida el ejemplo _15-memo-predicate_. Copia el contenido del proyecto a una carpeta nueva y ejecuta _npm install_.
 
 ```bash
 npm install
@@ -140,6 +141,9 @@ export const MyComponent = () => {
 ```bash
 npm start
 ```
+
+- Teclea por ejemplo en el input un "1" puedes ver los valores
+validos en esta url: https://jsonplaceholder.typicode.com/todos?userId=${user}
 
 - Abre las React DevTools en Chrome o Firefox. En la sección _hooks_ puedes ver el valor de depuración de el custom hook.
 
