@@ -13,44 +13,16 @@ export const MyComponent = () => {
   );
 };
 
-const useSafeState = function <T>(
-  initialValue: T
-): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const mountedRef = React.useRef(false);
-
-  const [state, setState] = React.useState<T>(initialValue);
-
-  React.useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  const isMounted = () => mountedRef.current;
-
-  const setSafeState = function (
-    data: T
-  ): React.Dispatch<React.SetStateAction<T>> | void {
-    return isMounted() ? setState(data) : null;
-  };
-
-  return [state, setSafeState];
-};
-
 export const MyChildComponent = () => {
   const [filter, setFilter] = React.useState("");
-  const [userCollection, setUserCollection] = useSafeState([]);
-
-  const setSafeUserCollection = (userCollection) =>
-    setUserCollection(userCollection);
+  const [userCollection, setUserCollection] = React.useState([]);
 
   // Load full list when the component gets mounted and filter gets updated
   React.useEffect(() => {
     setTimeout(() => {
       fetch(`https://jsonplaceholder.typicode.com/users?name_like=${filter}`)
         .then((response) => response.json())
-        .then((json) => setSafeUserCollection(json));
+        .then((json) => setUserCollection(json));
     }, 2500);
   }, [filter]);
 
