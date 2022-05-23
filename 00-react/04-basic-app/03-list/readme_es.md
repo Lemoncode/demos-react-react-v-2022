@@ -1,4 +1,4 @@
-# 02 List
+# 03 List
 
 ## Resumen
 
@@ -88,8 +88,6 @@ _./src/list.tsx_
   );
 ```
 
-
-
 - Y ahora vamos a añadir una tabla con grid que muestre los datos:
 
 _./src/styles.css_
@@ -151,7 +149,7 @@ _./src/list.tsx_
 ```
 
 - Otra forma de crear la url es usando _generatePath_, pero ojo en la versión 5
-esto si hacía el encoding de los parámetros, en la 6 no (https://github.com/remix-run/react-router/issues/7428)
+  esto si hacía el encoding de los parámetros, en la 6 no (https://github.com/remix-run/react-router/issues/7428)
 
 _./src/list.tsx_
 
