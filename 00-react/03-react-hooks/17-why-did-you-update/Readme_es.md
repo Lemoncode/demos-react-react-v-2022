@@ -67,39 +67,6 @@ _./src/demo.tsx_
 ```diff
 import React from "react";
 
-export const MyComponent = () => {
-  const [cont, setCont] = React.useState(0);
-  const [id, setId] = React.useState(0);
-
-  const name = {
-    firstname: 'John',
-    lastname: 'Doe',
-  };
-
-  return(
-    <div>
-      <div>
-        <MyChildComponent name={name} cont={cont} />
-        <button onClick={() => setCont(cont + 1)}>Increment cont</button>
-      </div>
-
-      <div>
-        <div>id: {id}</div>
-        <button onClick={() => setId(id + 1)}>Increment id</button>
-      </div>
-    </div>
-  );
-};
-
-export const MyChildComponent = React.memo(props => {
-+ useWhyDidYouUpdate('MyChildComponent', props);
-  return(
-    <div>
-      {props.name.firstname} {props.name.lastname} cont: {props.cont}
-    </div>
-  );
-});
-
 +// Hook
 +function useWhyDidYouUpdate(name, props) {
 +  // Get a mutable ref object where we can store props ...
@@ -143,6 +110,39 @@ export const MyChildComponent = React.memo(props => {
 +    previousProps.current = props;
 +  });
 +}
+
+export const MyComponent = () => {
+  const [cont, setCont] = React.useState(0);
+  const [id, setId] = React.useState(0);
+
+  const name = {
+    firstname: 'John',
+    lastname: 'Doe',
+  };
+
+  return(
+    <div>
+      <div>
+        <MyChildComponent name={name} cont={cont} />
+        <button onClick={() => setCont(cont + 1)}>Increment cont</button>
+      </div>
+
+      <div>
+        <div>id: {id}</div>
+        <button onClick={() => setId(id + 1)}>Increment id</button>
+      </div>
+    </div>
+  );
+};
+
+export const MyChildComponent = React.memo(props => {
++ useWhyDidYouUpdate('MyChildComponent', props);
+  return(
+    <div>
+      {props.name.firstname} {props.name.lastname} cont: {props.cont}
+    </div>
+  );
+});
 ```
 
 - Arranca el ejemplo para probar el hook.
