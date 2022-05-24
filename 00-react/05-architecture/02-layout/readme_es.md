@@ -29,7 +29,11 @@ _./src/layouts/center.layout.tsx_
 ```tsx
 import React from "react";
 
-export const CenterLayout: React.FC = ({ children }) => (
+interface Props {
+  children: React.ReactNode;
+}
+
+export const CenterLayout: React.FC<Props> = ({ children }) => (
   <div className="layout-center">{children}</div>
 );
 ```
@@ -68,7 +72,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
--    <div className="layout-center">
+-    <div>
 +    <CenterLayout>
       <form onSubmit={handleNavigation}>
         <div className="login-container">
@@ -110,13 +114,13 @@ body {
   font-family: Sans-Serif;
 }
 
-.layout-center {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  justify-items: center;
-  margin-top: 2rem;
-}
++ .layout-center {
++  display: grid;
++  grid-template-columns: 1fr;
++  align-items: center;
++  justify-items: center;
++  margin-top: 2rem;
++ }
 
 + .layout-app-container {
 +  display: grid;
@@ -139,7 +143,12 @@ _./src/layouts/app.layout.tsx_
 ```tsx
 import React from "react";
 
-export const AppLayout: React.FC = ({ children }) => (
+// New on React 18
+interface Props {
+  children: React.ReactNode;
+}
+
+export const AppLayout: React.FC<Props> = ({ children }) => (
   <div className="layout-app-container">
     <div className="layout-app-header">User Logged in</div>
     {children}
@@ -208,4 +217,10 @@ _./src/scenes/detail.tsx_
 -    </>
 +    </AppLayout>
   );
+```
+
+Vamos a probarlo
+
+```bash
+npm start
 ```
