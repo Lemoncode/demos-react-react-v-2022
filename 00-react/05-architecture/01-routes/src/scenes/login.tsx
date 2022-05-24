@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { routes } from "core";
 
 export const LoginPage: React.FC = () => {
@@ -18,23 +18,30 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="layout-center">
+    <>
       <form onSubmit={handleNavigation}>
-        <div className="login-container">
-          <input
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">login</button>
+        <h2>Hello from login page</h2>
+
+        <div>
+          <div>
+            <label>Username: </label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
         </div>
+
+        <button type="submit">Login</button>
       </form>
-    </div>
+    </>
   );
 };
