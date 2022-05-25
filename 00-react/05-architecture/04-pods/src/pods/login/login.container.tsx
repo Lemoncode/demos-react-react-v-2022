@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "core";
 import { ProfileContext } from "@/core/profile";
-import { LoginComponent } from "./login.component";
+import {LoginComponent} from './login.component';
 
 export const LoginContainer: React.FC = () => {
   const navigate = useNavigate();

@@ -111,6 +111,27 @@ import { ProfileContext } from "@/core/profile";
 
 - Es hora de profundizar en el componente de _login_
 
+Vamos a definir unos estilos (añadir al final del fichero CSS)
+
+_./src/styles.css_
+
+```css
+.login-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.login-container > input {
+  width: 320px;
+}
+
+.login-container > button {
+  width: 180px;
+  align-self: center;
+}
+```
+
 _./pods/login/login.component.tsx_
 
 ```diff
@@ -213,10 +234,9 @@ export const LoginPage: React.FC = () => {
 };
 ```
 
-- Eso estuvo bien, apliquemos lo que hemos aprendido, ... paremos e intentemos importar a pods la
-  página de la lista.
+**EJERCICIO**
 
-** Ejercicio espera algunos minutos **
+- Eso estuvo bien, apliquemos lo que hemos aprendido, ... paremos e intentemos importar a pods la página de la lista.
 
 - Primero vamos a crear el pod de la lista
 
@@ -532,3 +552,5 @@ Vamos a intentarlo:
 ```bash
 npm start
 ```
+
+Ya lo tenemos todo migrado a PODS ¿Qué te ha parecido?
