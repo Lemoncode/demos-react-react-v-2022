@@ -1,16 +1,15 @@
 # Datos transversales(Cross cutting data)
 
-En react estamos acostumbrados a pasar datos de padre a hijo (enfoque drill prop),
+En react estamos acostumbrados a pasar datos de padre a hijo (enfoque prop drill),
 pero hay entradas a las que necesitamos acceder desde cualquier lugar, como la información del usuario, o la información del tema, para manejar esto React nos ofrece el contexto.
 Veamos como podemos usar esto y encajarlo en nuestra arquitectura.
 
-En este ejemplo obtendremos el nombre de usuario registrado y lo almacenaremos en un lugar global, luego lo consumiremos en el
-cabecera del layout.
+En este ejemplo obtendremos el nombre de usuario registrado y lo almacenaremos en un lugar global, luego lo consumiremos en el cabecera del layout.
 
 # Pasos
 
 - En primer lugar tenemos que decidir, esta funcionalidad podría caer en tres áreas:
-  - _común_: podríamos pensar que almacenar el nombre de usuario podría ser reutilizado en otras aplicaciones, no es un mal lugar para almacenarlo,
+  - _common_: podríamos pensar que almacenar el nombre de usuario podría ser reutilizado en otras aplicaciones, no es un mal lugar para almacenarlo,
     aunque normalmente cada aplicación en el mundo real almacenaría información diferente.
   - _common-app_: podemos pensar que es un _asset_ que va a ser reutilizado en varios lugares de la aplicación,
     pero, ¿se va a reutilizar o sólo se va a invocar en varios sitios?
@@ -22,7 +21,7 @@ En este ejemplo hemos optado por _core_, razones:
 
 - Cada aplicación almacena diferente información de perfil de usuario (nombre, login, rol, duración de la sesión...), no es tan sencillo
   crear algo universal y fuertemente tipado, podríamos intentar usar genéricos, etc., pero podría complicar las cosas.
-- Este activo es similar a las cosas de las rutas, no vamos a un componente como una barra de filtro y soltarlo en algunas páginas,
+- Este activo es similar a las definiciones de las rutas, no vamos a un componente como una barra de filtro y soltarlo en algunas páginas,
   simplemente vamos a hacer uso de esta característica de corte transversal (raíz instanciar el proveedor, la tienda de inicio de sesión en el contexto, la cabecera de leer desde el contexto).
 
 - Empecemos a implementar esto, primero definamos el contexto:
@@ -63,7 +62,11 @@ export const ProfileContext = React.createContext<Context>({
     ),
 });
 
-export const ProfileProvider: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const ProfileProvider: React.FC<Props> = ({ children }) => {
   const [userProfile, setUserProfile] = React.useState<UserProfile>(
     createEmptyUserProfile()
   );
@@ -145,8 +148,8 @@ _./src/layouts/app.layout.tsx_
 import React from "react";
 + import { ProfileContext } from "@/core/profile";
 
--export const AppLayout: React.FC = ({ children }) => (
-+ export const AppLayout: React.FC = ({ children }) => {
+-export const AppLayout: React.FC<Props> = ({ children }) => (
++ export const AppLayout: React.FC<Props> = ({ children }) => {
 +  const { userName } = React.useContext(ProfileContext);
 +  return (
   <div className="layout-app-container">
@@ -163,3 +166,6 @@ import React from "react";
 ```diff
 npm start
 ```
+
+Ahora si nos logamos, podemos ver cuando pasamos a la página de listado que
+tenemos el nombre de usuario en la barra de la aplicación.
