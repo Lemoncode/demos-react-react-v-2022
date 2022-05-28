@@ -4,7 +4,7 @@ import { routes } from "core";
 import { ProfileContext } from "@/core/profile";
 import { LoginComponent } from "./login.component";
 import { doLogin } from "./login.api";
-import { Login } from './login.vm';
+import { Login } from "./login.vm";
 
 const useLoginHook = () => {
   const navigate = useNavigate();
@@ -24,9 +24,8 @@ const useLoginHook = () => {
 export const LoginContainer: React.FC = () => {
   const { loginSucceededAction, loginFailedAction } = useLoginHook();
 
-  const handleLogin = (login : Login) => {
-    const {username, password} = login;
-    
+  const handleLogin = (login: Login) => {
+    const { username, password } = login;
     doLogin(username, password).then((result) => {
       if (result) {
         loginSucceededAction(username);

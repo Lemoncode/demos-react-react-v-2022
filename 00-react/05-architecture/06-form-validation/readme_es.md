@@ -41,7 +41,7 @@ export const createEmptyLogin = (): Login => ({
 
 Y adaptar el código en el contenedor del _login_:
 
-_./src/pods/login/login.container.ts_
+_./src/pods/login/login.container.tsx_
 
 ```diff
 import React from "react";
@@ -221,7 +221,7 @@ _./src/pods/login.component.tsx_
 ```
 
 Ahora podemos actualizar las entradas para soportar
-_Formik_, ya que más adelante nos beneficiaremos de algunos _formik_
+_Formik_, ya que más adelante nos beneficiaremos de algunas características de _Formik_
 construiremos una envoltura alrededor del campo de entrada,
 ya que esta envoltura podría
 ser reutilizado en otros proyectos lo añadiremos a la carpeta _root_
