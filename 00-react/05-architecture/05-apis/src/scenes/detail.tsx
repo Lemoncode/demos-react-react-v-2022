@@ -5,7 +5,7 @@ import { DetailContainer } from "@/pods/detail";
 
 export const DetailPage: React.FC = () => {
   const { id } = useParams();
-
+  
   return (
     <AppLayout>
       <DetailContainer id={id} />

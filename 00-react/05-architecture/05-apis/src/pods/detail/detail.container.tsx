@@ -1,7 +1,6 @@
 import React from "react";
 import { MemberDetailEntity, createDefaultMemberDetail } from "./detail.vm";
 import { DetailComponent } from "./detail.component";
-import { getMemberCollection } from "./detail.repository";
 
 interface Props {
   id: string;
@@ -14,7 +13,9 @@ export const DetailContainer: React.FC<Props> = (props) => {
   );
 
   React.useEffect(() => {
-    getMemberCollection(id).then((memberDetail) => setMember(memberDetail));
+    fetch(`https://api.github.com/users/${id}`)
+      .then((response) => response.json())
+      .then((json) => setMember(json));
   }, []);
 
   return <DetailComponent member={member} />;
