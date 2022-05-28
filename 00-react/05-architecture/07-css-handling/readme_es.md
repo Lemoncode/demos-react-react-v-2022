@@ -432,5 +432,7 @@ _./src/list.components.tsx_
 +      <div className={classNames(css.container, css.someAdditionalClass)}>
 ```
 
+**EJERCICIO**
+
 Ejercicio: es hora de que pruebes el poder de los _css modules_, ¿puedes migrar los
 estilos del encabezado a _css modules_? este se encuentra en la ruta _./src/layout/app.layout_.
