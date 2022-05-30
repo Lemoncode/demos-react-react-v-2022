@@ -77,7 +77,7 @@ import css from "./login.styles.css";
 ```
 
 > _sx_ nos permite añadir estilado al component card, también podemos usar
-> la aproximación styled component (esto lo veremos en una sesión más adelante).
+> la aproximación styled component (esto daría para una sesión específica de CSS in JS).
 
 Vamos a por la cabecera y el cuerpo:
 
