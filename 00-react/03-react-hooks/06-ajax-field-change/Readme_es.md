@@ -87,7 +87,7 @@ React.useEffect(() => {
 }, [filter]);
 ```
 
-- Si ejecutamos este código podemos ver que la opcíon de filtrado funciona.
+- Si ejecutamos este código podemos ver que la opción de filtrado funciona.
 
 ```bash
 npm start

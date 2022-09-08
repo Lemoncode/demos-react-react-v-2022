@@ -80,12 +80,12 @@ export const MyComponent = () => {
 
 Al ejecutar esto podemos ver como aparece el nombre de _John_ por pantalla.
 
-Si depuramos podemos y ponemos un breakpoint justo donde se invoca
+Si depuramos y ponemos un breakpoint justo donde se invoca
 a _react.useState_, otro en el render y otro dentro del código de _useEffect_ podemos ver que se llaman en el siguiente orden:
 
 - Primero el _useState_
 - Después el render.
-- Después nuestro código de \_useEffect (sólo una vez).
+- Después nuestro código de _useEffect_ (sólo una vez).
 
 Y si modificamos el _input_ asociado al campo _username_ no se vuelve
 a ejecutar el código…
@@ -122,7 +122,7 @@ Un tema interesante:
 - También que si informamos una lista de valores como segundo parametro
   se ejecuta cuando estos valores cambian.
 
-Peeero ¿Y si informamos esa lista como vacía? Si hacemos esto, el código
+Pero ¿Y si informamos esa lista como vacía? Si hacemos esto, el código
 dentro del useEffect se ejecutará la primera vez (después del primer renderizado)
 y no volvera a ejecutarse más ya que le estamos diciendo que no depende de ningún
 valor de las propiedades o del estado, de esta manera no volverás a ejecutarse

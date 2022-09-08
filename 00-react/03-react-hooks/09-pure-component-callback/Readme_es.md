@@ -48,7 +48,7 @@ export const MyComponent = () => {
       </h3>
       <input value={username} onChange={(e) => setUsername(e.target.value)} />
       <input value={lastname} onChange={(e) => setLastname(e.target.value)} />
-      <ResetValue onReset={resetNameCallback}>Reset name</ResetValue>
+      <ResetValue onReset={resetNameCallback} />
     </>
   );
 };
@@ -85,7 +85,7 @@ export const MyComponent = () => {
       </h3>
       <input value={username} onChange={e => setUsername(e.target.value)} />
       <input value={lastname} onChange={e => setLastname(e.target.value)} />
-      <ResetValue onReset={resetNameCallback}>Reset name</ResetValue>
+      <ResetValue onReset={resetNameCallback} />
     </>
   );
 };
@@ -103,12 +103,12 @@ const ResetValue = React.memo(props => {
 
 - Si ejecutamos el ejemplo, podemos ver que ya no se lanza el rerender en el componente _ResetValue_
 
-¿ Cómo funciona esto? _useCallback_ guarda la función que se creo originalmente,
+¿Cómo funciona esto? _useCallback_ guarda la función que se creo originalmente,
 y devuelve esta en vez de crear una nueva en cada render, esto lo conseguimos
-pasandole un array vacio como segundo parametro (como hacíamos con _React.useEffect_)
+pasandole un array vacio como segundo parámetro (como hacíamos con _React.useEffect_)
 si queremos que se reevalue dependiendo del valor de una propiedad o estado, podemos
-añadirlas al segundo aprametro de este callbakc (al igual que con useEffect), y si
-omitimos el segundo parametro, esta función se reevaluara después de cada render.
+añadirlas al segundo parámetro de este callbakc (al igual que con useEffect), y si
+omitimos el segundo parámetro, esta función se reevaluara después de cada render.
 
 # ¿Te apuntas a nuestro máster?
 

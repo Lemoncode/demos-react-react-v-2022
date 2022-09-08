@@ -74,7 +74,7 @@ Si no estuvieramos al tanto del problema con las closures, esperaríamos
 que el mensaje final fuera "Total segundos: 1", pero lo ejecutaremos y veremos que
 el mensaje que aparece por pantalla es "Total segundos: 0"
 
-Para solucionar esto, los chicos de Facebook nos proveed del hook _useRef_, esto hook:
+Para solucionar esto, los chicos de Facebook nos proveen del hook _useRef_:
 
 - Almacena un valor de inicialización (igual que con useState).
 - Nos devuelve un objeto.
@@ -124,7 +124,7 @@ export const MyComponent = () => {
 npm start
 ```
 
-- Esto esta muy bien ¿ Pero tenemos forma de evitarlo? Si hubiesemos
+- Esto esta muy bien ¿Pero tenemos forma de evitarlo? Si hubiesemos
   usado un objeto sí, veamos como funciona el SetState utilizando una
   función para asignar el valor.
 

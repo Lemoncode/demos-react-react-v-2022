@@ -99,9 +99,9 @@ _React.useState_.
   acceder al valor que está en useState y te permite
   hacer una petición y setearlo de forma asíncrona).
 
-- La manera más cómoda de consumir lo que devuevel ese _useState_ es hacer
+- La manera más cómoda de consumir lo que devuelve ese _useState_ es hacer
   destructuring sabiendo que el primer elemento del array siempre será
-  nuestro _getter_ y el segundo nuestro \_setter.
+  nuestro _getter_ y el segundo nuestro _setter_.
 
 ¿Por qué narices usa un array? Aquí viene la genialidad, si hubiese devuelto
 un objeto, al hacer destructuring del objeto habríamos tenido que ceñirnos
@@ -132,7 +132,7 @@ export const MyComponent: React.FC = () => {
 
 ¿Qué tenemos aquí?
 
-- \*_e_: argumento del _eventHandler_, nos da información del evento, expone una serie de propiedades:
+- **e**: argumento del _eventHandler_, nos da información del evento, expone una serie de propiedades:
 - **e.target**: qué DOM Element generó el evento.
 - **e.target.value**: que valor tiene ese elemento (la propiedad valor
   del DOM Element que generó el evento).
@@ -155,7 +155,7 @@ setear el estado de _myName_.
 - Esto va a lanzar un repintado del componente.
 - Cuando se ejecute el código del componente y llegue a la línea
   de código que hace el _useState_, en vez de _John Doe_ se le
-  facilitará el nombre que se almaceno con _setState_
+  facilitará el nombre que se almacenó con _setState_
 - Al repintar el componente se usará ese nuevo valor mostrandolo
   por pantalla.
 
