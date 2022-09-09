@@ -1,5 +1,6 @@
 import React from "react";
+import { CounterComponent } from "./features/counter/counter.component";
 
 export const App = () => {
-  return <h1>Hello React !!</h1>;
+  return <CounterComponent />;
 };

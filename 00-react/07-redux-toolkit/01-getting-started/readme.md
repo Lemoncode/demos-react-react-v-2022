@@ -122,3 +122,70 @@ export const store = configureStore({
 });
 
 ```
+
+## Defined Typed Hooks
+
+We can use `RootState` and `AppDispatch` types in each component. But, it's better to create typed versions of the useDispatch and useSelector hooks for usage in your application.
+
+- `useSelector`, you don't need to type `(state: RootState)` every time
+- `useDispatch`, the default `Dispatch` type does not know about thunks. In order to correctly dispatch thunks, you need to use the specific customized `AppDispatch` type from the store that includes the thunk middleware types, and use that with `useDispatch`. Adding a pre-typed `useDispatch` hook keeps you from forgetting to import `AppDispatch` where it's needed.
+
+Since these are actual variables, not types, it's important to define them in a separate file such as `app/hooks.ts`, not the store setup file.
+
+- Create `app/hooks.ts`
+
+```ts
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from './store';
+
+
+export const useAppDispatch: () => AppDispatch = useDispatch; 
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+```
+
+## Use Redux State and Actions in React Components
+
+Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with `useAppSelector`, and dispatch actions using `useDispatch`. 
+
+- Create a `src/features/counter/Counter.tsx` 
+
+```tsx
+import React from "react";
+
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { increment, decrement } from "./counterSlice";
+
+export const CounterComponent = (): React.ReactElement => {
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
+
+  return (
+    <div>
+      <div>
+        <button onClick={() => dispatch(decrement())}>-</button>
+        <span>{count}</span>
+        <button onClick={() => dispatch(increment())}>+</button>
+      </div>
+    </div>
+  );
+};
+
+```
+
+* Update `App.tsx`
+
+```diff
+import React from "react";
++import { CounterComponent } from "./features/counter/counter.component";
+
+export const App = () => {
+- return <h1>Hello React !!</h1>;
++ return <CounterComponent />;
+};
+
+```
+
+Let's check if works `npm start`
+
+> Exercise: Update `counter.component.tsx` including a button that disptaches `incrementByAmount` action.
