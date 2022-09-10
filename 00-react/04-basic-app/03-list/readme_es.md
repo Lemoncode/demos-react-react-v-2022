@@ -142,10 +142,10 @@ _./src/list.tsx_
   primeras podríamos pensar en construir algo así como:
 
 ```diff
-  <td>
+  <>
 -    <span>{member.login}</span>
 +    <Link to={`/detail/${member.login}`}>{member.login}</Link>
-  </td>
+  </>
 ```
 
 - Otra forma de crear la url es usando _generatePath_, pero ojo en la versión 5
@@ -162,20 +162,19 @@ import React from "react";
 _./src/list.tsx_
 
 ```diff
-  <td>
+  <>
 -    <Link to={`/detail/${member.login}`}>{member.login}</Link>
 +    <Link to={generatePath('/detail/:id', {id: member.login})}>{member.login}</Link>
-  </td>
+  </>
 ```
 
-¿En qué impactar que no haga encoding? Si quieres hacer la prueba sustituye el código dentro del useEffect por este;
+¿En qué impacta que no haga encoding? Si quieres hacer la prueba sustituye el código dentro del useEffect por este;
 
 ```tsx
 setMembers([{ id: "2", login: "a/b", avatar_url: "" }]);
 ```
 
-> En la parte de arquitectura aprenderemos a quitar "strings mágicos" de nuestra
-> aplicación, ir harcodeando urls por nuestras páginas no es buena idea.
+> En la parte de arquitectura aprenderemos a quitar "strings mágicos" de nuestra aplicación, ir harcodeando urls por nuestras páginas no es buena idea.
 
 - Muy interesante, ¿Pero cómo puedo leer el id del usuario que estoy
   recibiendo por el parámetro de la URL?

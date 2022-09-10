@@ -31,12 +31,11 @@ Así que vamos a intentar un cambio radical, vamos a almacenar la _api_ dentro d
 
 - Empecemos a refactorizar la página de login, en este caso iremos un paso más allá:
 
-  - Tenemos que estar preparados para la integración "real", ahora mismo sólo estamos comprobando algún usuario/contraseña ficticio de forma
-    manera sincrónica.
+  - Tenemos que estar preparados para la integración "real", ahora mismo sólo estamos comprobando algún usuario/contraseña ficticio de forma sincrónica.
   - Por qué no crear una _API_ de cliente que devuelva una promesa con el resultado esperado, siguiendo este enfoque:
     - Una vez que obtenemos la API del servidor real sólo tenemos que actualizar el archivo _api_, el resto de los activos / componentes no
       se verán afectados.
-    - Podemos configurar mediante una variable de entorno si queremos utilizar la api real o el cliente simulado (esto nos permitirá
+    - Podemos configurar mediante una variable de entorno si queremos utilizar la api real o el cliente simulado 
       (esto nos permitirá realizar pruebas _e2e_, o si el servidor está caído seguir avanzando con el _mock_).
 
 - Primero vamos a simular una API de cliente:
@@ -58,8 +57,7 @@ export const doLogin = (
 };
 ```
 
-> Para simplificar estamos usando el manejo de promesas estándar, podríamos usar async await pero necesitaría
-> alguna configuración extra (regenerator runtime).
+> Para simplificar estamos usando el manejo de promesas estándar, podríamos usar async await pero necesitaría alguna configuración extra (regenerator runtime).
 
 - Y ahora vamos a consumirlo en el contenedor del _login_.
 
@@ -498,4 +496,4 @@ _./src/detail.container.tsx_
   }, []);
 ```
 
-
+Ahora podemos comprobar si funciona correctamente `npm start`

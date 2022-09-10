@@ -4,7 +4,7 @@
 
 Este ejemplo toma como punto de partida el ejemplo _02-webpack-boiler_.
 
-Vamos a ir paso a paso añdiendo la configuración necesaria para que integrar
+Vamos a ir paso a paso añdiendo la configuración necesaria para integrar
 **React** en nuestro proceso de build.
 
 ## Paso a Paso

@@ -6,7 +6,7 @@ Este ejemplo toma como punto de partida el ejemplo _07-custom-hook_.
 
 Hay veces en las que nos hace falta hilar fino y sólo volver a repintar un componente si sus propiedades han cambiado, si trabajamos con estructuras inmutables sólo tenemos que hacer un shallow compare.
 
-Esto lo podíamos hacer facilmente con componentes de clase ¿ Cómo podemos hacerlo en componente de tipo función?
+Esto lo podíamos hacer facilmente con componentes de clase ¿Cómo podemos hacerlo en componente de tipo función?
 Vamos a ello.
 
 ## Paso a Paso
@@ -17,7 +17,7 @@ Vamos a ello.
 npm install
 ```
 
-- Vamos a pegar un ejemplo en _demo.js_, este código va tener dos
+- Vamos a pegar un ejemplo en _demo.tsx_, este código va tener dos
   valores editables: _name_ y _lastname_ y vamos a tener un control
   hijo que sólo va a mostrar el _name_ (de hecho este componente
   sólo pedirá el campo nombre en las propiedades).
@@ -99,7 +99,7 @@ _./src/demo.tsx_
 npm start
 ```
 
-¿ Qué es lo que está haciendo _React.memo_? Esta aplicando el patrón memorize, recuerda
+¿ Qué es lo que está haciendo _React.memo_? Esta aplicando el patrón memoize, recuerda
 para la propiedad name el puntero del último render, cuando llega el siguiente los compara
 y si son iguales devuelve el render del componente cacheado.
 

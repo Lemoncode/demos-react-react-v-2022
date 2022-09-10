@@ -240,20 +240,12 @@ export const LoginPage: React.FC = () => {
 
 - Primero vamos a crear el pod de la lista
 
-```bash
-cd src
-```
-
-```bash
-mkdir list
-```
-
 Crea el contenedor de la lista y el componente, esta vez el contenedor contendrá la lógica para
 cargar la lista de usuarios y el componente contendrá la visualización, aquí podríamos discutir también
 donde colocar la lógica de navegación, podríamos burbujear al contenedor o simplemente
 colocarla en el componente interno.
 
-- Ahora necesitamos un archivo modelo para almacenar la entidad:
+- Ahora necesitamos un archivo de tipo modelo para almacenar la entidad:
 
 _./pods/list/list.vm.ts_
 
@@ -319,7 +311,7 @@ export const ListComponent: React.FC<Props> = (props) => {
 };
 ```
 
-Creemos el _barrel_
+Creamos el _barrel_
 
 _./src/pods/list/index.ts_
 
@@ -327,7 +319,7 @@ _./src/pods/list/index.ts_
 export * from "./list.container";
 ```
 
-Y vamos a consumirlo en la escena:
+Y lo consumimos en la escena:
 
 _./src/scenes/list.tsx_
 
@@ -375,8 +367,8 @@ import { AppLayout } from "@/layouts";
 };
 ```
 
-- Vamos a refactorizar el componente de detalle, podríamos pensar que esto es sólo un _tak_ aburrido, PEROOOO.... hay un buen elemento nuevo
-  para dicutir: estamos leyendo parámetros de la cadena de consulta, quien debe tomar la responsabilidad en la lectura de este valor,
+- Vamos a refactorizar el componente de detalle, podríamos pensar que esto es sólo una _task_ aburrida, PEROOOO.... hay un buen elemento nuevo
+  para discutir: estamos leyendo parámetros de la cadena de consulta, quien debe tomar la responsabilidad en la lectura de este valor,
   tenemos dos opciones:
   - Dejar que la escena se encargue de esto y pasarlo como un prop al pod.
   - Dejar que el pod se encargue de esto y usar el hook useParams de react router para obtener directamente los datos.
@@ -393,14 +385,6 @@ Hemos elegido la escena para manejar el parámetro _url parsing_ y pasarlo como 
 Vamos a por ello :)
 
 - Vamos a crear el _pod_ de detalle:
-
-```bash
-cd src
-```
-
-```bash
-mkdir detail
-```
 
 - Tenemos que definir un archivo _viewmodel_ que contendrá _MemberDetailEntity_
 

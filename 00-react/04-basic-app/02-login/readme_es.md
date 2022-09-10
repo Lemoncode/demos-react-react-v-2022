@@ -9,7 +9,7 @@ su id y clave y al pulsar el botón de login se valida, si introduce
 la combinación "admin" "test" puede pasar a la ventana de listado.
 
 El objetivo de este ejemplo es cubrir un escenario muy básico que te
-permita ver cómo funciona react manejando informacíon como esta.
+permita ver cómo funciona react manejando información como esta.
 
 ## Paso a Paso
 
@@ -85,7 +85,7 @@ export const LoginPage: React.FC = () => {
       </div>
 ```
 
-- Y ahora vamos al click de login, cuando se pulsa comprobamos si el usuario
+- Y ahora vamos al click del login, cuando se pulsa comprobamos si el usuario
   y la clave son (admin / test) si es correcto navegamos a listado, si no
   mostramos un mensaje.
 
@@ -107,7 +107,7 @@ export const LoginPage: React.FC = () => {
 ```
 
 - Para terminar vamos a hacer run refactor con el formulario de login,
-  vamos a meterlo dentro de un formulario, ¿Por qué, así lo hacemos
+  vamos a meterlo dentro de un formulario, ¿Por qué? Así lo hacemos
   más accesible y por ejeemplo el botón de envío se ejecuta al pulsar enter.
 
 ```diff

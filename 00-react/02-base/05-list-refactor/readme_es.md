@@ -20,7 +20,7 @@ _./src/app.tsx_
 
 ```diff
 {members.map((member) => (
--  <>
+-  <>mode
 +  <React.Fragment key={member.id}>
     <img src={member.avatar_url} />
     <span>{member.id}</span>
@@ -59,7 +59,7 @@ export const App = () => {
 - Ahora si cometemos una equivocación al escribir uno de los campos en nuestro
   componente fila, el IDE nos lo marcará en rojo.
 
-- La siguiente mejora que vamos a introducir tiene que ver con el JSX que genramos,
+- La siguiente mejora que vamos a introducir tiene que ver con el JSX que generamos,
   fijate que apenas hemos metido una tabla y ya nos cuesta seguirlo, ¿No podríamos
   simplificar esto? La respuesta si, podemos extraer la parte que pinta un miembro
   en la tabla a un componente, esto lo podemos dejar en el mismo fichero o sacarlo
@@ -98,7 +98,7 @@ _./src/app.tsx_
 ```diff
 import React from "react";
 import { MemberEntity } from './model';
-+ import { MemberTableRow} from './member-grid-row';
++import { MemberTableRow} from './member-grid-row';
 ```
 
 ```diff
@@ -121,7 +121,7 @@ import { MemberEntity } from './model';
 
 > Incluso si quisiéramos podríamos crear un subcomponente para las cabecera de la tabla.
 
-- Un último paso, el componente _App_ sigue teniendo demasiado código, debería sólo de instanciar
+- Un último paso, el componente _App_ sigue teniendo demasiado código, debería sólo instanciar
   el componente principal y punto, vamos a simplificar esto.
 
 - Nos creamos un componente que se llame _member-table.tsx_ y encapsulamos la tabla en dicho componente.
@@ -164,8 +164,8 @@ import React from "react";
 - import { MemberEntity } from './model';
 + import {MemberTable} from './member-table';
 
-export const App = () => {
-  const [members, setMembers] = React.useState<MemberEntity[]>([]);
+-export const App = () => {
+- const [members, setMembers] = React.useState<MemberEntity[]>([]);
 
 -  React.useEffect(() => {
 -    fetch(`https://api.github.com/orgs/lemoncode/members`)
@@ -193,5 +193,5 @@ export const App = () => {
 };
 ```
 
-¿Podemos seguir limpiando este código y montar algo que a futuro se mantenible y escalable? La respuesta es si, lo veremos
+¿Podemos seguir limpiando este código y montar algo que a futuro sea mantenible y escalable? La respuesta es si, lo veremos
 más adelante.

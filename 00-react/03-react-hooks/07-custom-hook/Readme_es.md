@@ -6,7 +6,7 @@ Este ejemplo toma como punto de partida el ejemplo \_06-ajax-field-change.
 
 Esto de los hooks está muy bien, pero si empezamos a usarlo en proyectos
 reales, nos podemos encontrar que nuestros componente funcionales pueden
-acabar manchados de un montón de código, y lo que es peor ¿ Cómo puedo
+acabar manchados de un montón de código, y lo que es peor ¿Cómo puedo
 reusar funcionalidad? ... Para todo esto tenemos los customs hooks, sí...
 hacernos nuestros propios hooks, ya veréis que fáciles son de crear.
 

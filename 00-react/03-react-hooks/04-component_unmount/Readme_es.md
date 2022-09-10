@@ -47,7 +47,7 @@ _./src/demo.tsx_
   );
 ```
 
-- Y si en vez de un \_h4\_\_, instanciamos un componente:
+- Y si en vez de un \_h4\_, instanciamos un componente:
 
 _./src/demo.tsx_
 
