@@ -188,4 +188,4 @@ export const App = () => {
 
 Let's check if works `npm start`
 
-> Exercise: Update `counter.component.tsx` including a button that disptaches `incrementByAmount` action.
+> Exercise: Update `counter.component.tsx` including a button that disptaches `incrementByAmount` action. Notice that we need as well an input for desired amount. We can create a local state to handle this.
