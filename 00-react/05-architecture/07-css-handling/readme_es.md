@@ -173,7 +173,7 @@ _./global-css/styles.css_
 
 - Ahora para usar este archivo CSS, tendremos que importarlo, y usar _camelCase_ para
   los selectores (los selectores con guión son un dolor de cabeza para utilizarlo tendremos que
-  usar paréntesis para acceder a las propiedades, por defecto los _CSS modules_ lo convertirán a notación
+  usar corchetes para acceder a las propiedades, por defecto los _CSS modules_ lo convertirán a notación
   _case_)
 
 _./src/pods/login/login.component.tsx_
@@ -194,7 +194,7 @@ _./src/pods/login/login.component.tsx_
         </Form>
 ```
 
-- Hagamos que la cosa funcione:
+- Veamos si funcionan nuestros cambios:
 
 ```bash
 npm start

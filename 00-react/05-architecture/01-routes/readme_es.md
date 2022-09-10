@@ -16,11 +16,9 @@ Vamos a refactorizar las rutas de navegación que hemos definido:
 
 - Vamos a copiar el ejemplo anterior (04-basic-app/04-detail)
 
-- Ahora mismo tenemos todos los archivos mezclados a nivel de la carpeta _src_, esto puede llegar a ser bastante desordenado si
-  el proyecto sigue creciendo.
+- Ahora mismo tenemos todos los archivos mezclados a nivel de la carpeta _src_, esto puede llegar a ser bastante desordenado si el proyecto sigue creciendo.
 
-- Vamos a hacer una refactorización muy básica y lógica, vamos a crear una carpeta
-  llamada _scenes_ para almacenar todas las páginas:
+- Vamos a hacer una refactorización muy básica y lógica, vamos a crear una carpeta llamada _scenes_ para almacenar todas las páginas:
 
 ```bash
 cd src
@@ -204,12 +202,12 @@ export const switchRoutes: SwitchRoutes = {
 };
 ```
 
-Definamos las rutas de navegación: todas las rutas son iguales menos la ruta _detalles_.
+Definamos las rutas de navegación: todas las rutas son iguales menos la ruta _details_.
 (definición del parámetro vs parámetro real al navegar):
 
 Añadamos el siguiente contenido:
 
-_./src/core/routers/routes.tsx_
+_./src/core/router/routes.ts_
 
 ```tsx
 interface Routes extends Omit<SwitchRoutes, "details"> {
@@ -222,7 +220,7 @@ las entradas que no son iguales para reescribirlas.
 
 Vamos a implementar ahora el objeto de rutas (append content):
 
-_./src/core/routers/routes.tsx_
+_./src/core/router/routes.ts_
 
 ```tsx
 export const routes: Routes = {
@@ -311,6 +309,8 @@ _./src/scenes/login.tsx_
 _./src/scenes/list.tsx_
 
 ```diff
+-import { Link, generatePath } from "react-router-dom";
++import { Link } from "react-router-dom";
 + import {routes} from 'core';
 // (...)
 

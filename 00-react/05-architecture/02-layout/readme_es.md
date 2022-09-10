@@ -98,7 +98,7 @@ export const LoginPage: React.FC = () => {
 
 En este caso puede ser un cambio ligero pero, ten en cuenta:
 
-- Separación de preocupaciones, el diseño se define en un lugar separado.
+- Segregación de responsabilidades, el diseño se define en un lugar separado.
 - Podríamos reutilizarlo para otras páginas.
 - En el futuro podríamos usar este _widget_ de _login_ en otros lugares (_spoiler alert_, _pods_).
 
