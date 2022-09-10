@@ -64,12 +64,12 @@ React incorpora un mecanismo muy potente, se llama **Context**
   flujo unidireccional de React, es decir cualquier cambio que haga en él hace
   que se disparen actualizaciones de manera automática.
 
-- El Contexto lo puedo colocar al nivel que quiera del arbol de componentes,
-  es decir puedo poner esos datos disponibles a nivel de aplicacion completa
-  o de por ejemplo una ventana que contenga varios tabs.
+- El Contexto lo puedo colocar al nivel que quiera del árbol de componentes,
+  es decir puedo poner esos datos disponibles a nivel de aplicación completa
+  o por ejemplo una ventana que contenga varios tabs.
 
 Y a todo esto tenemos que añadirle que React incorpora un hook que se llama
-_useContext_ que hace que usarlo sea muy facil.
+_useContext_ que hace que usarlo, sea muy facil.
 
 Vamos a ver como funciona esto.
 

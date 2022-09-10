@@ -24,9 +24,8 @@ https://api.github.com/users/brauliodiez
 ```
 
 **EJERCICIO**
-> Con lo que has hecho en ejemplos anteriores sería capaz de montar
-> esta página tu sólo, te aconsejo que les des a la pause en este
-> ejercicio y lo pruebes.
+
+> Con lo que has hecho en ejemplos anteriores sería capaz de montar esta página tu sólo, te aconsejo que les des a la pause en este ejercicio y lo pruebes. 
 
 - Vamos a crearnos un interfaz para tener tipada para mostrar
   los detalles de un miembro.
@@ -35,7 +34,7 @@ _./src/detail.tsx_
 
 ```diff
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 + interface MemberDetailEntity {
 +   id : string;

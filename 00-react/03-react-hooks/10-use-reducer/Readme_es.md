@@ -78,7 +78,7 @@ export const MyComponent = () => {
   si el control se repinta o no, este control se repinta siempre porque
   en la propiedad _onChange_ estamos creando una función nueva en cada render.
 
-Aquí podríams estar tentados a usar _react.useCallback_, ¿ Existe otra manera
+Aquí podríams estar tentados a usar _react.useCallback_, ¿Existe otra manera
 de tratar esto? Vamos a ver la propuesta que ofrece _useReducer_
 
 En _useReducer_ agrupamos un conjunto de funcionalidad

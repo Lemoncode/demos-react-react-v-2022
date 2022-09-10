@@ -39,9 +39,7 @@ _./public/index.html_
   - Creamos la app React en el elemento root.
   - Empezamos a pintarla (fijate que le pasamos el componente raíz App)
 
-> Ojo esta forma de crear la aplicación React es nueva (desde la versión 18), en versiones anteriores
-se usaba _React.render()_
-
+> Ojo esta forma de crear la aplicación React es nueva (desde la versión 18), en versiones anteriores se usaba _React.render()_
 
 _./public/index.js_
 
@@ -80,7 +78,7 @@ export default function App() {
 }
 ```
 
-Si te fijas es un componente de tipo función, que devuelve un elemento con dos hijos (los dos H1)
+Si te fijas es un componente de tipo función, que devuelve un elemento con dos hijos (el H1 y H2)
 
 - Vamos a trabajar un poco más sobre este ejemplo, queremos permitir que el usuario teclee
   un nombre y mostrar este nombre por pantalla.
@@ -107,7 +105,7 @@ export default function App() {
 
 ¿Qué diferencia tiene esto con usar una variable? Si usaramos una variable tal cual
 esta se detruiría al terminar la función y se volvería a crear cuando volvieramos a ejecutar
-la función, al usar _React.useState_ esta función guarda "en un cajón desastre" el valor que
+la función, al usar _React.useState_ esta función guarda "en un cajón de sastre" el valor que
 se estaba editando y lo vuelve a inyectar cuando se vuelve a llamar a la función.
 
 - Vamos a mostrar el nombre del usuario que está guardado en ese _state_. Esto lo veremos más en
@@ -142,7 +140,7 @@ _username_
 
 - Podemos ver como aparece el nombre, pero y si intentamos editar, oye resulta que no se actualiza
   esto ¿Por qué? Tenemos que recordar ahora como funcionaba el flujo undireccional, me llegan los
-  datos, el input dispara un rerender (repintado)y vuelve a leer el del valor de la variable.
+  datos, el input dispara un rerender (repintado) y vuelve a leer el del valor de la variable.
 
 - El input nos expone un evento, _onChange_ que recibe un parametro estandar del _dom_
   accediente a _e.target.value_ tenemos el nuevo valor.

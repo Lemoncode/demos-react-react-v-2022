@@ -24,7 +24,7 @@ Los componentes funcionales son eso, funciones:
 - Mueren.
 
 Si recordamos el concepto de closure, cuando tenía una llamada asíncrona
-me permitía en la respuesta acceder a variables de la funcíon padre que la
+me permitía en la respuesta acceder a variables de la función padre que la
 había invocado aunque está función estuviera ya muerta.
 
 Si aplicamos este concepto a React, nos podemos encontrar con un caso curioso:
@@ -35,7 +35,7 @@ Si aplicamos este concepto a React, nos podemos encontrar con un caso curioso:
 - En la respuesta del servidor multiplicamos el total del pedido por el descuento.
 
 ¿ Qué valor de descuento crees que aplicará el antiguo o el nuevo? ... Bingo, el
-antiguo ¿Porqué? ... pensemnos en un closure, no dejamos de tener una función padre
+antiguo ¿Por qué? ... pensemnos en un closure, no dejamos de tener una función padre
 que se ha muerto, que mantiene los valores por el principio de closure y que lee
 los valores que tuviera en ese momento ¿ Qué pasa con los nuevos valores se generan
 en otra vida... es decir en otra llamada a la función donde todo vuelve a arrancar).

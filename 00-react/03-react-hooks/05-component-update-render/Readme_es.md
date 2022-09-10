@@ -15,7 +15,7 @@ un código justo después de cada renderizado.
 npm install
 ```
 
-- Vamos abrir el fichero _demo.js_ y crear el ejemplo de un componente
+- Vamos abrir el fichero _demo.tsx_ y crear el ejemplo de un componente
   padre y un hijo que se muestra dependiendo de una condición booleana.
 
 ```tsx
